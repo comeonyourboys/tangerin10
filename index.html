@@ -286,7 +286,7 @@ function saveRank(name,score){
   ref.push({name:name,score:score,date:new Date().toISOString().slice(0,10)});
 }
 function listenRanks(){
-  db.ref('rankings').orderByChild('score').limitToLast(5).on('value',function(snap){
+  db.ref('rankings').orderByChild('score').limitToLast(3).on('value',function(snap){
     var ranks=[];
     snap.forEach(function(child){ranks.push(child.val());});
     ranks.sort(function(a,b){return b.score-a.score;});
@@ -305,13 +305,13 @@ function renderRanks(ranks){
 
 // isTop 체크용 (게임오버 시 Firebase에서 현재 최저점 확인)
 var _currentRanks=[];
-db.ref('rankings').orderByChild('score').limitToLast(5).on('value',function(snap){
+db.ref('rankings').orderByChild('score').limitToLast(3).on('value',function(snap){
   _currentRanks=[];
   snap.forEach(function(c){_currentRanks.push(c.val());});
   _currentRanks.sort(function(a,b){return b.score-a.score;});
 });
 function isTopScore(score){
-  return _currentRanks.length<5||score>_currentRanks[_currentRanks.length-1].score;
+  return _currentRanks.length<3||score>_currentRanks[_currentRanks.length-1].score;
 }
 
 // === 히스토리 (현재 세션만, 최근 5개) ===
