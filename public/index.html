@@ -443,12 +443,12 @@ function animateScore(from,to){
   bumpScore();
 }
 
-// === 드래그 (보드에서 시작, document에서 이동/종료) ===
-var boardEl=document.getElementById('bd');
-boardEl.addEventListener('mousedown',function(e){dn(e.clientX,e.clientY);});
+// === 드래그 (appEl에서 시작, document에서 이동/종료) ===
+var dragArea=document.getElementById('appEl');
+dragArea.addEventListener('mousedown',function(e){dn(e.clientX,e.clientY);});
 document.addEventListener('mousemove',function(e){if(DRAG)mv(e.clientX,e.clientY);});
 document.addEventListener('mouseup',function(){up();});
-boardEl.addEventListener('touchstart',function(e){if(!ON)return;e.preventDefault();dn(e.touches[0].clientX,e.touches[0].clientY);},{passive:false});
+dragArea.addEventListener('touchstart',function(e){if(!ON)return;e.preventDefault();dn(e.touches[0].clientX,e.touches[0].clientY);},{passive:false});
 document.addEventListener('touchmove',function(e){if(!DRAG)return;e.preventDefault();mv(e.touches[0].clientX,e.touches[0].clientY);},{passive:false});
 document.addEventListener('touchend',function(){up();});
 
