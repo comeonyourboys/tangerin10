@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{width:800px;height:800px;overflow:hidden;display:flex;align-items:center;justify-content:center;
+  background:#0f0f0f;
+  font-family:'Outfit',sans-serif;position:relative;
+}
+.glow{position:absolute;border-radius:50%;filter:blur(100px);opacity:0.5;}
+.g1{width:400px;height:400px;top:-80px;left:50px;background:#FF6B00;}
+.g2{width:400px;height:400px;bottom:-80px;right:50px;background:#FF4D6D;}
+.g3{width:200px;height:200px;top:50%;left:50%;transform:translate(-50%,-50%);background:#FFB74D;opacity:0.2;}
+
+.card{text-align:center;position:relative;z-index:1;}
+
+.tangerine{position:relative;display:inline-block;margin-bottom:16px;}
+.tangerine .emoji{font-size:110px;display:block;}
+.tangerine .ring{position:absolute;inset:-18px;border:2px solid rgba(255,255,255,0.15);border-radius:50%;}
+
+.title{font-size:60px;font-weight:900;color:#fff;letter-spacing:-1px;}
+.title span{background:linear-gradient(135deg,#FFB74D,#FF6B00);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.sub{font-size:18px;color:rgba(255,255,255,0.5);margin-top:8px;letter-spacing:4px;text-transform:uppercase;font-weight:700;}
+
+.tags{display:flex;gap:10px;justify-content:center;margin-top:20px;}
+.tag{padding:6px 16px;background:rgba(255,255,255,0.08);border-radius:20px;font-size:13px;color:rgba(255,255,255,0.6);font-weight:600;border:1px solid rgba(255,255,255,0.08);}
+
+.mini{position:absolute;font-size:32px;opacity:0.25;}
+.m1{top:60px;left:80px;transform:rotate(-15deg);}
+.m2{bottom:80px;left:100px;transform:rotate(20deg);font-size:26px;}
+.m3{top:60px;right:80px;transform:rotate(10deg);font-size:32px;}
+.m4{bottom:80px;right:100px;transform:rotate(-25deg);font-size:26px;}
+.m5{top:350px;left:50px;transform:rotate(30deg);font-size:20px;opacity:0.12;}
+.m6{top:350px;right:50px;transform:rotate(-10deg);font-size:20px;opacity:0.12;}
+</style>
+</head>
+<body>
+<div class="glow g1"></div>
+<div class="glow g2"></div>
+<div class="glow g3"></div>
+
+<div class="mini m1">🍊</div>
+<div class="mini m2">🍊</div>
+<div class="mini m3">🍊</div>
+<div class="mini m4">🍊</div>
+<div class="mini m5">🍊</div>
+<div class="mini m6">🍊</div>
+
+<div class="card">
+  <div class="tangerine">
+    <span class="emoji">🍊</span>
+    <div class="ring"></div>
+  </div>
+  <div class="title">Tangerine <span>10</span></div>
+  <div class="sub">Number Puzzle Game</div>
+  <div class="tags">
+    <span class="tag">🎯 Drag & Match</span>
+    <span class="tag">⏱ 2 Min</span>
+    <span class="tag">🏆 Ranking</span>
+  </div>
+</div>
+</body>
+</html>
