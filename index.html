@@ -39,6 +39,8 @@ body.tense{background:linear-gradient(180deg,#fff 0%,#fff0f0 100%);}
 .score-box{text-align:right;}
 .score-label{font-size:9px;color:#aaa;letter-spacing:1px;}
 .score-val{font-size:24px;font-weight:900;color:#FF6B00;transition:transform 0.15s;}
+.restart-btn{width:36px;height:36px;border:none;border-radius:50%;background:#f0f0f0;font-size:18px;cursor:pointer;color:#888;transition:all .15s;flex-shrink:0;}
+.restart-btn:hover{background:#FF6B00;color:#fff;transform:rotate(180deg);}
 .score-val.bump{animation:scoreBump 0.3s ease;}
 @keyframes scoreBump{0%{transform:scale(1)}40%{transform:scale(1.35)}100%{transform:scale(1)}}
 
@@ -209,6 +211,7 @@ body.tense{background:linear-gradient(180deg,#fff 0%,#fff0f0 100%);}
       <div class="score-label">SCORE</div>
       <div class="score-val" id="sc">0</div>
     </div>
+    <button class="restart-btn" id="restartBtn" onclick="end()">↻</button>
   </div>
 
   <div class="board" id="bd"></div>
