@@ -240,7 +240,7 @@ body.tense{background:linear-gradient(180deg,#fff 0%,#fff0f0 100%);}
 
 <div class="ov" id="ov">
   <div class="ovc">
-    <div class="ol">GAME OVER</div>
+    <div class="ol" id="ol">GAME OVER</div>
     <div class="os" id="fs">0</div>
     <div class="ou">tiles cleared</div>
     <div class="ob" id="fb"></div>
@@ -535,6 +535,7 @@ function end(){
   var isTop=isTopScore(S);
   var nr=document.getElementById('nameRow');
   var fb=document.getElementById('fb');
+  document.getElementById('ol').textContent=S===0?"TIME'S UP!":'GAME OVER';
   if(isTop&&S>0){
     nr.classList.add('show');
     fb.textContent='🎉 NEW HIGH SCORE!';
@@ -542,7 +543,7 @@ function end(){
     document.getElementById('playBtn').textContent='Save & Play Again';
   }else{
     nr.classList.remove('show');
-    fb.textContent=ranks.length>0?'Top: '+ranks[0].score:'';
+    fb.textContent=S===0?'No tiles cleared...':(_currentRanks.length>0?'Top: '+_currentRanks[0].score:'');
     fb.className='ob';
     document.getElementById('playBtn').textContent='▶ Play Again';
   }
