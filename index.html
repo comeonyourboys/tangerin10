@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Make 10 — Number Puzzle Game</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+<script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-user-select:none;user-select:none;}
+html,body{height:100%;background:#fff;}
+body{font-family:'Outfit',sans-serif;color:#1a1a1a;touch-action:none;overflow-y:auto;overflow-x:hidden;transition:background 1.5s ease;}
+body.playing{background:linear-gradient(180deg,#fff 0%,#fff8f0 100%);}
+body.tense{background:linear-gradient(180deg,#fff 0%,#fff0f0 100%);}
+
+.app{display:flex;flex-direction:column;align-items:center;min-height:100%;width:100%;padding:12px 16px 40px;}
+
+/* 상단 바 */
+.topbar{display:flex;align-items:center;justify-content:space-between;width:100%;max-width:850px;padding:8px 4px;margin-bottom:8px;}
+.logo{display:flex;align-items:baseline;gap:4px;}
+.logo-m{font-size:16px;font-weight:600;color:#aaa;}
+.logo-10{font-size:24px;font-weight:900;color:#FF6B00;}
+
+/* 원형 타이머 */
+.timer-wrap{position:relative;width:56px;height:56px;}
+.timer-ring{transform:rotate(-90deg);}
+.timer-ring-bg{fill:none;stroke:#f0f0f0;stroke-width:4;}
+.timer-ring-fg{fill:none;stroke:#FF4D6D;stroke-width:4;stroke-linecap:round;transition:stroke-dashoffset 1s linear,stroke 0.5s;}
+.timer-ring-fg.warn{stroke:#ef4444;}
+.timer-text{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:900;color:#FF4D6D;font-variant-numeric:tabular-nums;}
+.timer-text.warn{color:#ef4444;animation:blink 0.5s infinite alternate;}
+@keyframes blink{from{opacity:1}to{opacity:0.3}}
+
+/* 점수 — 카운트업 바운스 */
+.score-box{text-align:right;}
+.score-label{font-size:9px;color:#aaa;letter-spacing:1px;}
+.score-val{font-size:24px;font-weight:900;color:#FF6B00;transition:transform 0.15s;}
+.score-val.bump{animation:scoreBump 0.3s ease;}
+@keyframes scoreBump{0%{transform:scale(1)}40%{transform:scale(1.35)}100%{transform:scale(1)}}
+
+/* 콤보 */
+.combo-badge{position:fixed;top:80px;left:50%;transform:translateX(-50%) scale(0);font-size:20px;font-weight:900;color:#FF6B00;background:linear-gradient(135deg,#FFF3E0,#FFE0B2);padding:8px 20px;border-radius:20px;z-index:1002;pointer-events:none;opacity:0;border:2px solid #FFB74D;}
+.combo-badge.show{animation:comboIn 0.6s ease forwards;}
+.combo-badge.mega{font-size:32px;padding:14px 32px;border-radius:24px;background:linear-gradient(135deg,#FF6B00,#FF4D6D);color:#fff;border:3px solid #FFD700;box-shadow:0 0 40px rgba(255,107,0,0.5);top:60px;}
+.combo-badge.mega.show{animation:comboMega 0.8s ease forwards;}
+@keyframes comboIn{0%{transform:translateX(-50%) scale(0);opacity:0}30%{transform:translateX(-50%) scale(1.2);opacity:1}60%{transform:translateX(-50%) scale(0.95);opacity:1}100%{transform:translateX(-50%) scale(1);opacity:0}}
+@keyframes comboMega{0%{transform:translateX(-50%) scale(0) rotate(-5deg);opacity:0}20%{transform:translateX(-50%) scale(1.5) rotate(3deg);opacity:1}40%{transform:translateX(-50%) scale(1.1) rotate(-2deg);opacity:1}60%{transform:translateX(-50%) scale(1.25) rotate(1deg);opacity:1}80%{transform:translateX(-50%) scale(1.15);opacity:1}100%{transform:translateX(-50%) scale(1);opacity:0}}
+
+/* 보드 */
+.board{
+  display:grid;grid-template-columns:repeat(17,1fr);gap:3px;
+  width:100%;max-width:850px;
+  padding:4px;
+  margin-bottom:8px;
+}
+
+/* 귤 타일 */
+.t{
+  aspect-ratio:1;display:flex;align-items:center;justify-content:center;
+  border-radius:50%;cursor:pointer;
+  transition:transform 0.12s;position:relative;
+}
+.t:hover{transform:scale(1.06);}
+.t .bg{position:absolute;width:95%;height:95%;z-index:0;}
+.t .bg svg{width:100%;height:100%;}
+.t .num{position:relative;z-index:1;font-size:clamp(16px,2.8vw,28px);font-weight:900;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,0.4);line-height:1;}
+.t.sel{transform:scale(0.85);filter:brightness(1.15);}
+
+/* 모이기 */
+.t.gather{transition:transform 0.3s ease-in;pointer-events:none;}
+
+/* 튕겨나감 */
+@keyframes f0{0%{transform:scale(1.3);opacity:1}100%{transform:translate(80px,-100px) scale(0.2) rotate(60deg);opacity:0}}
+@keyframes f1{0%{transform:scale(1.3);opacity:1}100%{transform:translate(-90px,-70px) scale(0.2) rotate(-55deg);opacity:0}}
+@keyframes f2{0%{transform:scale(1.3);opacity:1}100%{transform:translate(70px,90px) scale(0.2) rotate(70deg);opacity:0}}
+@keyframes f3{0%{transform:scale(1.3);opacity:1}100%{transform:translate(-80px,100px) scale(0.2) rotate(-65deg);opacity:0}}
+@keyframes f4{0%{transform:scale(1.3);opacity:1}100%{transform:translate(100px,30px) scale(0.2) rotate(45deg);opacity:0}}
+@keyframes f5{0%{transform:scale(1.3);opacity:1}100%{transform:translate(-100px,-40px) scale(0.2) rotate(-70deg);opacity:0}}
+.t.f0{animation:f0 .45s ease-out forwards;pointer-events:none;}
+.t.f1{animation:f1 .45s ease-out forwards;pointer-events:none;}
+.t.f2{animation:f2 .45s ease-out forwards;pointer-events:none;}
+.t.f3{animation:f3 .45s ease-out forwards;pointer-events:none;}
+.t.f4{animation:f4 .45s ease-out forwards;pointer-events:none;}
+.t.f5{animation:f5 .45s ease-out forwards;pointer-events:none;}
+.t.dead{opacity:0;pointer-events:none;}
+
+/* 주스 파티클 */
+@keyframes juice{0%{transform:translate(0,0) scale(1);opacity:1}100%{opacity:0}}
+.juice{position:fixed;width:8px;height:8px;border-radius:50%;pointer-events:none;z-index:1001;}
+
+/* 화면 흔들림 */
+@keyframes shake{0%{transform:translate(0)}25%{transform:translate(-3px,2px)}50%{transform:translate(3px,-2px)}75%{transform:translate(-2px,1px)}100%{transform:translate(0)}}
+.app.shake{animation:shake 0.2s ease;}
+
+/* 하단 힌트 */
+.hint{text-align:center;font-size:11px;color:#ccc;padding:4px;margin-bottom:16px;}
+
+/* 드래그 박스 */
+#box{position:fixed;border:2px solid rgba(255,140,0,0.7);background:rgba(255,140,0,0.08);pointer-events:none;display:none;z-index:999;border-radius:4px;}
+
+/* 실시간 합계 — 비활성 */
+#ls{display:none!important;}
+
+/* +N 팝업 */
+@keyframes sUp{0%{opacity:1;transform:translateY(0)}100%{opacity:0;transform:translateY(-40px)}}
+.sp{position:fixed;pointer-events:none;z-index:1001;font-size:22px;font-weight:900;color:#FF6B00;animation:sUp .8s ease forwards;}
+
+/* 하단 패널 */
+.bottom-panels{
+  display:flex;gap:16px;width:100%;max-width:850px;
+}
+.panel{
+  flex:1;background:#fafafa;border-radius:14px;padding:16px;
+  border:1px solid #f0f0f0;min-height:120px;max-height:280px;overflow-y:auto;
+}
+.panel-title{
+  font-size:11px;color:#aaa;letter-spacing:2px;font-weight:700;
+  margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid #eee;
+}
+.rank-item{
+  display:flex;align-items:center;gap:8px;padding:7px 4px;
+  border-bottom:1px solid #f0f0f0;
+}
+.rank-item:last-child{border:none;}
+.rank-pos{font-size:15px;font-weight:900;width:24px;text-align:center;}
+.rank-pos.g{color:#FFD700;} .rank-pos.s{color:#aaa;} .rank-pos.b{color:#CD7F32;}
+.rank-name{font-size:13px;font-weight:600;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.rank-score{font-size:14px;font-weight:800;color:#FF6B00;}
+.rank-new{font-size:9px;color:#FF6B00;margin-left:4px;}
+.rank-empty{font-size:12px;color:#ddd;text-align:center;padding:20px 0;}
+
+/* 히스토리 — 바 차트 */
+.hist-item{display:flex;align-items:center;gap:8px;padding:6px 4px;border-bottom:1px solid #f0f0f0;}
+.hist-item:last-child{border:none;}
+.hist-num{font-size:11px;color:#ccc;width:20px;text-align:center;flex-shrink:0;}
+.hist-bar-wrap{flex:1;height:18px;background:#f0f0f0;border-radius:9px;overflow:hidden;position:relative;}
+.hist-bar{height:100%;border-radius:9px;background:linear-gradient(90deg,#FFB74D,#FF6B00);min-width:2px;transition:width 0.5s ease;}
+.hist-bar-text{position:absolute;right:6px;top:50%;transform:translateY(-50%);font-size:11px;font-weight:800;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,0.3);}
+.hist-bar-text.dark{color:#999;text-shadow:none;}
+.hist-date{font-size:10px;color:#bbb;flex-shrink:0;width:52px;text-align:right;}
+
+@media(max-width:600px){
+  .bottom-panels{flex-direction:column;gap:10px;}
+  .panel{max-height:200px;}
+}
+
+/* 게임오버 */
+.ov{position:fixed;inset:0;background:rgba(255,255,255,0.9);display:none;align-items:center;justify-content:center;z-index:2000;backdrop-filter:blur(8px);}
+.ov.on{display:flex;}
+.ovc{background:#fff;border-radius:24px;padding:36px 28px;text-align:center;width:92%;max-width:340px;border:1px solid #eee;box-shadow:0 20px 60px rgba(0,0,0,0.08);}
+.ovc .ol{font-size:11px;color:#aaa;letter-spacing:3px;font-weight:700;}
+.ovc .os{font-size:64px;font-weight:900;margin:8px 0;color:#FF6B00;}
+.ovc .ou{font-size:14px;color:#888;margin-bottom:4px;}
+.ovc .ob{font-size:14px;color:#FFD700;margin-bottom:20px;}
+@keyframes nb{0%{transform:scale(1)}50%{transform:scale(1.2)}100%{transform:scale(1)}}
+.ovc .ob.nw{animation:nb .5s ease 3;}
+
+.name-input{
+  width:100%;padding:12px;border:2px solid #eee;border-radius:12px;
+  font-size:16px;font-family:inherit;text-align:center;outline:none;
+  margin-bottom:12px;
+}
+.name-input:focus{border-color:#FF6B00;}
+.name-row{display:none;margin-bottom:16px;}
+.name-row.show{display:block;}
+
+.ovc button{width:100%;padding:14px;border:none;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:6px;transition:all .2s;}
+.ovc button:hover{transform:translateY(-2px);}
+.ovc .bp{background:#1a1a1a;color:#fff;}
+.ovc .bc{background:#f5f5f5;color:#888;}
+.share-row{display:flex;gap:8px;margin-top:4px;}
+.sh-btn{flex:1;padding:12px 0;border:none;border-radius:12px;font-size:18px;cursor:pointer;font-family:inherit;transition:all .15s;font-weight:700;}
+.sh-btn:hover{transform:translateY(-2px);}
+.sh-x{background:#000;color:#fff;}
+.sh-kakao{background:#FEE500;color:#3C1E1E;}
+.sh-fb{background:#1877F2;color:#fff;font-size:20px;}
+.sh-copy{background:#f0f0f0;color:#555;}
+
+/* 시작 화면 */
+.start-overlay{position:fixed;inset:0;background:rgba(255,255,255,0.95);display:flex;align-items:center;justify-content:center;z-index:3000;}
+.start-overlay.hide{display:none;}
+.start-card{text-align:center;}
+.start-card .st-emoji{font-size:80px;margin-bottom:16px;}
+.start-card .st-title{font-size:36px;font-weight:900;}
+.start-card .st-title span{color:#FF6B00;}
+.start-card .st-sub{font-size:14px;color:#aaa;margin:8px 0 24px;}
+.start-card .st-btn{padding:16px 48px;background:#FF6B00;color:#fff;border:none;border-radius:14px;font-size:18px;font-weight:800;cursor:pointer;font-family:inherit;transition:all .2s;}
+.start-card .st-btn:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(255,107,0,0.3);}
+</style>
+</head>
+<body>
+
+<div class="app" id="appEl">
+  <div class="topbar">
+    <div class="logo"><span class="logo-m">Make</span><span class="logo-10">10</span></div>
+    <!-- 원형 타이머 -->
+    <div class="timer-wrap">
+      <svg class="timer-ring" width="56" height="56" viewBox="0 0 56 56">
+        <circle class="timer-ring-bg" cx="28" cy="28" r="24"/>
+        <circle class="timer-ring-fg" id="tmRing" cx="28" cy="28" r="24" stroke-dasharray="150.8" stroke-dashoffset="0"/>
+      </svg>
+      <div class="timer-text" id="tm">2:00</div>
+    </div>
+    <div class="score-box">
+      <div class="score-label">SCORE</div>
+      <div class="score-val" id="sc">0</div>
+    </div>
+  </div>
+
+  <div class="board" id="bd"></div>
+  <div class="hint">Drag to select numbers that add up to 10</div>
+
+  <div class="bottom-panels">
+    <div class="panel">
+      <div class="panel-title">🏆 TOP SCORES</div>
+      <div id="rankList"><div class="rank-empty">No scores yet</div></div>
+    </div>
+    <div class="panel">
+      <div class="panel-title">📋 MY HISTORY</div>
+      <div id="histList"><div class="rank-empty">No games yet</div></div>
+    </div>
+  </div>
+</div>
+
+<div id="box"></div>
+<div id="ls"></div>
+<div class="combo-badge" id="comboBadge"></div>
+
+<div class="start-overlay" id="startOv">
+  <div class="start-card">
+    <div class="st-emoji">🍊</div>
+    <div class="st-title">Make <span>10</span></div>
+    <div class="st-sub">Drag numbers that add up to 10!<br>2 minutes. How many can you clear?</div>
+    <button class="st-btn" onclick="startGame()">▶ START</button>
+  </div>
+</div>
+
+<div class="ov" id="ov">
+  <div class="ovc">
+    <div class="ol">GAME OVER</div>
+    <div class="os" id="fs">0</div>
+    <div class="ou">tiles cleared</div>
+    <div class="ob" id="fb"></div>
+    <div class="name-row" id="nameRow">
+      <input class="name-input" id="nameInput" placeholder="Enter your name" maxlength="12">
+    </div>
+    <button class="bp" id="playBtn" onclick="onPlayAgain()">▶ Play Again</button>
+    <div class="share-row">
+      <button class="sh-btn sh-x" onclick="shareX()">𝕏</button>
+      <button class="sh-btn sh-kakao" onclick="shareKakao()">💬</button>
+      <button class="sh-btn sh-fb" onclick="shareFB()">f</button>
+      <button class="sh-btn sh-copy" onclick="cp()">📋</button>
+    </div>
+  </div>
+</div>
+
+<script>
+var R=10,C=17,T=[],S=0,TL=120,TI=null,ON=false;
+var DRAG=false,SX=0,SY=0,SEL=[];
+var COMBO=0,COMBO_TIMER=null;
+var SESSION_HIST=[];
+var CIRC=2*Math.PI*24;
+
+// === Firebase 초기화 ===
+firebase.initializeApp({
+  apiKey:"AIzaSyBBFUJbi2TWAI9Ea6FoC0IsG74gsXt33Uo",
+  authDomain:"tangerin10.firebaseapp.com",
+  databaseURL:"https://tangerin10-default-rtdb.firebaseio.com",
+  projectId:"tangerin10",
+  storageBucket:"tangerin10.firebasestorage.app",
+  messagingSenderId:"697453286418",
+  appId:"1:697453286418:web:cba8d56850384cb7feb4cb"
+});
+var db=firebase.database();
+
+// === 랭킹 (Firebase) ===
+function saveRank(name,score){
+  var ref=db.ref('rankings');
+  ref.push({name:name,score:score,date:new Date().toISOString().slice(0,10)});
+}
+function listenRanks(){
+  db.ref('rankings').orderByChild('score').limitToLast(5).on('value',function(snap){
+    var ranks=[];
+    snap.forEach(function(child){ranks.push(child.val());});
+    ranks.sort(function(a,b){return b.score-a.score;});
+    renderRanks(ranks);
+  });
+}
+function renderRanks(ranks){
+  var el=document.getElementById('rankList');
+  if(!ranks||ranks.length===0){el.innerHTML='<div class="rank-empty">No scores yet</div>';return;}
+  el.innerHTML=ranks.map(function(r,i){
+    var cls=i===0?'g':i===1?'s':i===2?'b':'';
+    var medal=i===0?'🥇':i===1?'🥈':i===2?'🥉':(i+1);
+    return '<div class="rank-item"><span class="rank-pos '+cls+'">'+medal+'</span><span class="rank-name">'+r.name+'</span><span class="rank-score">'+r.score+'</span></div>';
+  }).join('');
+}
+
+// isTop 체크용 (게임오버 시 Firebase에서 현재 최저점 확인)
+var _currentRanks=[];
+db.ref('rankings').orderByChild('score').limitToLast(5).on('value',function(snap){
+  _currentRanks=[];
+  snap.forEach(function(c){_currentRanks.push(c.val());});
+  _currentRanks.sort(function(a,b){return b.score-a.score;});
+});
+function isTopScore(score){
+  return _currentRanks.length<5||score>_currentRanks[_currentRanks.length-1].score;
+}
+
+// === 히스토리 (현재 세션만, 최근 5개) ===
+function saveHistory(score){
+  var now=new Date();
+  var ts=now.toLocaleTimeString('en',{hour:'2-digit',minute:'2-digit',hour12:false});
+  SESSION_HIST.unshift({score:score,date:ts});
+  if(SESSION_HIST.length>5)SESSION_HIST=SESSION_HIST.slice(0,5);
+  renderHistory();
+}
+function renderHistory(){
+  var el=document.getElementById('histList');
+  if(SESSION_HIST.length===0){el.innerHTML='<div class="rank-empty">No games yet</div>';return;}
+  var max=Math.max.apply(null,SESSION_HIST.map(function(h){return h.score;}))||1;
+  el.innerHTML=SESSION_HIST.map(function(h,i){
+    var pct=Math.round((h.score/max)*100);
+    var txtCls=pct<30?'dark':'';
+    return '<div class="hist-item"><span class="hist-num">'+(i+1)+'</span>'
+      +'<div class="hist-bar-wrap"><div class="hist-bar" style="width:'+pct+'%"></div><span class="hist-bar-text '+txtCls+'">'+h.score+'</span></div>'
+      +'<span class="hist-date">'+h.date+'</span></div>';
+  }).join('');
+}
+
+// === 보드 ===
+function makeBoard(){var b=[];for(var i=0;i<R*C;i++)b.push(Math.floor(Math.random()*9)+1);return b;}
+function draw(){
+  var bd=document.getElementById('bd');bd.innerHTML='';
+  for(var i=0;i<T.length;i++){
+    var d=document.createElement('div');var v=T[i];
+    d.className='t'+(v===0?' dead':'');
+    if(v>0){
+      d.innerHTML='<span class="bg"><svg viewBox="0 0 100 100">'
+        +'<ellipse cx="50" cy="55" rx="46" ry="42" fill="#FFA726"/>'
+        +'<path d="M50 14 Q44 2 38 8 Q44 0 50 6 Q56 0 62 8 Q56 2 50 14Z" fill="#66BB6A"/>'
+        +'</svg></span><span class="num">'+v+'</span>';
+    }
+    d.dataset.i=i;bd.appendChild(d);
+  }
+}
+function getRects(){
+  var cells=document.querySelectorAll('.t');var arr=[];
+  cells.forEach(function(c){var r=c.getBoundingClientRect();arr.push({l:r.left,t:r.top,r:r.right,b:r.bottom});});
+  return arr;
+}
+
+// === 주스 파티클 ===
+function spawnJuice(x,y,count){
+  var colors=['#FF6B00','#FFA726','#FFB74D','#FFCC80','#FF8F00'];
+  for(var i=0;i<count;i++){
+    var p=document.createElement('div');p.className='juice';
+    p.style.left=x+'px';p.style.top=y+'px';
+    p.style.background=colors[Math.floor(Math.random()*colors.length)];
+    var angle=Math.random()*Math.PI*2;
+    var dist=30+Math.random()*60;
+    var dx=Math.cos(angle)*dist,dy=Math.sin(angle)*dist;
+    var dur=0.4+Math.random()*0.3;
+    p.style.animation='juice '+dur+'s ease-out forwards';
+    p.animate([
+      {transform:'translate(0,0) scale(1)',opacity:1},
+      {transform:'translate('+dx+'px,'+dy+'px) scale(0.2)',opacity:0}
+    ],{duration:dur*1000,easing:'ease-out',fill:'forwards'});
+    document.body.appendChild(p);
+    (function(el,d){setTimeout(function(){el.remove();},d*1000);})(p,dur);
+  }
+}
+
+// === 콤보 ===
+function triggerCombo(){
+  COMBO++;
+  if(COMBO>=2){
+    var badge=document.getElementById('comboBadge');
+    var isMega=COMBO>=5;
+    var multLabel=COMBO>=20?'x5':COMBO>=10?'x3':COMBO>=5?'x2':'x1.5';
+    badge.textContent=(isMega?'💥':'🔥')+' COMBO '+COMBO+' ('+multLabel+')';
+    badge.className='combo-badge'+(isMega?' mega':'');
+    void badge.offsetWidth;
+    badge.classList.add('show');
+    if(isMega)shakeScreen();
+  }
+  clearTimeout(COMBO_TIMER);
+  COMBO_TIMER=setTimeout(function(){COMBO=0;},2000);
+}
+
+// === 화면 흔들림 ===
+function shakeScreen(){
+  var app=document.getElementById('appEl');
+  app.classList.remove('shake');
+  void app.offsetWidth;
+  app.classList.add('shake');
+}
+
+// === 점수 바운스 ===
+function bumpScore(){
+  var el=document.getElementById('sc');
+  el.classList.remove('bump');
+  void el.offsetWidth;
+  el.classList.add('bump');
+}
+
+// === 점수 카운트업 ===
+function animateScore(from,to){
+  var el=document.getElementById('sc');
+  var diff=to-from;
+  if(diff<=0){el.textContent=to;return;}
+  var step=Math.ceil(diff/8);
+  var cur=from;
+  function tick(){
+    cur=Math.min(cur+step,to);
+    el.textContent=cur;
+    if(cur<to)requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+  bumpScore();
+}
+
+// === 드래그 ===
+document.addEventListener('mousedown',function(e){dn(e.clientX,e.clientY);});
+document.addEventListener('mousemove',function(e){if(DRAG)mv(e.clientX,e.clientY);});
+document.addEventListener('mouseup',function(){up();});
+document.addEventListener('touchstart',function(e){e.preventDefault();dn(e.touches[0].clientX,e.touches[0].clientY);},{passive:false});
+document.addEventListener('touchmove',function(e){e.preventDefault();if(DRAG)mv(e.touches[0].clientX,e.touches[0].clientY);},{passive:false});
+document.addEventListener('touchend',function(){up();});
+
+function dn(x,y){
+  if(!ON)return;
+  DRAG=true;SX=x;SY=y;SEL=[];
+  var box=document.getElementById('box');
+  box.style.display='block';box.style.left=x+'px';box.style.top=y+'px';box.style.width='0';box.style.height='0';
+  clr();
+}
+function mv(x,y){
+  var box=document.getElementById('box');
+  var x1=Math.min(SX,x),y1=Math.min(SY,y),x2=Math.max(SX,x),y2=Math.max(SY,y);
+  box.style.left=x1+'px';box.style.top=y1+'px';box.style.width=(x2-x1)+'px';box.style.height=(y2-y1)+'px';
+  var rects=getRects();var cells=document.querySelectorAll('.t');
+  SEL=[];var sum=0;
+  for(var i=0;i<rects.length;i++){
+    if(T[i]===0)continue;
+    var cx=(rects[i].l+rects[i].r)/2,cy=(rects[i].t+rects[i].b)/2;
+    if(cx>=x1&&cx<=x2&&cy>=y1&&cy<=y2){cells[i].classList.add('sel');SEL.push(i);sum+=T[i];}
+    else{cells[i].classList.remove('sel');}
+  }
+}
+function up(){
+  if(!DRAG)return;DRAG=false;
+  document.getElementById('box').style.display='none';
+  if(SEL.length===0)return;
+  var sum=0;for(var i=0;i<SEL.length;i++)sum+=T[SEL[i]];
+  if(sum===10){
+    var cells=document.querySelectorAll('.t');
+    var first=cells[SEL[0]].getBoundingClientRect();
+    showPop('+'+SEL.length,first.left+first.width/2,first.top);
+    var cx=0,cy=0;
+    for(var i=0;i<SEL.length;i++){var r=cells[SEL[i]].getBoundingClientRect();cx+=(r.left+r.right)/2;cy+=(r.top+r.bottom)/2;}
+    cx/=SEL.length;cy/=SEL.length;
+    // 주스 파티클
+    spawnJuice(cx,cy,SEL.length*4);
+    // 콤보 (shake는 triggerCombo 내에서 5+ 일때만)
+    triggerCombo();
+    // Phase 1: 모이기
+    for(var i=0;i<SEL.length;i++){
+      T[SEL[i]]=0;var el=cells[SEL[i]];el.classList.remove('sel');
+      var er=el.getBoundingClientRect();var dx=cx-(er.left+er.right)/2,dy=cy-(er.top+er.bottom)/2;
+      el.classList.add('gather');el.style.transform='translate('+dx+'px,'+dy+'px) scale(1.1)';
+    }
+    // Phase 2: 튕기기
+    (function(idxs){setTimeout(function(){
+      for(var j=0;j<idxs.length;j++){var e=cells[idxs[j]];e.classList.remove('gather');e.style.transform='';
+        e.classList.add('f'+Math.floor(Math.random()*6));
+        (function(ee){setTimeout(function(){ee.classList.add('dead');ee.innerHTML='';},450);})(e);}
+    },300);})(SEL.slice());
+    var oldS=S;
+    var mult=COMBO>=20?5:COMBO>=10?3:COMBO>=5?2:COMBO>=2?1.5:1;
+    S+=Math.floor(SEL.length*mult);
+    animateScore(oldS,S);
+  }
+  clr();SEL=[];
+}
+
+function clr(){document.querySelectorAll('.t.sel').forEach(function(c){c.classList.remove('sel');});}
+function showPop(t,x,y){var d=document.createElement('div');d.className='sp';d.textContent=t;d.style.left=x+'px';d.style.top=y+'px';document.body.appendChild(d);setTimeout(function(){d.remove();},800);}
+
+// === 타이머 (원형) ===
+function updateTimerRing(){
+  var pct=TL/120;
+  var offset=CIRC*(1-pct);
+  var ring=document.getElementById('tmRing');
+  ring.style.strokeDashoffset=offset;
+  if(TL<=30){ring.classList.add('warn');}else{ring.classList.remove('warn');}
+}
+function tick(){
+  TL--;
+  var m=Math.floor(TL/60),s=TL%60;
+  var el=document.getElementById('tm');
+  el.textContent=m+':'+String(s).padStart(2,'0');
+  updateTimerRing();
+  if(TL<=10){el.classList.add('warn');}else{el.classList.remove('warn');}
+  // 배경 긴장감
+  if(TL<=30)document.body.className='tense';
+  else if(ON)document.body.className='playing';
+  if(TL<=0){clearInterval(TI);end();}
+}
+
+// === 시작 ===
+function startGame(){document.getElementById('startOv').classList.add('hide');go();}
+function go(){
+  S=0;ON=true;TL=120;COMBO=0;
+  document.getElementById('ov').classList.remove('on');
+  T=makeBoard();draw();
+  document.getElementById('sc').textContent='0';
+  document.getElementById('tm').textContent='2:00';
+  document.getElementById('tm').classList.remove('warn');
+  document.getElementById('tmRing').style.strokeDashoffset='0';
+  document.getElementById('tmRing').classList.remove('warn');
+  document.body.className='playing';
+  clearInterval(TI);TI=setInterval(tick,1000);
+}
+
+// === 게임 끝 ===
+function end(){
+  ON=false;clearInterval(TI);
+  document.body.className='';
+  saveHistory(S);
+  document.getElementById('fs').textContent=S;
+  var isTop=isTopScore(S);
+  var nr=document.getElementById('nameRow');
+  var fb=document.getElementById('fb');
+  if(isTop&&S>0){
+    nr.classList.add('show');
+    fb.textContent='🎉 NEW HIGH SCORE!';
+    fb.className='ob nw';
+    document.getElementById('playBtn').textContent='Save & Play Again';
+  }else{
+    nr.classList.remove('show');
+    fb.textContent=ranks.length>0?'Top: '+ranks[0].score:'';
+    fb.className='ob';
+    document.getElementById('playBtn').textContent='▶ Play Again';
+  }
+  document.getElementById('nameInput').value='';
+  document.getElementById('ov').classList.add('on');
+}
+function onPlayAgain(){
+  var nr=document.getElementById('nameRow');
+  if(nr.classList.contains('show')){
+    var name=document.getElementById('nameInput').value.trim()||'Player';
+    saveRank(name,S);
+  }
+  go();
+}
+var SHARE_URL='https://tangerin10.web.app';
+var SHARE_TEXT='🍊 Make 10에서 '+S+'점 달성! 2분 안에 10을 만들어라! ';
+
+function getShareText(){return '🍊 Make 10에서 '+S+'점 달성! 2분 안에 10을 만들어라! '+SHARE_URL;}
+
+function shareX(){
+  var text=encodeURIComponent('🍊 Make 10에서 '+S+'점 달성!\n2분 안에 귤을 터뜨려라! #Make10Game\n'+SHARE_URL);
+  window.open('https://twitter.com/intent/tweet?text='+text,'_blank');
+}
+
+function shareKakao(){
+  if(!window.Kakao){alert('잠시 후 다시 시도해주세요.');return;}
+  if(!Kakao.isInitialized())Kakao.init('4dc7d7690ca8b78aec06f64ca1158905');
+  Kakao.Share.sendDefault({
+    objectType:'feed',
+    content:{
+      title:'🍊 Make 10',
+      description:'나 '+S+'점 달성! 2분 안에 귤 터뜨리기 게임. 도전해봐!',
+      imageUrl:'https://raw.githubusercontent.com/twitter/twemoji/master/assets/svg/1f34a.svg',
+      link:{mobileWebUrl:SHARE_URL,webUrl:SHARE_URL}
+    },
+    buttons:[{title:'게임 하러 가기',link:{mobileWebUrl:SHARE_URL,webUrl:SHARE_URL}}]
+  });
+}
+
+function shareFB(){
+  var url=encodeURIComponent(SHARE_URL);
+  window.open('https://www.facebook.com/sharer/sharer.php?u='+url,'_blank');
+}
+
+function cp(){
+  navigator.clipboard.writeText(getShareText()).then(function(){alert('Copied!');});
+}
+
+listenRanks();
+renderHistory();
+</script>
+</body>
+</html>
