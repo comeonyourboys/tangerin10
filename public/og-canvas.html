@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@700;900&display=swap" rel="stylesheet">
+</head><body style="margin:0;padding:0;">
+<canvas id="c" width="800" height="400"></canvas>
+<script>
+var c=document.getElementById('c').getContext('2d');
+
+// 배경
+var g=c.createLinearGradient(0,0,800,400);
+g.addColorStop(0,'#1a1a1a');
+g.addColorStop(1,'#0a0a0a');
+c.fillStyle=g;
+c.fillRect(0,0,800,400);
+
+// 글로우 원 1 (오렌지)
+var r1=c.createRadialGradient(200,150,0,200,150,250);
+r1.addColorStop(0,'rgba(255,107,0,0.4)');
+r1.addColorStop(1,'rgba(255,107,0,0)');
+c.fillStyle=r1;
+c.fillRect(0,0,800,400);
+
+// 글로우 원 2 (핑크)
+var r2=c.createRadialGradient(650,300,0,650,300,200);
+r2.addColorStop(0,'rgba(255,77,109,0.3)');
+r2.addColorStop(1,'rgba(255,77,109,0)');
+c.fillStyle=r2;
+c.fillRect(0,0,800,400);
+
+// 귤 이모지
+c.font='90px serif';
+c.textAlign='center';
+c.textBaseline='middle';
+c.fillText('🍊',400,130);
+
+// 타이틀
+c.font='900 52px Outfit,sans-serif';
+c.fillStyle='#fff';
+c.fillText('Tangerine',310,250);
+c.fillStyle='#FFB74D';
+c.fillText('10',430,250);
+
+// 서브
+c.font='700 16px Outfit,sans-serif';
+c.fillStyle='rgba(255,255,255,0.5)';
+c.letterSpacing='3px';
+c.fillText('NUMBER PUZZLE GAME',400,300);
+
+// 태그
+c.font='600 12px Outfit,sans-serif';
+c.fillStyle='rgba(255,255,255,0.3)';
+c.fillText('🎯 Drag & Match    ⏱ 2 Min Challenge    🏆 Global Ranking',400,350);
+
+var a=document.createElement('a');
+a.download='og-tangerin10.png';
+a.href=document.getElementById('c').toDataURL('image/png');
+a.click();
+</script></body></html>
