@@ -439,8 +439,8 @@ function animateScore(from,to){
 document.addEventListener('mousedown',function(e){dn(e.clientX,e.clientY);});
 document.addEventListener('mousemove',function(e){if(DRAG)mv(e.clientX,e.clientY);});
 document.addEventListener('mouseup',function(){up();});
-document.addEventListener('touchstart',function(e){e.preventDefault();dn(e.touches[0].clientX,e.touches[0].clientY);},{passive:false});
-document.addEventListener('touchmove',function(e){e.preventDefault();if(DRAG)mv(e.touches[0].clientX,e.touches[0].clientY);},{passive:false});
+document.addEventListener('touchstart',function(e){if(!ON)return;e.preventDefault();dn(e.touches[0].clientX,e.touches[0].clientY);},{passive:false});
+document.addEventListener('touchmove',function(e){if(!ON)return;e.preventDefault();if(DRAG)mv(e.touches[0].clientX,e.touches[0].clientY);},{passive:false});
 document.addEventListener('touchend',function(){up();});
 
 function dn(x,y){
