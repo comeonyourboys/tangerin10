@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html><body>
+<canvas id="c" width="800" height="400"></canvas>
+<script>
+var c=document.getElementById("c").getContext("2d");
+// 배경 그라데이션
+var g=c.createLinearGradient(0,0,800,400);
+g.addColorStop(0,"#FFF8F0");
+g.addColorStop(1,"#FFE8CC");
+c.fillStyle=g;
+c.fillRect(0,0,800,400);
+
+// 귤 이모지
+c.font="120px serif";
+c.textAlign="center";
+c.textBaseline="middle";
+c.fillText("🍊",400,150);
+
+// 타이틀
+c.fillStyle="#FF6B00";
+c.font="bold 48px Outfit, sans-serif";
+c.fillText("Tangerine 10",400,280);
+
+// 서브
+c.fillStyle="#888";
+c.font="20px Outfit, sans-serif";
+c.fillText("2분 안에 귤을 터뜨려라!",400,330);
+
+var a=document.createElement("a");
+a.download="og-tangerin10.png";
+a.href=document.getElementById("c").toDataURL("image/png");
+a.click();
+</script></body></html>

@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html><body>
+<canvas id="c" width="512" height="512"></canvas>
+<script>
+var c=document.getElementById("c").getContext("2d");
+c.font="460px serif";
+c.textAlign="center";
+c.textBaseline="middle";
+c.fillText("🍊",256,280);
+var a=document.createElement("a");
+a.download="tangerine-emoji.png";
+a.href=document.getElementById("c").toDataURL("image/png");
+a.click();
+</script></body></html>
