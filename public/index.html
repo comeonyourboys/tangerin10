@@ -448,7 +448,7 @@ var dragArea=document.getElementById('appEl');
 dragArea.addEventListener('mousedown',function(e){dn(e.clientX,e.clientY);});
 document.addEventListener('mousemove',function(e){if(DRAG)mv(e.clientX,e.clientY);});
 document.addEventListener('mouseup',function(){up();});
-dragArea.addEventListener('touchstart',function(e){if(!ON)return;e.preventDefault();dn(e.touches[0].clientX,e.touches[0].clientY);},{passive:false});
+dragArea.addEventListener('touchstart',function(e){if(!ON)return;if(e.target.closest('button,input,.ov,.start-overlay'))return;e.preventDefault();dn(e.touches[0].clientX,e.touches[0].clientY);},{passive:false});
 document.addEventListener('touchmove',function(e){if(!DRAG)return;e.preventDefault();mv(e.touches[0].clientX,e.touches[0].clientY);},{passive:false});
 document.addEventListener('touchend',function(){up();});
 
