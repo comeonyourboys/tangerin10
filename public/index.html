@@ -29,7 +29,8 @@ body{font-family:'Outfit',sans-serif;color:#1a1a1a;overflow-y:auto;overflow-x:hi
 body.playing{background:linear-gradient(180deg,#fff 0%,#fff8f0 100%);}
 body.tense{background:linear-gradient(180deg,#fff 0%,#fff0f0 100%);}
 
-.app{display:flex;flex-direction:column;align-items:center;min-height:100%;width:100%;padding:12px 16px 40px;}
+.page-wrap{display:flex;justify-content:center;min-height:100%;width:100%;}
+.app{display:flex;flex-direction:column;align-items:center;flex:1;min-height:100%;padding:12px 16px 40px;max-width:850px;}
 
 /* 상단 바 */
 .topbar{display:flex;align-items:center;justify-content:space-between;width:100%;max-width:850px;padding:8px 4px;margin-bottom:8px;}
@@ -200,6 +201,16 @@ body.tense{background:linear-gradient(180deg,#fff 0%,#fff0f0 100%);}
 .sh-fb{background:#1877F2;color:#fff;font-size:20px;}
 .sh-copy{background:#f0f0f0;color:#555;}
 
+/* 광고 */
+.ad-side{display:none;flex-shrink:0;width:160px;align-items:center;justify-content:center;}
+.ad-mobile{display:none;justify-content:center;padding:4px 0;}
+@media(min-width:601px){
+  .ad-side{display:flex;}
+}
+@media(max-width:600px){
+  .ad-mobile{display:flex;}
+}
+
 /* 시작 화면 */
 .start-overlay{position:fixed;inset:0;background:rgba(255,255,255,0.95);display:flex;align-items:center;justify-content:center;z-index:3000;}
 .start-overlay.hide{display:none;}
@@ -214,7 +225,20 @@ body.tense{background:linear-gradient(180deg,#fff 0%,#fff0f0 100%);}
 </head>
 <body>
 
+<div class="page-wrap">
+<!-- PC 좌측 광고 -->
+<div class="ad-side" id="adLeft">
+<script>atOptions={'key':'8292d9ce77d507a9e291e7ae83c9b2a3','format':'iframe','height':600,'width':160,'params':{}};</script>
+<script src="https://www.highrevenueformat.com/8292d9ce77d507a9e291e7ae83c9b2a3/invoke.js"></script>
+</div>
+
 <div class="app" id="appEl">
+  <!-- 모바일 상단 광고 -->
+  <div class="ad-mobile" id="adTop">
+  <script>atOptions={'key':'200e28eba0a56e8048b776f7632e2b56','format':'iframe','height':50,'width':320,'params':{}};</script>
+  <script src="https://www.highrevenueformat.com/200e28eba0a56e8048b776f7632e2b56/invoke.js"></script>
+  </div>
+
   <div class="topbar">
     <div class="logo"><span class="logo-m">Tangerine</span><span class="logo-10">10</span></div>
     <!-- 원형 타이머 -->
@@ -245,7 +269,20 @@ body.tense{background:linear-gradient(180deg,#fff 0%,#fff0f0 100%);}
       <div id="histList"><div class="rank-empty">No games yet</div></div>
     </div>
   </div>
+
+  <!-- 모바일 하단 광고 -->
+  <div class="ad-mobile" id="adBottom">
+  <script>atOptions={'key':'200e28eba0a56e8048b776f7632e2b56','format':'iframe','height':50,'width':320,'params':{}};</script>
+  <script src="https://www.highrevenueformat.com/200e28eba0a56e8048b776f7632e2b56/invoke.js"></script>
+  </div>
 </div>
+
+<!-- PC 우측 광고 -->
+<div class="ad-side" id="adRight">
+<script>atOptions={'key':'8292d9ce77d507a9e291e7ae83c9b2a3','format':'iframe','height':600,'width':160,'params':{}};</script>
+<script src="https://www.highrevenueformat.com/8292d9ce77d507a9e291e7ae83c9b2a3/invoke.js"></script>
+</div>
+</div><!-- /page-wrap -->
 
 <div id="box"></div>
 <div id="ls"></div>
