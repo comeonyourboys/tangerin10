@@ -202,7 +202,8 @@ body.tense{background:linear-gradient(180deg,#fff 0%,#fff0f0 100%);}
 .sh-copy{background:#f0f0f0;color:#555;}
 
 /* 광고 */
-.ad-side{display:none;flex-shrink:0;width:160px;align-items:center;justify-content:center;}
+.ad-side{display:none;flex-shrink:0;width:160px;align-items:center;justify-content:center;pointer-events:none;}
+.ad-side ins,.ad-side iframe{pointer-events:auto;}
 .ad-mobile{display:none;justify-content:center;padding:4px 0;}
 @media(min-width:601px){
   .ad-side{display:flex;}
