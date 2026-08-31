@@ -221,12 +221,8 @@ body.tense{background:linear-gradient(180deg,#fff 0%,#fff0f0 100%);}
 .ad-side{display:none;flex-shrink:0;width:160px;align-items:center;justify-content:center;position:fixed;top:50%;transform:translateY(-50%);z-index:10;}
 #adLeft{left:0;}
 #adRight{right:0;}
-.ad-mobile{display:none;justify-content:center;padding:4px 0;}
 @media(min-width:1200px){
   .ad-side{display:flex;}
-}
-@media(max-width:600px){
-  .ad-mobile{display:flex;}
 }
 
 /* 시작 화면 */
@@ -247,24 +243,11 @@ body.tense{background:linear-gradient(180deg,#fff 0%,#fff0f0 100%);}
 
 <!-- PC 좌측 광고 -->
 <div class="ad-side" id="adLeft">
-<ins class="kakao_ad_area" style="display:none;"
-data-ad-unit="DAN-xRz8uKiS9ed0NFsD"
-data-ad-width="160"
-data-ad-height="600"></ins>
-<div style="margin-top:8px;">
 <script src="https://ads-partners.coupang.com/g.js"></script>
 <script>new PartnersCoupang.G({"id":1024318,"template":"carousel","trackingCode":"AF7330023","width":"160","height":"600","tsource":""});</script>
 </div>
-</div>
 
 <div class="app" id="appEl">
-  <!-- 모바일 상단 광고 -->
-  <div class="ad-mobile" id="adTop">
-  <ins class="kakao_ad_area" style="display:none;"
-  data-ad-unit="DAN-vwzzWFnt83j2lDmM"
-  data-ad-width="320"
-  data-ad-height="50"></ins>
-  </div>
 
   <div class="topbar">
     <div class="logo"><span class="logo-m">Tangerine</span><span class="logo-10">10</span></div>
@@ -297,13 +280,6 @@ data-ad-height="600"></ins>
     </div>
   </div>
 
-  <!-- 모바일 하단 광고 -->
-  <div class="ad-mobile" id="adBottom">
-  <ins class="kakao_ad_area" style="display:none;"
-  data-ad-unit="DAN-vwzzWFnt83j2lDmM"
-  data-ad-width="320"
-  data-ad-height="50"></ins>
-  </div>
 
   <!-- 하단 쿠팡 가로 배너 -->
   <div style="display:flex;justify-content:center;padding:12px 0;width:100%;max-width:850px;">
@@ -314,18 +290,11 @@ data-ad-height="600"></ins>
 
 <!-- PC 우측 광고 -->
 <div class="ad-side" id="adRight">
-<ins class="kakao_ad_area" style="display:none;"
-data-ad-unit="DAN-u7ebMhFWv4UdKAMT"
-data-ad-width="160"
-data-ad-height="600"></ins>
-<div style="margin-top:8px;">
 <script src="https://ads-partners.coupang.com/g.js"></script>
 <script>new PartnersCoupang.G({"id":1024318,"template":"carousel","trackingCode":"AF7330023","width":"160","height":"600","tsource":""});</script>
 </div>
-</div>
 </div><!-- /page-wrap -->
 
-<script type="text/javascript" src="//t1.kakaocdn.net/kas/static/ba.min.js" async></script>
 
 <div id="box"></div>
 <div id="ls"></div>
