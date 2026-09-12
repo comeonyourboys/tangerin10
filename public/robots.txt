@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://tangerin10.web.app/sitemap.xml
