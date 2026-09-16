@@ -45,8 +45,8 @@ body{font-family:'Outfit',sans-serif;color:#1a1a1a;overflow-y:auto;overflow-x:hi
 body.playing{background:linear-gradient(180deg,#fff 0%,#fff8f0 100%);}
 body.tense{background:linear-gradient(180deg,#fff 0%,#fff0f0 100%);}
 
-.page-wrap{display:flex;justify-content:center;min-height:100%;width:100%;}
-.app{display:flex;flex-direction:column;align-items:center;flex:1;min-height:100%;padding:12px 16px 40px;max-width:850px;}
+.page-wrap{display:flex;justify-content:center;min-height:100%;width:100%;max-width:100%;overflow-x:clip;}
+.app{display:flex;flex-direction:column;align-items:center;flex:1;min-width:0;max-width:850px;min-height:100%;padding:12px 16px 40px;}
 
 /* 상단 바 */
 .topbar{display:flex;align-items:center;justify-content:space-between;width:100%;max-width:850px;padding:8px 4px;margin-bottom:8px;}
@@ -91,7 +91,7 @@ body.tense{background:linear-gradient(180deg,#fff 0%,#fff0f0 100%);}
 
 /* 귤 타일 */
 .t{
-  aspect-ratio:1;display:flex;align-items:center;justify-content:center;
+  aspect-ratio:1;min-width:0;min-height:0;display:flex;align-items:center;justify-content:center;
   border-radius:50%;cursor:pointer;
   transition:transform 0.12s;position:relative;
 }
@@ -142,10 +142,10 @@ body.tense{background:linear-gradient(180deg,#fff 0%,#fff0f0 100%);}
 
 /* 하단 패널 */
 .bottom-panels{
-  display:flex;gap:16px;width:100%;max-width:850px;
+  display:flex;gap:16px;width:100%;max-width:850px;min-width:0;
 }
 .panel{
-  flex:1;background:#fafafa;border-radius:14px;padding:16px;
+  flex:1;min-width:0;background:#fafafa;border-radius:14px;padding:16px;
   border:1px solid #f0f0f0;min-height:120px;max-height:280px;overflow-y:auto;
 }
 .panel-title{
@@ -235,6 +235,33 @@ body.tense{background:linear-gradient(180deg,#fff 0%,#fff0f0 100%);}
 .start-card .st-sub{font-size:14px;color:#aaa;margin:8px 0 24px;}
 .start-card .st-btn{padding:16px 48px;background:#FF6B00;color:#fff;border:none;border-radius:14px;font-size:18px;font-weight:800;cursor:pointer;font-family:inherit;transition:all .2s;}
 .start-card .st-btn:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(255,107,0,0.3);}
+
+/* ===== 하단 소개 콘텐츠 ===== */
+.site-content{max-width:780px;margin:0 auto;padding:8px 20px 10px;text-align:left;}
+.site-content h2{font-size:21px;font-weight:800;margin:30px 0 10px;letter-spacing:-.3px;color:#1a1a1a;}
+.site-content h3{font-size:16px;font-weight:700;margin:20px 0 6px;color:#1a1a1a;}
+.site-content p{font-size:15.5px;line-height:1.75;color:#444;margin-bottom:13px;}
+.site-content ul{margin:0 0 14px 20px;}
+.site-content li{font-size:15px;line-height:1.7;color:#444;margin-bottom:7px;}
+.site-content a{color:#f97316;}
+.sc-table{width:100%;border-collapse:collapse;margin:14px 0;font-size:14.5px;border:1px solid #f0f0f0;border-radius:12px;overflow:hidden;}
+.sc-table th,.sc-table td{padding:10px 13px;text-align:left;border-bottom:1px solid #f6f6f6;}
+.sc-table th{background:#fafafa;font-weight:700;color:#777;font-size:13px;}
+.sc-table tr:last-child th,.sc-table tr:last-child td{border-bottom:none;}
+.sc-table td b{color:#ea580c;}
+.sc-note{background:#fff8f2;border:1px solid #ffe4cc;border-radius:14px;padding:16px 18px;margin:16px 0;}
+.sc-note p{margin-bottom:0;}
+.sc-note strong{color:#ea580c;}
+.sc-links{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 6px;}
+.sc-links a{background:#fff4ea;color:#ea580c;font-weight:700;font-size:14px;padding:10px 16px;border-radius:999px;text-decoration:none;}
+.sc-links a:hover{background:#ffe4cc;}
+.site-ftr{border-top:1px solid #f0f0f0;margin-top:28px;padding:22px 20px 44px;text-align:center;}
+.site-ftr .fnav{display:flex;flex-wrap:wrap;justify-content:center;gap:2px 0;}
+.site-ftr .fnav a{font-size:12.5px;color:#888;text-decoration:none;padding:4px 9px;}
+.site-ftr .fnote{font-size:11.5px;color:#bbb;margin-top:10px;line-height:1.8;}
+.ad-bottom{display:flex;justify-content:center;padding:12px 0;width:100%;max-width:850px;min-width:0;overflow-x:hidden;}
+.ad-bottom ins,.ad-bottom iframe{max-width:100%!important;}
+.ad-side ins,.ad-side iframe{max-width:160px;}
 </style>
 </head>
 <body>
@@ -282,9 +309,9 @@ body.tense{background:linear-gradient(180deg,#fff 0%,#fff0f0 100%);}
 
 
   <!-- 하단 쿠팡 가로 배너 -->
-  <div style="display:flex;justify-content:center;padding:12px 0;width:100%;max-width:850px;">
+  <div class="ad-bottom">
   <script src="https://ads-partners.coupang.com/g.js"></script>
-  <script>new PartnersCoupang.G({"id":1024317,"template":"carousel","trackingCode":"AF7330023","width":"728","height":"90","tsource":""});</script>
+  <script>new PartnersCoupang.G({"id":1024317,"template":"carousel","trackingCode":"AF7330023","width":"100%","height":"140","tsource":""});</script>
   </div>
 </div>
 
@@ -294,6 +321,55 @@ body.tense{background:linear-gradient(180deg,#fff 0%,#fff0f0 100%);}
 <script>new PartnersCoupang.G({"id":1024318,"template":"carousel","trackingCode":"AF7330023","width":"160","height":"600","tsource":""});</script>
 </div>
 </div><!-- /page-wrap -->
+
+<section class="site-content">
+  <h2>About Tangerine 10</h2>
+  <p>Tangerine 10 is a free browser puzzle built on one rule: drag a box around tangerines whose numbers add up to <b>exactly ten</b>, and they pop. You get 120 seconds. No sign-up, no download, no app store.</p>
+  <p>Every game deals a fresh grid of tangerines numbered 1 to 9 — 170 of them on desktop, 168 on a phone — so you never replay the same board. Your run is saved to your own browser, and your best score goes to the global leaderboard above.</p>
+
+  <h2>The rules in thirty seconds</h2>
+  <ul>
+    <li>Press and drag to draw a rectangle. Tangerines whose center falls inside get selected.</li>
+    <li>Release when the selected numbers total exactly ten. Nine or eleven does nothing.</li>
+    <li>Cleared tangerines leave holes, and holes are ignored by later selections. The board gets easier as it empties.</li>
+    <li>The clock stops at 120 seconds and your score is final.</li>
+  </ul>
+
+  <h2>How scoring actually works</h2>
+  <p>This trips up most new players. Your score is <b>not</b> the sum of the numbers you cleared. It is how many tangerines you removed, multiplied by your combo bonus.</p>
+  <table class="sc-table">
+    <thead><tr><th>Combo streak</th><th>Multiplier</th><th>Clearing 4 tangerines earns</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>&times;1</td><td>4 points</td></tr>
+      <tr><td>2 &ndash; 4</td><td><b>&times;1.5</b></td><td>6 points</td></tr>
+      <tr><td>5 &ndash; 9</td><td><b>&times;2</b></td><td>8 points</td></tr>
+      <tr><td>10 &ndash; 19</td><td><b>&times;3</b></td><td>12 points</td></tr>
+      <tr><td>20+</td><td><b>&times;5</b></td><td>20 points</td></tr>
+    </tbody>
+  </table>
+  <div class="sc-note">
+    <p><strong>The combo resets two seconds after your last clear.</strong> That single detail decides most games. Taking a small match immediately beats hunting for a bigger one and losing the streak.</p>
+  </div>
+
+  <h3>Three tips that work straight away</h3>
+  <ul>
+    <li><b>Memorize the five pairs.</b> 1+9, 2+8, 3+7, 4+6, 5+5. Pairs need the smallest box and are the fastest way to keep a streak alive.</li>
+    <li><b>Sweep in horizontal bands.</b> Work two or three rows at a time instead of scanning the whole grid. The rectangles you need are short and wide.</li>
+    <li><b>Abandon stranded nines.</b> A 9 only ever pairs with a 1. If no 1 is reachable, leave it and spend the seconds elsewhere.</li>
+  </ul>
+
+  <div class="sc-links">
+    <a href="/how-to-play">Full rules &rarr;</a>
+    <a href="/strategy">Strategy guide &rarr;</a>
+    <a href="/faq">FAQ &rarr;</a>
+  </div>
+</section>
+
+<footer class="site-ftr">
+  <div class="fnav"><a href="/">Play</a><a href="/how-to-play">How to Play</a><a href="/strategy">Strategy</a><a href="/faq">FAQ</a><a href="/privacy.html">Privacy Policy</a></div>
+  <p class="fnote">Tangerine 10 is a free browser puzzle game. No sign-up, no download.<br>This page participates in the Coupang Partners program and may earn a commission.</p>
+</footer>
+
 
 
 <div id="box"></div>
@@ -331,7 +407,7 @@ body.tense{background:linear-gradient(180deg,#fff 0%,#fff0f0 100%);}
 <script>
 var MOBILE=window.innerWidth<=600;
 var R=MOBILE?12:10,C=MOBILE?14:17,T=[],S=0,TL=120,TI=null,ON=false;
-document.getElementById('bd').style.gridTemplateColumns='repeat('+C+',1fr)';
+document.getElementById('bd').style.gridTemplateColumns='repeat('+C+',minmax(0,1fr))';
 var DRAG=false,SX=0,SY=0,SEL=[];
 var COMBO=0,COMBO_TIMER=null;
 var SESSION_HIST=[];
