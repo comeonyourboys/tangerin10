@@ -101,7 +101,7 @@ ${body}
 <div class="wrap ad-wrap"><div><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":${SITE.coupang.id},"template":"carousel","trackingCode":"${SITE.coupang.tracking}","width":"100%","height":"140","tsource":""});</script></div>
 <p class="disclose">This page participates in the Coupang Partners program and may earn a commission.</p></div>
 <footer><div class="wrap">
-  <div class="ftr-nav">${NAV.map(([h, t]) => `<a href="${h}">${t}</a>`).join('')}<a href="/privacy.html">Privacy Policy</a></div>
+  <div class="ftr-nav">${NAV.map(([h, t]) => `<a href="${h}">${t}</a>`).join('')}<a href="/privacy">Privacy Policy</a></div>
   <p class="ftr-note">Tangerine 10 is a free browser puzzle game. No sign-up, no download. © ${new Date().getFullYear()} Tangerine 10</p>
 </div></footer>
 </body>
