@@ -75,10 +75,15 @@ function layout({ title, desc, path, body, ld = [] }) {
 <meta property="og:title" content="${esc(title)}">
 <meta property="og:description" content="${esc(desc)}">
 <meta property="og:url" content="${SITE.url}${path}">
-<meta property="og:image" content="${SITE.url}/og-tangerin10.png?v=6">
+<meta property="og:image" content="${SITE.url}/og-tangerin10.png?v=7">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Tangerine 10 number puzzle">
+<meta property="og:locale" content="en_US">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="${esc(title)}">
-<meta name="twitter:image" content="${SITE.url}/og-tangerin10.png?v=6">
+<meta name="twitter:description" content="${esc(desc)}">
+<meta name="twitter:image" content="${SITE.url}/og-tangerin10.png?v=7">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍊</text></svg>">
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>${CSS}</style>
