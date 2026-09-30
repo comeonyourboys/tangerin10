@@ -57,7 +57,7 @@ footer{border-top:1px solid #f0f0f0;margin-top:36px;padding:24px 0 46px;}
 @media(max-width:600px){.nav a{font-size:12px;padding:5px 7px;}p,li{font-size:15px;}}
 `;
 
-const NAV = [['/', 'Play'], ['/how-to-play', 'How to Play'], ['/strategy', 'Strategy'], ['/faq', 'FAQ']];
+const NAV = [['/', 'Play'], ['/how-to-play', 'How to Play'], ['/strategy', 'Strategy'], ['/faq', 'FAQ'], ['/about', 'About'], ['/contact', 'Contact']];
 
 function layout({ title, desc, path, body, ld = [] }) {
   return `<!DOCTYPE html>
@@ -247,12 +247,61 @@ mkdirSync(OUT, { recursive: true });
 const pages = [
   ['how-to-play.html', layout({ title: 'How to Play Tangerine 10 — Rules, Scoring and Combos', desc: 'Complete rules for Tangerine 10: the 120-second timer, the exactly-ten selection rule, how score is calculated from tiles cleared, and how the combo multiplier works.', path: '/how-to-play', body: howBody, ld: [{ '@context': 'https://schema.org', '@type': 'HowTo', name: 'How to play Tangerine 10', description: 'Drag a rectangle over tangerines whose numbers add up to exactly ten to clear them before the 120-second timer ends.', step: [{ '@type': 'HowToStep', name: 'Start the game', text: 'Press Start. A grid of tangerines numbered 1 to 9 appears and a 120-second timer begins.' }, { '@type': 'HowToStep', name: 'Drag a selection box', text: 'Press and drag to draw a rectangle. Every tangerine whose center falls inside is selected.' }, { '@type': 'HowToStep', name: 'Make exactly ten', text: 'Release when the selected numbers total exactly ten. The tangerines pop and you score.' }, { '@type': 'HowToStep', name: 'Keep the combo alive', text: 'Clear again within two seconds to build the combo multiplier, which reaches five times at combo twenty.' }] }] })],
   ['strategy.html', layout({ title: 'Tangerine 10 Strategy — How to Score Higher', desc: 'Why fast pairs beat big rectangles in Tangerine 10, the five number pairs to memorize, how to scan the board, and how to protect a combo streak.', path: '/strategy', body: stratBody, ld: [{ '@context': 'https://schema.org', '@type': 'Article', headline: 'Tangerine 10 Strategy Guide', description: 'Scoring math and practical tactics for the Tangerine 10 number puzzle.', inLanguage: 'en', mainEntityOfPage: SITE.url + '/strategy', author: { '@type': 'Organization', name: SITE.name, url: SITE.url }, publisher: { '@type': 'Organization', name: SITE.name, url: SITE.url } }] })],
+  ['about.html', layout({ title: 'About Tangerine 10 — Who Makes This Game', desc: 'Who builds Tangerine 10, why a 120-second make-ten puzzle, how scores are stored, what the game costs, and how to get in touch.', path: '/about', body: `
+<h1>About Tangerine 10</h1>
+<p class="updated">Last updated: September 30, 2026</p>
+
+<h2>What this is</h2>
+<p>Tangerine 10 is a free browser puzzle. A grid fills with numbered tangerines, and you drag a rectangle around any group whose numbers add up to exactly ten. Clear as many as you can before the 120-second timer runs out. There is no sign-up, no download, and no app store.</p>
+<p>The rule is old — the same make-ten mechanic has appeared in arcade and mobile games for years. What this version adds is a short, honest format: two minutes, one board, a score you can compare. No lives to wait for, no currency to buy, no tutorial to sit through.</p>
+
+<h2>Who makes it</h2>
+<p>Tangerine 10 is built and run by one person, a software engineer based in Seoul who builds small web projects outside of work. It is not a studio, a startup, or a company. There is no team behind the game and no investor to answer to.</p>
+<p>That matters for what you can expect. Bugs get fixed when there is time. Features arrive slowly, if at all. Nothing gets shut down abruptly to chase a business model.</p>
+
+<h2>Why it was made this way</h2>
+<p><b>Two minutes, not twenty.</b> The timer is short on purpose. A puzzle you can finish during a coffee break gets played; one that demands a session gets closed.</p>
+<p><b>No account.</b> Asking for an email before someone has played a single round is a bad trade. Scores are saved without one.</p>
+<p><b>It works on a phone.</b> The board is sized to be tapped with a thumb. Most people who open the game are on a phone, so that is the case it is built for first.</p>
+
+<h2>How scores work</h2>
+<p>Your score comes from the number of tiles you clear, multiplied by a combo bonus that grows while you keep clearing without pausing. Speed beats size — several quick pairs usually outscore one large rectangle.</p>
+<p>High scores are stored in Firebase Realtime Database with whatever ranking name you type. Your own recent sessions are kept in your browser's local storage and never leave your device. No email address, phone number, or account identity is collected at any point. The <a href="/privacy">privacy policy</a> covers this in full.</p>
+
+<h2>What it costs</h2>
+<p>The game is free and always will be. There is nothing to buy inside it — no hints, no extra time, no cosmetic items. Hosting is paid for out of pocket, and advertising is meant to offset that. Ads are placed at the edges of the page, never inside the board or between rounds, because an ad that interrupts a 120-second game ruins the game.</p>
+
+<h2>Getting in touch</h2>
+<p>Found a bug, hit a score that looks wrong, or want to suggest something? Corrections are welcome — if a rule on <a href="/how-to-play">How to Play</a> or an answer in the <a href="/faq">FAQ</a> is wrong or unclear, saying so is genuinely useful.</p>
+<p>See the <a href="/contact">contact page</a> for how to reach the person who runs this.</p>
+` })],
+  ['contact.html', layout({ title: 'Contact — Tangerine 10', desc: 'How to reach the person who builds Tangerine 10: bug reports, scoring questions, rule corrections and suggestions.', path: '/contact', body: `
+<h1>Contact</h1>
+<p class="updated">Last updated: September 30, 2026</p>
+
+<h2>Email</h2>
+<p><a href="mailto:comeonyourboyz@gmail.com">comeonyourboyz@gmail.com</a></p>
+<p>Tangerine 10 is built and run by one person, so replies can take a few days. Every message is read.</p>
+
+<h2>What is most useful to send</h2>
+<p><b>Bug reports.</b> If the board stops responding, a selection that adds to ten does not clear, or the timer behaves oddly, please include your device and browser. "iPhone 15, Safari" is enough to narrow it down.</p>
+<p><b>Scoring questions.</b> If a score looks wrong, tell us roughly what the board looked like and what you expected. Combo multipliers are the usual source of confusion.</p>
+<p><b>Corrections.</b> If something on <a href="/how-to-play">How to Play</a>, <a href="/strategy">Strategy</a> or the <a href="/faq">FAQ</a> is wrong or unclear, saying so is genuinely helpful — those pages describe the rules, so an error there misleads everyone.</p>
+<p><b>Leaderboard issues.</b> If a name on the board is offensive or a score is obviously fabricated, let us know and it will be removed.</p>
+
+<h2>What we cannot do</h2>
+<p>Scores cannot be restored. They are tied to the browser you played in, so clearing site data or switching devices loses your local history.</p>
+<p>Advertising and partnership offers are read but usually go unanswered.</p>
+
+<h2>About the game</h2>
+<p>Who makes this and why it works the way it does is covered on the <a href="/about">about page</a>. What data the game stores is in the <a href="/privacy">privacy policy</a>.</p>
+` })],
   ['faq.html', layout({ title: 'Tangerine 10 FAQ — Rules, Scoring and Common Questions', desc: 'Answers to common Tangerine 10 questions: game length, why a selection did not clear, how scoring and combos work, and where scores are saved.', path: '/faq', body: faqBody, ld: [{ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faqs.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) }] })],
 ];
 for (const [name, html] of pages) writeFileSync(join(OUT, name), html);
 
 const today = new Date().toISOString().slice(0, 10);
-const urls = [['/', '1.0', 'weekly'], ['/how-to-play', '0.8', 'monthly'], ['/strategy', '0.8', 'monthly'], ['/faq', '0.7', 'monthly'], ['/privacy.html', '0.2', 'yearly']];
+const urls = [['/', '1.0', 'weekly'], ['/how-to-play', '0.8', 'monthly'], ['/strategy', '0.8', 'monthly'], ['/faq', '0.7', 'monthly'], ['/about', '0.6', 'yearly'], ['/contact', '0.5', 'yearly'], ['/privacy', '0.2', 'yearly']];
 writeFileSync(join(OUT, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.map(([l, p, f]) => `  <url><loc>${SITE.url}${l}</loc><lastmod>${today}</lastmod><changefreq>${f}</changefreq><priority>${p}</priority></url>`).join('\n')}\n</urlset>\n`);
 
 const strip = (h) => h.replace(/<script[\s\S]*?<\/script>/g, '').replace(/<style[\s\S]*?<\/style>/g, '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
