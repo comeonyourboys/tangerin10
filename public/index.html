@@ -47,7 +47,6 @@
   "author":{"@type":"Organization","name":"Tangerine 10","url":"https://tangerin10.web.app"}
 }
 </script>
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5479403345572412" crossorigin="anonymous"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
 <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js"></script>
@@ -232,12 +231,6 @@ body.tense{background:linear-gradient(180deg,#fff 0%,#fff0f0 100%);}
 .sh-copy{background:#f0f0f0;color:#555;}
 
 /* 광고 */
-.ad-side{display:none;flex-shrink:0;width:160px;align-items:center;justify-content:center;position:fixed;top:50%;transform:translateY(-50%);z-index:10;}
-#adLeft{left:0;}
-#adRight{right:0;}
-@media(min-width:1200px){
-  .ad-side{display:flex;}
-}
 
 /* 시작 화면 */
 .start-overlay{position:fixed;inset:0;background:rgba(255,255,255,0.95);display:flex;align-items:center;justify-content:center;z-index:3000;}
@@ -275,18 +268,12 @@ body.tense{background:linear-gradient(180deg,#fff 0%,#fff0f0 100%);}
 .site-ftr .fnote{font-size:11.5px;color:#bbb;margin-top:10px;line-height:1.8;}
 .ad-bottom{display:flex;justify-content:center;padding:12px 0;width:100%;max-width:850px;min-width:0;overflow-x:hidden;}
 .ad-bottom ins,.ad-bottom iframe{max-width:100%!important;}
-.ad-side ins,.ad-side iframe{max-width:160px;}
 </style>
 </head>
 <body>
 
 <div class="page-wrap">
 
-<!-- PC 좌측 광고 -->
-<div class="ad-side" id="adLeft">
-<script src="https://ads-partners.coupang.com/g.js"></script>
-<script>new PartnersCoupang.G({"id":1024318,"template":"carousel","trackingCode":"AF7330023","width":"160","height":"600","tsource":""});</script>
-</div>
 
 <div class="app" id="appEl">
 
@@ -322,18 +309,11 @@ body.tense{background:linear-gradient(180deg,#fff 0%,#fff0f0 100%);}
   </div>
 
 
-  <!-- 하단 쿠팡 가로 배너 -->
-  <div class="ad-bottom">
-  <script src="https://ads-partners.coupang.com/g.js"></script>
-  <script>new PartnersCoupang.G({"id":1024317,"template":"carousel","trackingCode":"AF7330023","width":"100%","height":"140","tsource":""});</script>
-  </div>
+  <!-- ADFIT: 카카오 애드핏 300x250 하단 광고 자리. 단위 ID(DAN-…)를 받으면 아래 형식으로 넣는다.
+  <div class="ad-bottom"><ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-..." data-ad-width="300" data-ad-height="250"></ins><script async src="https://t1.kakaocdn.net/kas/static/ba.min.js"></script></div>
+  -->
 </div>
 
-<!-- PC 우측 광고 -->
-<div class="ad-side" id="adRight">
-<script src="https://ads-partners.coupang.com/g.js"></script>
-<script>new PartnersCoupang.G({"id":1024318,"template":"carousel","trackingCode":"AF7330023","width":"160","height":"600","tsource":""});</script>
-</div>
 </div><!-- /page-wrap -->
 
 <section class="site-content">
