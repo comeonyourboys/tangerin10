@@ -50,7 +50,6 @@
   "author":{"@type":"Organization","name":"Tangerine 10","url":"https://tangerin10.web.app"}
 }
 </script>
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5479403345572412" crossorigin="anonymous"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
 <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js"></script>
@@ -235,12 +234,9 @@ body.tense{background:linear-gradient(180deg,#fff 0%,#fff0f0 100%);}
 .sh-copy{background:#f0f0f0;color:#555;}
 
 /* 광고 */
-.ad-side{display:none;flex-shrink:0;width:160px;align-items:center;justify-content:center;position:fixed;top:50%;transform:translateY(-50%);z-index:10;}
-#adLeft{left:0;}
-#adRight{right:0;}
-@media(min-width:1200px){
-  .ad-side{display:flex;}
-}
+.adfit-side{position:fixed;top:50%;transform:translateY(-50%);width:160px;z-index:10;}
+.adfit-left{left:16px;}
+.adfit-right{right:16px;}
 
 /* 시작 화면 */
 .start-overlay{position:fixed;inset:0;background:rgba(255,255,255,0.95);display:flex;align-items:center;justify-content:center;z-index:3000;}
@@ -278,18 +274,12 @@ body.tense{background:linear-gradient(180deg,#fff 0%,#fff0f0 100%);}
 .site-ftr .fnote{font-size:11.5px;color:#bbb;margin-top:10px;line-height:1.8;}
 .ad-bottom{display:flex;justify-content:center;padding:12px 0;width:100%;max-width:850px;min-width:0;overflow-x:hidden;}
 .ad-bottom ins,.ad-bottom iframe{max-width:100%!important;}
-.ad-side ins,.ad-side iframe{max-width:160px;}
 </style>
 </head>
 <body>
 
 <div class="page-wrap">
 
-<!-- PC 좌측 광고 -->
-<div class="ad-side" id="adLeft">
-<script src="https://ads-partners.coupang.com/g.js"></script>
-<script>new PartnersCoupang.G({"id":1024318,"template":"carousel","trackingCode":"AF7330023","width":"160","height":"600","tsource":""});</script>
-</div>
 
 <div class="app" id="appEl">
 
@@ -325,18 +315,13 @@ body.tense{background:linear-gradient(180deg,#fff 0%,#fff0f0 100%);}
   </div>
 
 
-  <!-- 하단 쿠팡 가로 배너 -->
-  <div class="ad-bottom">
-  <script src="https://ads-partners.coupang.com/g.js"></script>
-  <script>new PartnersCoupang.G({"id":1024317,"template":"carousel","trackingCode":"AF7330023","width":"100%","height":"140","tsource":""});</script>
-  </div>
+  <!-- 카카오 애드핏: 하단 320x50 은 모든 화면, 양옆 160x600 은 게임 영역(최대 850px) 밖에 자리가 남는
+       1240px 이상 화면에서만 스크립트로 만들어 붙인다(좁은 화면에 숨긴 광고를 두지 않기 위해). -->
+  <div class="ad-bottom"><ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-vwzzWFnt83j2lDmM" data-ad-width="320" data-ad-height="50"></ins></div>
+  <script>(function(){if(window.innerWidth<1240)return;[["DAN-xRz8uKiS9ed0NFsD","adfit-left"],["DAN-u7ebMhFWv4UdKAMT","adfit-right"]].forEach(function(u){var d=document.createElement('div');d.className='adfit-side '+u[1];d.innerHTML='<ins class="kakao_ad_area" style="display:none;" data-ad-unit="'+u[0]+'" data-ad-width="160" data-ad-height="600"></ins>';document.body.appendChild(d);});})();</script>
+  <script async src="https://t1.kakaocdn.net/kas/static/ba.min.js"></script>
 </div>
 
-<!-- PC 우측 광고 -->
-<div class="ad-side" id="adRight">
-<script src="https://ads-partners.coupang.com/g.js"></script>
-<script>new PartnersCoupang.G({"id":1024318,"template":"carousel","trackingCode":"AF7330023","width":"160","height":"600","tsource":""});</script>
-</div>
 </div><!-- /page-wrap -->
 
 <section class="site-content">
@@ -590,10 +575,10 @@ function animateScore(from,to){
 }
 
 // === 드래그 (appEl에서 시작, document에서 이동/종료) ===
-document.addEventListener('mousedown',function(e){if(e.target.closest('.ad-side,.ad-mobile,button,input,.ov,.start-overlay'))return;dn(e.clientX,e.clientY);});
+document.addEventListener('mousedown',function(e){if(e.target.closest('.adfit-side,.ad-bottom,button,input,.ov,.start-overlay'))return;dn(e.clientX,e.clientY);});
 document.addEventListener('mousemove',function(e){if(DRAG)mv(e.clientX,e.clientY);});
 document.addEventListener('mouseup',function(){up();});
-document.addEventListener('touchstart',function(e){if(!ON)return;if(e.target.closest('.ad-side,.ad-mobile,button,input,.ov,.start-overlay'))return;e.preventDefault();dn(e.touches[0].clientX,e.touches[0].clientY);},{passive:false});
+document.addEventListener('touchstart',function(e){if(!ON)return;if(e.target.closest('.adfit-side,.ad-bottom,button,input,.ov,.start-overlay'))return;e.preventDefault();dn(e.touches[0].clientX,e.touches[0].clientY);},{passive:false});
 document.addEventListener('touchmove',function(e){if(!DRAG)return;e.preventDefault();mv(e.touches[0].clientX,e.touches[0].clientY);},{passive:false});
 document.addEventListener('touchend',function(){up();});
 

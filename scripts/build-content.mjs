@@ -10,7 +10,9 @@ import { fileURLToPath } from 'node:url';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const OUT = join(root, 'public');
-const SITE = { url: 'https://tangerin10.web.app', name: 'Tangerine 10', adsense: 'ca-pub-5479403345572412', gsv: ['8nUCFYxTph7TOTN0ZC0zWvamYgyQMd026qCLSBL9YgE', 'WjzFs7iu4kDSzcJKM5QyAqGDAqx9J1P0uj-Ry4z1_NU'], coupang: { tracking: 'AF7330023', id: 1017186 } };
+const SITE = { url: 'https://tangerin10.web.app', name: 'Tangerine 10', gsv: ['8nUCFYxTph7TOTN0ZC0zWvamYgyQMd026qCLSBL9YgE', 'WjzFs7iu4kDSzcJKM5QyAqGDAqx9J1P0uj-Ry4z1_NU'], adfit: 'DAN-vwzzWFnt83j2lDmM' }; // adfit: 카카오 애드핏 하단 320x50
+// 카카오 애드핏 320x50 한 칸을 본문 맨 아래에 둔다. 단위 ID 가 비어 있으면 아무것도 출력하지 않는다.
+const adfit = (unit) => unit ? `<div class="wrap ad-wrap" style="display:flex;justify-content:center"><ins class="kakao_ad_area" style="display:none;" data-ad-unit="${unit}" data-ad-width="320" data-ad-height="50"></ins><script async src="https://t1.kakaocdn.net/kas/static/ba.min.js"></script></div>` : '';
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const jsonld = (o) => `<script type="application/ld+json">${JSON.stringify(o).replace(/</g, '\\u003c')}</script>`;
 
@@ -90,7 +92,6 @@ ${SITE.gsv.map((t) => `<meta name="google-site-verification" content="${t}">`).j
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>${CSS}</style>
 ${ld.map(jsonld).join('\n')}
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${SITE.adsense}" crossorigin="anonymous"></script>
 </head>
 <body>
 <header class="topbar"><div class="wrap">
@@ -100,8 +101,7 @@ ${ld.map(jsonld).join('\n')}
 <main class="wrap">
 ${body}
 </main>
-<div class="wrap ad-wrap"><div><script src="https://ads-partners.coupang.com/g.js"></script><script>new PartnersCoupang.G({"id":${SITE.coupang.id},"template":"carousel","trackingCode":"${SITE.coupang.tracking}","width":"100%","height":"140","tsource":""});</script></div>
-<p class="disclose">This page participates in the Coupang Partners program and may earn a commission.</p></div>
+${adfit(SITE.adfit)}
 <footer><div class="wrap">
   <div class="ftr-nav">${NAV.map(([h, t]) => `<a href="${h}">${t}</a>`).join('')}<a href="/privacy">Privacy Policy</a></div>
   <p class="ftr-note">Tangerine 10 is a free browser puzzle game. No sign-up, no download. © ${new Date().getFullYear()} Tangerine 10</p>
