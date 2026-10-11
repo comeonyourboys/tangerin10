@@ -10,7 +10,7 @@ import { fileURLToPath } from 'node:url';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const OUT = join(root, 'public');
-const SITE = { url: 'https://tangerin10.web.app', name: 'Tangerine 10', adsense: 'ca-pub-5479403345572412', gsv: '8nUCFYxTph7TOTN0ZC0zWvamYgyQMd026qCLSBL9YgE', coupang: { tracking: 'AF7330023', id: 1017186 } };
+const SITE = { url: 'https://tangerin10.web.app', name: 'Tangerine 10', adsense: 'ca-pub-5479403345572412', gsv: ['8nUCFYxTph7TOTN0ZC0zWvamYgyQMd026qCLSBL9YgE', 'WjzFs7iu4kDSzcJKM5QyAqGDAqx9J1P0uj-Ry4z1_NU'], coupang: { tracking: 'AF7330023', id: 1017186 } };
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const jsonld = (o) => `<script type="application/ld+json">${JSON.stringify(o).replace(/</g, '\\u003c')}</script>`;
 
@@ -65,11 +65,12 @@ function layout({ title, desc, path, body, ld = [] }) {
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#f97316">
 <title>${esc(title)}</title>
 <meta name="description" content="${esc(desc)}">
 <link rel="canonical" href="${SITE.url}${path}">
 <meta name="robots" content="index, follow">
-<meta name="google-site-verification" content="${SITE.gsv}">
+${SITE.gsv.map((t) => `<meta name="google-site-verification" content="${t}">`).join('\n')}
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="${SITE.name}">
 <meta property="og:title" content="${esc(title)}">
@@ -85,6 +86,7 @@ function layout({ title, desc, path, body, ld = [] }) {
 <meta name="twitter:description" content="${esc(desc)}">
 <meta name="twitter:image" content="${SITE.url}/og-tangerin10.png?v=7">
 <link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/png" href="/favicon.png" sizes="512x512"><link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>${CSS}</style>
 ${ld.map(jsonld).join('\n')}
