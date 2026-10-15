@@ -87,6 +87,7 @@ function layout({ title, desc, path, body, ld = [], lang = 'en', alt = '', noind
 ${hreflang}
 <meta name="robots" content="${noindex ? 'noindex, follow' : 'index, follow'}">
 ${SITE.gsv.map((g) => `<meta name="google-site-verification" content="${g}">`).join('\n')}
+<meta name="google-adsense-account" content="ca-pub-5479403345572412">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="${SITE.name}">
 <meta property="og:title" content="${esc(title)}">
