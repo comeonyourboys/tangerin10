@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#f97316">
+<meta name="google-site-verification" content="8nUCFYxTph7TOTN0ZC0zWvamYgyQMd026qCLSBL9YgE" />
+<meta name="google-site-verification" content="WjzFs7iu4kDSzcJKM5QyAqGDAqx9J1P0uj-Ry4z1_NU">
+<meta name="description" content="귤게임 Tangerine 10 — 숫자의 합이 정확히 10이 되게 귤을 묶어 터뜨리는 무료 퍼즐. 2분 동안 몇 개나 지울 수 있을까요? 회원가입·설치 없이 바로 할 수 있습니다.">
+<meta name="keywords" content="귤게임, 숫자 10 만들기, 사과게임, 숫자 퍼즐, 무료 게임, 두뇌 게임, Tangerine 10">
+
+
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" href="/favicon.png" sizes="512x512">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<title>귤게임 Tangerine 10 — 숫자 합 10 만들기 퍼즐</title>
+<meta property="og:title" content="귤게임 Tangerine 10 — 숫자 합 10 만들기 퍼즐">
+<meta property="og:description" content="2분 안에 귤을 터뜨려라! 합이 정확히 10이 되게 묶는 무료 숫자 퍼즐.">
+<meta property="og:image" content="https://tangerin10.web.app/og-tangerin10.png?v=7">
+<meta property="og:url" content="https://tangerin10.web.app/ko/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Tangerine 10">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="귤게임 Tangerine 10 숫자 퍼즐">
+<meta name="twitter:description" content="합이 정확히 10이 되게 귤을 묶어 터뜨리는 무료 숫자 퍼즐. 120초 동안 최대한 많이 지워 보세요.">
+<link rel="canonical" href="https://tangerin10.web.app/ko/">
+<link rel="alternate" hreflang="en" href="https://tangerin10.web.app/"><link rel="alternate" hreflang="ko" href="https://tangerin10.web.app/ko/"><link rel="alternate" hreflang="x-default" href="https://tangerin10.web.app/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="귤게임 Tangerine 10 — 숫자 합 10 만들기 퍼즐">
+<meta name="twitter:image" content="https://tangerin10.web.app/og-tangerin10.png?v=7">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebSite","name":"Tangerine 10","url":"https://tangerin10.web.app/","inLanguage":"ko"}
+</script>
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"WebApplication",
+  "name":"Tangerine 10",
+  "description":"합이 10이 되게 귤을 묶어 터뜨리는 무료 숫자 퍼즐. 2분 도전과 전체 랭킹.",
+  "url":"https://tangerin10.web.app",
+  "applicationCategory":"Game",
+  "genre":"Puzzle",
+  "operatingSystem":"Web Browser",
+  "image":"https://tangerin10.web.app/og-tangerin10.png",
+  "screenshot":"https://tangerin10.web.app/og-tangerin10.png",
+  "offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},
+  "author":{"@type":"Organization","name":"Tangerine 10","url":"https://tangerin10.web.app"}
+}
+</script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+<script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-user-select:none;user-select:none;}
+html,body{height:100%;background:#fff;}
+body{font-family:'Outfit',sans-serif;color:#1a1a1a;overflow-y:auto;overflow-x:hidden;transition:background 1.5s ease;}
+.board{touch-action:none;}
+body.playing{background:linear-gradient(180deg,#fff 0%,#fff8f0 100%);}
+body.tense{background:linear-gradient(180deg,#fff 0%,#fff0f0 100%);}
+
+.page-wrap{display:flex;justify-content:center;min-height:100%;width:100%;max-width:100%;overflow-x:clip;}
+.app{display:flex;flex-direction:column;align-items:center;flex:1;min-width:0;max-width:850px;min-height:100%;padding:12px 16px 40px;}
+
+/* 상단 바 */
+.topbar{display:flex;align-items:center;justify-content:space-between;width:100%;max-width:850px;padding:8px 4px;margin-bottom:8px;}
+.logo{display:flex;align-items:baseline;gap:4px;}
+.logo-m{font-size:16px;font-weight:600;color:#aaa;}
+.logo-10{font-size:24px;font-weight:900;color:#FF6B00;}
+
+/* 원형 타이머 */
+.timer-wrap{position:relative;width:56px;height:56px;}
+.timer-ring{transform:rotate(-90deg);}
+.timer-ring-bg{fill:none;stroke:#f0f0f0;stroke-width:4;}
+.timer-ring-fg{fill:none;stroke:#FF4D6D;stroke-width:4;stroke-linecap:round;transition:stroke-dashoffset 1s linear,stroke 0.5s;}
+.timer-ring-fg.warn{stroke:#ef4444;}
+.timer-text{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:900;color:#FF4D6D;font-variant-numeric:tabular-nums;}
+.timer-text.warn{color:#ef4444;animation:blink 0.5s infinite alternate;}
+@keyframes blink{from{opacity:1}to{opacity:0.3}}
+
+/* 점수 — 카운트업 바운스 */
+.score-box{text-align:right;}
+.score-label{font-size:9px;color:#aaa;letter-spacing:1px;}
+.score-val{font-size:24px;font-weight:900;color:#FF6B00;transition:transform 0.15s;}
+.restart-btn{width:36px;height:36px;border:none;border-radius:50%;background:#f0f0f0;font-size:18px;cursor:pointer;color:#888;transition:all .15s;flex-shrink:0;}
+.restart-btn:hover{background:#FF6B00;color:#fff;transform:rotate(180deg);}
+.score-val.bump{animation:scoreBump 0.3s ease;}
+@keyframes scoreBump{0%{transform:scale(1)}40%{transform:scale(1.35)}100%{transform:scale(1)}}
+
+/* 콤보 */
+.combo-badge{position:fixed;top:80px;left:50%;transform:translateX(-50%) scale(0);font-size:20px;font-weight:900;color:#FF6B00;background:linear-gradient(135deg,#FFF3E0,#FFE0B2);padding:8px 20px;border-radius:20px;z-index:1002;pointer-events:none;opacity:0;border:2px solid #FFB74D;}
+.combo-badge.show{animation:comboIn 0.6s ease forwards;}
+.combo-badge.mega{font-size:32px;padding:14px 32px;border-radius:24px;background:linear-gradient(135deg,#FF6B00,#FF4D6D);color:#fff;border:3px solid #FFD700;box-shadow:0 0 40px rgba(255,107,0,0.5);top:60px;}
+.combo-badge.mega.show{animation:comboMega 0.8s ease forwards;}
+@keyframes comboIn{0%{transform:translateX(-50%) scale(0);opacity:0}30%{transform:translateX(-50%) scale(1.2);opacity:1}60%{transform:translateX(-50%) scale(0.95);opacity:1}100%{transform:translateX(-50%) scale(1);opacity:0}}
+@keyframes comboMega{0%{transform:translateX(-50%) scale(0) rotate(-5deg);opacity:0}20%{transform:translateX(-50%) scale(1.5) rotate(3deg);opacity:1}40%{transform:translateX(-50%) scale(1.1) rotate(-2deg);opacity:1}60%{transform:translateX(-50%) scale(1.25) rotate(1deg);opacity:1}80%{transform:translateX(-50%) scale(1.15);opacity:1}100%{transform:translateX(-50%) scale(1);opacity:0}}
+
+/* 보드 */
+.board{
+  display:grid;gap:3px;
+  width:100%;max-width:850px;
+  padding:4px;
+  margin-bottom:8px;
+}
+
+/* 귤 타일 */
+.t{
+  aspect-ratio:1;min-width:0;min-height:0;display:flex;align-items:center;justify-content:center;
+  border-radius:50%;cursor:pointer;
+  transition:transform 0.12s;position:relative;
+}
+.t:hover{transform:scale(1.06);}
+.t .bg{position:absolute;width:95%;height:95%;z-index:0;}
+.t .bg svg{width:100%;height:100%;}
+.t .num{position:relative;z-index:1;font-size:clamp(16px,2.8vw,28px);font-weight:900;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,0.4);line-height:1;}
+.t.sel{transform:scale(0.85);filter:brightness(1.15);}
+
+/* 모이기 */
+.t.gather{transition:transform 0.3s ease-in;pointer-events:none;}
+
+/* 튕겨나감 */
+@keyframes f0{0%{transform:scale(1.3);opacity:1}100%{transform:translate(80px,-100px) scale(0.2) rotate(60deg);opacity:0}}
+@keyframes f1{0%{transform:scale(1.3);opacity:1}100%{transform:translate(-90px,-70px) scale(0.2) rotate(-55deg);opacity:0}}
+@keyframes f2{0%{transform:scale(1.3);opacity:1}100%{transform:translate(70px,90px) scale(0.2) rotate(70deg);opacity:0}}
+@keyframes f3{0%{transform:scale(1.3);opacity:1}100%{transform:translate(-80px,100px) scale(0.2) rotate(-65deg);opacity:0}}
+@keyframes f4{0%{transform:scale(1.3);opacity:1}100%{transform:translate(100px,30px) scale(0.2) rotate(45deg);opacity:0}}
+@keyframes f5{0%{transform:scale(1.3);opacity:1}100%{transform:translate(-100px,-40px) scale(0.2) rotate(-70deg);opacity:0}}
+.t.f0{animation:f0 .45s ease-out forwards;pointer-events:none;}
+.t.f1{animation:f1 .45s ease-out forwards;pointer-events:none;}
+.t.f2{animation:f2 .45s ease-out forwards;pointer-events:none;}
+.t.f3{animation:f3 .45s ease-out forwards;pointer-events:none;}
+.t.f4{animation:f4 .45s ease-out forwards;pointer-events:none;}
+.t.f5{animation:f5 .45s ease-out forwards;pointer-events:none;}
+.t.dead{opacity:0;pointer-events:none;}
+
+/* 주스 파티클 */
+@keyframes juice{0%{transform:translate(0,0) scale(1);opacity:1}100%{opacity:0}}
+.juice{position:fixed;width:8px;height:8px;border-radius:50%;pointer-events:none;z-index:1001;}
+
+/* 화면 흔들림 */
+@keyframes shake{0%{transform:translate(0)}25%{transform:translate(-3px,2px)}50%{transform:translate(3px,-2px)}75%{transform:translate(-2px,1px)}100%{transform:translate(0)}}
+.app.shake{animation:shake 0.2s ease;}
+
+/* 하단 힌트 */
+.hint{text-align:center;font-size:11px;color:#ccc;padding:4px;margin-bottom:16px;}
+
+/* 드래그 박스 */
+#box{position:fixed;border:2px solid rgba(255,140,0,0.7);background:rgba(255,140,0,0.08);pointer-events:none;display:none;z-index:999;border-radius:4px;}
+
+/* 실시간 합계 — 비활성 */
+#ls{display:none!important;}
+
+/* +N 팝업 */
+@keyframes sUp{0%{opacity:1;transform:translateY(0)}100%{opacity:0;transform:translateY(-40px)}}
+.sp{position:fixed;pointer-events:none;z-index:1001;font-size:22px;font-weight:900;color:#FF6B00;animation:sUp .8s ease forwards;}
+
+/* 하단 패널 */
+.bottom-panels{
+  display:flex;gap:16px;width:100%;max-width:850px;min-width:0;
+}
+.panel{
+  flex:1;min-width:0;background:#fafafa;border-radius:14px;padding:16px;
+  border:1px solid #f0f0f0;min-height:120px;max-height:280px;overflow-y:auto;
+}
+.panel-title{
+  font-size:11px;color:#aaa;letter-spacing:2px;font-weight:700;
+  margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid #eee;
+}
+.rank-item{
+  display:flex;align-items:center;gap:8px;padding:7px 4px;
+  border-bottom:1px solid #f0f0f0;
+}
+.rank-item:last-child{border:none;}
+.rank-pos{font-size:15px;font-weight:900;width:24px;text-align:center;}
+.rank-pos.g{color:#FFD700;} .rank-pos.s{color:#aaa;} .rank-pos.b{color:#CD7F32;}
+.rank-name{font-size:13px;font-weight:600;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.rank-score{font-size:14px;font-weight:800;color:#FF6B00;}
+.rank-new{font-size:9px;color:#FF6B00;margin-left:4px;}
+.rank-empty{font-size:12px;color:#ddd;text-align:center;padding:20px 0;}
+
+/* 히스토리 — 바 차트 */
+.hist-item{display:flex;align-items:center;gap:8px;padding:6px 4px;border-bottom:1px solid #f0f0f0;}
+.hist-item:last-child{border:none;}
+.hist-num{font-size:11px;color:#ccc;width:20px;text-align:center;flex-shrink:0;}
+.hist-bar-wrap{flex:1;height:18px;background:#f0f0f0;border-radius:9px;overflow:hidden;position:relative;}
+.hist-bar{height:100%;border-radius:9px;background:linear-gradient(90deg,#FFB74D,#FF6B00);min-width:2px;transition:width 0.5s ease;}
+.hist-bar-text{position:absolute;right:6px;top:50%;transform:translateY(-50%);font-size:11px;font-weight:800;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,0.3);}
+.hist-bar-text.dark{color:#999;text-shadow:none;}
+.hist-date{font-size:10px;color:#bbb;flex-shrink:0;width:52px;text-align:right;}
+
+@media(max-width:600px){
+  .app{padding:4px 4px 20px;}
+  .board{gap:2px;padding:2px;}
+  .topbar{padding:4px 2px;margin-bottom:4px;}
+  .hint{margin-bottom:8px;padding:2px;}
+  .bottom-panels{flex-direction:column;gap:10px;}
+  .panel{max-height:200px;}
+  .combo-badge{font-size:14px;padding:5px 14px;}
+  .combo-badge.mega{font-size:18px;padding:8px 20px;top:50px;}
+}
+
+/* 게임오버 */
+.ov{position:fixed;inset:0;background:rgba(255,255,255,0.9);display:none;align-items:center;justify-content:center;z-index:2000;backdrop-filter:blur(8px);}
+.ov.on{display:flex;}
+.ovc{background:#fff;border-radius:24px;padding:36px 28px;text-align:center;width:92%;max-width:340px;border:1px solid #eee;box-shadow:0 20px 60px rgba(0,0,0,0.08);}
+.ovc .ol{font-size:11px;color:#aaa;letter-spacing:3px;font-weight:700;}
+.ovc .os{font-size:64px;font-weight:900;margin:8px 0;color:#FF6B00;}
+.ovc .ou{font-size:14px;color:#888;margin-bottom:4px;}
+.ovc .ob{font-size:14px;color:#FFD700;margin-bottom:20px;}
+@keyframes nb{0%{transform:scale(1)}50%{transform:scale(1.2)}100%{transform:scale(1)}}
+.ovc .ob.nw{animation:nb .5s ease 3;}
+
+.name-input{
+  width:100%;padding:12px;border:2px solid #eee;border-radius:12px;
+  font-size:16px;font-family:inherit;text-align:center;outline:none;
+  margin-bottom:12px;
+}
+.name-input:focus{border-color:#FF6B00;}
+.name-row{display:none;margin-bottom:16px;}
+.name-row.show{display:block;}
+
+.ovc button{width:100%;padding:14px;border:none;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:6px;transition:all .2s;}
+.ovc button:hover{transform:translateY(-2px);}
+.ovc .bp{background:#1a1a1a;color:#fff;}
+.ovc .bc{background:#f5f5f5;color:#888;}
+.share-row{display:flex;gap:8px;margin-top:4px;}
+.sh-btn{flex:1;padding:12px 0;border:none;border-radius:12px;font-size:18px;cursor:pointer;font-family:inherit;transition:all .15s;font-weight:700;}
+.sh-btn:hover{transform:translateY(-2px);}
+.sh-x{background:#000;color:#fff;}
+.sh-kakao{background:#FEE500;color:#3C1E1E;}
+.sh-fb{background:#1877F2;color:#fff;font-size:20px;}
+.sh-copy{background:#f0f0f0;color:#555;}
+
+/* 광고 */
+.adfit-side{position:fixed;top:50%;transform:translateY(-50%);width:160px;z-index:10;}
+.adfit-left{left:16px;}
+.adfit-right{right:16px;}
+
+/* 시작 화면 */
+.start-overlay{position:fixed;inset:0;background:rgba(255,255,255,0.95);display:flex;align-items:center;justify-content:center;z-index:3000;}
+.start-overlay.hide{display:none;}
+.start-card{text-align:center;}
+.start-card .st-emoji{font-size:80px;margin-bottom:16px;}
+.start-card .st-title{font-size:36px;font-weight:900;}
+.start-card .st-title span{color:#FF6B00;}
+.start-card .st-sub{font-size:14px;color:#aaa;margin:8px 0 24px;}
+.start-card .st-btn{padding:16px 48px;background:#FF6B00;color:#fff;border:none;border-radius:14px;font-size:18px;font-weight:800;cursor:pointer;font-family:inherit;transition:all .2s;}
+.start-card .st-btn:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(255,107,0,0.3);}
+
+/* ===== 하단 소개 콘텐츠 ===== */
+.site-content{max-width:780px;margin:0 auto;padding:8px 20px 10px;text-align:left;}
+.site-content h2{font-size:21px;font-weight:800;margin:30px 0 10px;letter-spacing:-.3px;color:#1a1a1a;}
+.site-content h3{font-size:16px;font-weight:700;margin:20px 0 6px;color:#1a1a1a;}
+.site-content p{font-size:15.5px;line-height:1.75;color:#444;margin-bottom:13px;}
+.site-content ul{margin:0 0 14px 20px;}
+.site-content li{font-size:15px;line-height:1.7;color:#444;margin-bottom:7px;}
+.site-content a{color:#f97316;}
+.sc-table{width:100%;border-collapse:collapse;margin:14px 0;font-size:14.5px;border:1px solid #f0f0f0;border-radius:12px;overflow:hidden;}
+.sc-table th,.sc-table td{padding:10px 13px;text-align:left;border-bottom:1px solid #f6f6f6;}
+.sc-table th{background:#fafafa;font-weight:700;color:#777;font-size:13px;}
+.sc-table tr:last-child th,.sc-table tr:last-child td{border-bottom:none;}
+.sc-table td b{color:#ea580c;}
+.sc-note{background:#fff8f2;border:1px solid #ffe4cc;border-radius:14px;padding:16px 18px;margin:16px 0;}
+.sc-note p{margin-bottom:0;}
+.sc-note strong{color:#ea580c;}
+.sc-links{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 6px;}
+.sc-links a{background:#fff4ea;color:#ea580c;font-weight:700;font-size:14px;padding:10px 16px;border-radius:999px;text-decoration:none;}
+.sc-links a:hover{background:#ffe4cc;}
+.site-ftr{border-top:1px solid #f0f0f0;margin-top:28px;padding:22px 20px 44px;text-align:center;}
+.site-ftr .fnav{display:flex;flex-wrap:wrap;justify-content:center;gap:2px 0;}
+.site-ftr .fnav a{font-size:12.5px;color:#888;text-decoration:none;padding:4px 9px;}
+.site-ftr .fnote{font-size:11.5px;color:#bbb;margin-top:10px;line-height:1.8;}
+.ad-bottom{display:flex;justify-content:center;padding:12px 0;width:100%;max-width:850px;min-width:0;overflow-x:hidden;}
+.ad-bottom ins,.ad-bottom iframe{max-width:100%!important;}
+</style>
+</head>
+<body>
+
+<div class="page-wrap">
+
+
+<div class="app" id="appEl">
+
+  <div class="topbar">
+    <div class="logo"><span class="logo-m">Tangerine</span><span class="logo-10">10</span></div>
+    <!-- 원형 타이머 -->
+    <div class="timer-wrap">
+      <svg class="timer-ring" width="56" height="56" viewBox="0 0 56 56">
+        <circle class="timer-ring-bg" cx="28" cy="28" r="24"/>
+        <circle class="timer-ring-fg" id="tmRing" cx="28" cy="28" r="24" stroke-dasharray="150.8" stroke-dashoffset="0"/>
+      </svg>
+      <div class="timer-text" id="tm">2:00</div>
+    </div>
+    <div class="score-box">
+      <div class="score-label">점수</div>
+      <div class="score-val" id="sc">0</div>
+    </div>
+    <button class="restart-btn" id="restartBtn" onclick="end()">↻</button>
+  </div>
+
+  <div class="board" id="bd"></div>
+  <div class="hint">합이 10이 되게 드래그해서 묶으세요 · <a href="/" hreflang="en" style="color:#f97316;text-decoration:none;font-weight:700;">English</a> · <a href="/ko/privacy" style="color:#ccc;text-decoration:none;">개인정보처리방침</a></div>
+
+  <div class="bottom-panels">
+    <div class="panel">
+      <div class="panel-title">🏆 최고 점수</div>
+      <div id="rankList"><div class="rank-empty">아직 기록이 없어요</div></div>
+    </div>
+    <div class="panel">
+      <div class="panel-title">📋 내 기록</div>
+      <div id="histList"><div class="rank-empty">아직 플레이 기록이 없어요</div></div>
+    </div>
+  </div>
+
+
+  <!-- 카카오 애드핏: 하단 320x50 은 모든 화면, 양옆 160x600 은 게임 영역(최대 850px) 밖에 자리가 남는
+       1240px 이상 화면에서만 스크립트로 만들어 붙인다(좁은 화면에 숨긴 광고를 두지 않기 위해). -->
+  <div class="ad-bottom"><ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-vwzzWFnt83j2lDmM" data-ad-width="320" data-ad-height="50"></ins></div>
+  <script>(function(){if(window.innerWidth<1240)return;[["DAN-xRz8uKiS9ed0NFsD","adfit-left"],["DAN-u7ebMhFWv4UdKAMT","adfit-right"]].forEach(function(u){var d=document.createElement('div');d.className='adfit-side '+u[1];d.innerHTML='<ins class="kakao_ad_area" style="display:none;" data-ad-unit="'+u[0]+'" data-ad-width="160" data-ad-height="600"></ins>';document.body.appendChild(d);});})();</script>
+  <script async src="https://t1.kakaocdn.net/kas/static/ba.min.js"></script>
+</div>
+
+</div><!-- /page-wrap -->
+
+<section class="site-content">
+  <h2>귤게임 Tangerine 10은요</h2>
+  <p>Tangerine 10은 규칙 하나로 하는 무료 브라우저 퍼즐입니다. 숫자의 합이 <b>정확히 10</b>이 되는 귤들에 네모를 그리면 터집니다. 시간은 120초. 회원가입도, 설치도, 앱스토어도 없습니다.</p>
+  <p>판을 시작할 때마다 1부터 9까지 숫자가 적힌 귤이 새로 깔립니다. PC는 170개, 휴대폰은 168개라 같은 판을 다시 할 일은 없습니다. 내 기록은 브라우저에 저장되고, 이름을 입력하면 위쪽 전체 랭킹에 최고 점수가 올라갑니다.</p>
+  <h2>30초 규칙 요약</h2>
+  <ul>
+    <li>누른 채 끌어서 네모를 그립니다. 귤의 가운데가 네모 안에 들어오면 선택됩니다.</li>
+    <li>선택한 숫자의 합이 정확히 10일 때 손을 떼세요. 9나 11은 아무 일도 없습니다.</li>
+    <li>터진 자리는 빈칸이 되고, 빈칸은 다음 선택에서 빠집니다. 판이 빌수록 쉬워집니다.</li>
+    <li>120초가 되면 시계가 멈추고 점수가 확정됩니다.</li>
+  </ul>
+  <h2>점수는 이렇게 매겨집니다</h2>
+  <p>처음 하는 사람 대부분이 여기서 헷갈립니다. 점수는 터뜨린 숫자의 합이 <b>아닙니다</b>. 터뜨린 귤의 개수에 콤보 배율을 곱한 값입니다.</p>
+  <table class="sc-table">
+    <thead><tr><th>연속 콤보</th><th>배율</th><th>귤 4개를 터뜨리면</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>&times;1</td><td>4점</td></tr>
+      <tr><td>2 &ndash; 4</td><td><b>&times;1.5</b></td><td>6점</td></tr>
+      <tr><td>5 &ndash; 9</td><td><b>&times;2</b></td><td>8점</td></tr>
+      <tr><td>10 &ndash; 19</td><td><b>&times;3</b></td><td>12점</td></tr>
+      <tr><td>20+</td><td><b>&times;5</b></td><td>20점</td></tr>
+    </tbody>
+  </table>
+  <div class="sc-note">
+    <p><strong>마지막으로 터뜨린 뒤 2초가 지나면 콤보가 끊깁니다.</strong> 대부분의 판이 이 하나로 갈립니다. 더 큰 묶음을 찾다가 콤보를 놓치는 것보다, 작은 짝이라도 바로 터뜨리는 게 낫습니다.</p>
+  </div>
+  <h3>바로 써먹는 팁 세 가지</h3>
+  <ul>
+    <li><b>다섯 쌍을 외우세요.</b> 1+9, 2+8, 3+7, 4+6, 5+5. 짝은 네모가 가장 작고, 콤보를 이어 가는 가장 빠른 방법입니다.</li>
+    <li><b>가로 띠로 훑으세요.</b> 판 전체를 보지 말고 두세 줄씩 처리하세요. 필요한 네모는 납작하고 넓습니다.</li>
+    <li><b>고립된 9는 포기하세요.</b> 9는 1하고만 짝이 됩니다. 닿는 곳에 1이 없으면 두고 다른 데 시간을 쓰세요.</li>
+  </ul>
+  <div class="sc-links">
+    <a href="/ko/how-to-play">전체 규칙 &rarr;</a>
+    <a href="/ko/strategy">공략 &rarr;</a>
+    <a href="/ko/faq">자주 묻는 질문 &rarr;</a>
+    <a href="/ko/records">기록 &rarr;</a>
+  </div>
+</section>
+
+<footer class="site-ftr">
+  <div class="fnav"><a href="/ko/">게임</a><a href="/ko/how-to-play">게임 방법</a><a href="/ko/strategy">공략</a><a href="/ko/faq">FAQ</a><a href="/ko/records">기록</a><a href="/ko/about">소개</a><a href="/ko/contact">문의</a><a href="/ko/privacy">개인정보처리방침</a><a href="/" hreflang="en">English</a></div>
+  <p class="fnote">Tangerine 10은 무료 브라우저 퍼즐 게임입니다. 회원가입·설치 없이 바로 할 수 있습니다.</p>
+</footer>
+
+
+
+<div id="box"></div>
+<div id="ls"></div>
+<div class="combo-badge" id="comboBadge"></div>
+
+<div class="start-overlay" id="startOv">
+  <div class="start-card">
+    <div class="st-emoji">🍊</div>
+    <div class="st-title">Tangerine <span>10</span></div>
+    <div class="st-sub">합이 10이 되게 묶어 터뜨리세요!<br>2분 동안 몇 개나 지울 수 있을까요?</div>
+    <button class="st-btn" onclick="startGame()">▶ 시작</button>
+  </div>
+</div>
+
+<div class="ov" id="ov">
+  <div class="ovc">
+    <div class="ol" id="ol">게임 종료</div>
+    <div class="os" id="fs">0</div>
+    <div class="ou">점</div>
+    <div class="ob" id="fb"></div>
+    <div class="name-row" id="nameRow">
+      <input class="name-input" id="nameInput" placeholder="이름을 입력하세요" maxlength="12">
+    </div>
+    <button class="bp" id="playBtn" onclick="onPlayAgain()">▶ 다시 하기</button>
+    <div class="share-row">
+      <button class="sh-btn sh-x" onclick="shareX()">𝕏</button>
+      <button class="sh-btn sh-kakao" onclick="shareKakao()">💬</button>
+      <button class="sh-btn sh-fb" onclick="shareFB()">f</button>
+      <button class="sh-btn sh-copy" onclick="cp()">📋</button>
+    </div>
+  </div>
+</div>
+
+<script>
+var MOBILE=window.innerWidth<=600;
+var R=MOBILE?12:10,C=MOBILE?14:17,T=[],S=0,TL=120,TI=null,ON=false;
+document.getElementById('bd').style.gridTemplateColumns='repeat('+C+',minmax(0,1fr))';
+var DRAG=false,SX=0,SY=0,SEL=[];
+var COMBO=0,COMBO_TIMER=null;
+var SESSION_HIST=[];
+var CIRC=2*Math.PI*24;
+
+// === Firebase 초기화 ===
+firebase.initializeApp({
+  apiKey:"AIzaSyBBFUJbi2TWAI9Ea6FoC0IsG74gsXt33Uo",
+  authDomain:"tangerin10.firebaseapp.com",
+  databaseURL:"https://tangerin10-default-rtdb.firebaseio.com",
+  projectId:"tangerin10",
+  storageBucket:"tangerin10.firebasestorage.app",
+  messagingSenderId:"697453286418",
+  appId:"1:697453286418:web:cba8d56850384cb7feb4cb"
+});
+var db=firebase.database();
+
+// === 랭킹 (Firebase) ===
+function saveRank(name,score){
+  var ref=db.ref('rankings');
+  ref.push({name:name,score:score,date:new Date().toISOString().slice(0,10)});
+}
+function listenRanks(){
+  db.ref('rankings').orderByChild('score').limitToLast(3).on('value',function(snap){
+    var ranks=[];
+    snap.forEach(function(child){ranks.push(child.val());});
+    ranks.sort(function(a,b){return b.score-a.score;});
+    renderRanks(ranks);
+  });
+}
+function renderRanks(ranks){
+  var el=document.getElementById('rankList');
+  if(!ranks||ranks.length===0){el.innerHTML='<div class="rank-empty">아직 기록이 없어요</div>';return;}
+  el.innerHTML=ranks.map(function(r,i){
+    var cls=i===0?'g':i===1?'s':i===2?'b':'';
+    var medal=i===0?'🥇':i===1?'🥈':i===2?'🥉':(i+1);
+    return '<div class="rank-item"><span class="rank-pos '+cls+'">'+medal+'</span><span class="rank-name">'+r.name+'</span><span class="rank-score">'+r.score+'</span></div>';
+  }).join('');
+}
+
+// isTop 체크용 (게임오버 시 Firebase에서 현재 최저점 확인)
+var _currentRanks=[];
+db.ref('rankings').orderByChild('score').limitToLast(3).on('value',function(snap){
+  _currentRanks=[];
+  snap.forEach(function(c){_currentRanks.push(c.val());});
+  _currentRanks.sort(function(a,b){return b.score-a.score;});
+});
+function isTopScore(score){
+  return _currentRanks.length<3||score>_currentRanks[_currentRanks.length-1].score;
+}
+
+// === 히스토리 (현재 세션만, 최근 5개) ===
+function saveHistory(score){
+  var now=new Date();
+  var ts=now.toLocaleTimeString('en',{hour:'2-digit',minute:'2-digit',hour12:false});
+  SESSION_HIST.unshift({score:score,date:ts});
+  if(SESSION_HIST.length>5)SESSION_HIST=SESSION_HIST.slice(0,5);
+  renderHistory();
+}
+function renderHistory(){
+  var el=document.getElementById('histList');
+  if(SESSION_HIST.length===0){el.innerHTML='<div class="rank-empty">아직 플레이 기록이 없어요</div>';return;}
+  var max=Math.max.apply(null,SESSION_HIST.map(function(h){return h.score;}))||1;
+  el.innerHTML=SESSION_HIST.map(function(h,i){
+    var pct=Math.round((h.score/max)*100);
+    var txtCls=pct<30?'dark':'';
+    return '<div class="hist-item"><span class="hist-num">'+(i+1)+'</span>'
+      +'<div class="hist-bar-wrap"><div class="hist-bar" style="width:'+pct+'%"></div><span class="hist-bar-text '+txtCls+'">'+h.score+'</span></div>'
+      +'<span class="hist-date">'+h.date+'</span></div>';
+  }).join('');
+}
+
+// === 보드 ===
+function makeBoard(){var b=[];for(var i=0;i<R*C;i++)b.push(Math.floor(Math.random()*9)+1);return b;}
+function draw(){
+  var bd=document.getElementById('bd');bd.innerHTML='';
+  for(var i=0;i<T.length;i++){
+    var d=document.createElement('div');var v=T[i];
+    d.className='t'+(v===0?' dead':'');
+    if(v>0){
+      d.innerHTML='<span class="bg"><svg viewBox="0 0 100 100">'
+        +'<ellipse cx="50" cy="55" rx="46" ry="42" fill="#FFA726"/>'
+        +'<path d="M50 14 Q44 2 38 8 Q44 0 50 6 Q56 0 62 8 Q56 2 50 14Z" fill="#66BB6A"/>'
+        +'</svg></span><span class="num">'+v+'</span>';
+    }
+    d.dataset.i=i;bd.appendChild(d);
+  }
+}
+function getRects(){
+  var cells=document.querySelectorAll('.t');var arr=[];
+  cells.forEach(function(c){var r=c.getBoundingClientRect();arr.push({l:r.left,t:r.top,r:r.right,b:r.bottom});});
+  return arr;
+}
+
+// === 주스 파티클 ===
+function spawnJuice(x,y,count){
+  var colors=['#FF6B00','#FFA726','#FFB74D','#FFCC80','#FF8F00'];
+  for(var i=0;i<count;i++){
+    var p=document.createElement('div');p.className='juice';
+    p.style.left=x+'px';p.style.top=y+'px';
+    p.style.background=colors[Math.floor(Math.random()*colors.length)];
+    var angle=Math.random()*Math.PI*2;
+    var dist=30+Math.random()*60;
+    var dx=Math.cos(angle)*dist,dy=Math.sin(angle)*dist;
+    var dur=0.4+Math.random()*0.3;
+    p.style.animation='juice '+dur+'s ease-out forwards';
+    p.animate([
+      {transform:'translate(0,0) scale(1)',opacity:1},
+      {transform:'translate('+dx+'px,'+dy+'px) scale(0.2)',opacity:0}
+    ],{duration:dur*1000,easing:'ease-out',fill:'forwards'});
+    document.body.appendChild(p);
+    (function(el,d){setTimeout(function(){el.remove();},d*1000);})(p,dur);
+  }
+}
+
+// === 콤보 ===
+function triggerCombo(){
+  COMBO++;
+  if(COMBO>=2){
+    var badge=document.getElementById('comboBadge');
+    var isMega=COMBO>=5;
+    var multLabel=COMBO>=20?'x5':COMBO>=10?'x3':COMBO>=5?'x2':'x1.5';
+    badge.textContent=(isMega?'💥':'🔥')+' COMBO '+COMBO+' ('+multLabel+')';
+    badge.className='combo-badge'+(isMega?' mega':'');
+    void badge.offsetWidth;
+    badge.classList.add('show');
+    if(isMega)shakeScreen();
+  }
+  clearTimeout(COMBO_TIMER);
+  COMBO_TIMER=setTimeout(function(){COMBO=0;},2000);
+}
+
+// === 화면 흔들림 ===
+function shakeScreen(){
+  var app=document.getElementById('appEl');
+  app.classList.remove('shake');
+  void app.offsetWidth;
+  app.classList.add('shake');
+}
+
+// === 점수 바운스 ===
+function bumpScore(){
+  var el=document.getElementById('sc');
+  el.classList.remove('bump');
+  void el.offsetWidth;
+  el.classList.add('bump');
+}
+
+// === 점수 카운트업 ===
+function animateScore(from,to){
+  var el=document.getElementById('sc');
+  var diff=to-from;
+  if(diff<=0){el.textContent=to;return;}
+  var step=Math.ceil(diff/8);
+  var cur=from;
+  function tick(){
+    cur=Math.min(cur+step,to);
+    el.textContent=cur;
+    if(cur<to)requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+  bumpScore();
+}
+
+// === 드래그 (appEl에서 시작, document에서 이동/종료) ===
+document.addEventListener('mousedown',function(e){if(e.target.closest('.adfit-side,.ad-bottom,button,input,.ov,.start-overlay'))return;dn(e.clientX,e.clientY);});
+document.addEventListener('mousemove',function(e){if(DRAG)mv(e.clientX,e.clientY);});
+document.addEventListener('mouseup',function(){up();});
+document.addEventListener('touchstart',function(e){if(!ON)return;if(e.target.closest('.adfit-side,.ad-bottom,button,input,.ov,.start-overlay'))return;e.preventDefault();dn(e.touches[0].clientX,e.touches[0].clientY);},{passive:false});
+document.addEventListener('touchmove',function(e){if(!DRAG)return;e.preventDefault();mv(e.touches[0].clientX,e.touches[0].clientY);},{passive:false});
+document.addEventListener('touchend',function(){up();});
+
+function dn(x,y){
+  if(!ON)return;
+  DRAG=true;SX=x;SY=y;SEL=[];
+  var box=document.getElementById('box');
+  box.style.display='block';box.style.left=x+'px';box.style.top=y+'px';box.style.width='0';box.style.height='0';
+  clr();
+}
+function mv(x,y){
+  var box=document.getElementById('box');
+  var x1=Math.min(SX,x),y1=Math.min(SY,y),x2=Math.max(SX,x),y2=Math.max(SY,y);
+  box.style.left=x1+'px';box.style.top=y1+'px';box.style.width=(x2-x1)+'px';box.style.height=(y2-y1)+'px';
+  var rects=getRects();var cells=document.querySelectorAll('.t');
+  SEL=[];var sum=0;
+  for(var i=0;i<rects.length;i++){
+    if(T[i]===0)continue;
+    var cx=(rects[i].l+rects[i].r)/2,cy=(rects[i].t+rects[i].b)/2;
+    if(cx>=x1&&cx<=x2&&cy>=y1&&cy<=y2){cells[i].classList.add('sel');SEL.push(i);sum+=T[i];}
+    else{cells[i].classList.remove('sel');}
+  }
+}
+function up(){
+  if(!DRAG)return;DRAG=false;
+  document.getElementById('box').style.display='none';
+  if(SEL.length===0)return;
+  var sum=0;for(var i=0;i<SEL.length;i++)sum+=T[SEL[i]];
+  if(sum===10){
+    var cells=document.querySelectorAll('.t');
+    var first=cells[SEL[0]].getBoundingClientRect();
+    showPop('+'+SEL.length,first.left+first.width/2,first.top);
+    var cx=0,cy=0;
+    for(var i=0;i<SEL.length;i++){var r=cells[SEL[i]].getBoundingClientRect();cx+=(r.left+r.right)/2;cy+=(r.top+r.bottom)/2;}
+    cx/=SEL.length;cy/=SEL.length;
+    // 주스 파티클
+    spawnJuice(cx,cy,SEL.length*4);
+    // 콤보 (shake는 triggerCombo 내에서 5+ 일때만)
+    triggerCombo();
+    // Phase 1: 모이기
+    for(var i=0;i<SEL.length;i++){
+      T[SEL[i]]=0;var el=cells[SEL[i]];el.classList.remove('sel');
+      var er=el.getBoundingClientRect();var dx=cx-(er.left+er.right)/2,dy=cy-(er.top+er.bottom)/2;
+      el.classList.add('gather');el.style.transform='translate('+dx+'px,'+dy+'px) scale(1.1)';
+    }
+    // Phase 2: 튕기기
+    (function(idxs){setTimeout(function(){
+      for(var j=0;j<idxs.length;j++){var e=cells[idxs[j]];e.classList.remove('gather');e.style.transform='';
+        e.classList.add('f'+Math.floor(Math.random()*6));
+        (function(ee){setTimeout(function(){ee.classList.add('dead');ee.innerHTML='';},450);})(e);}
+    },300);})(SEL.slice());
+    var oldS=S;
+    var mult=COMBO>=20?5:COMBO>=10?3:COMBO>=5?2:COMBO>=2?1.5:1;
+    S+=Math.floor(SEL.length*mult);
+    animateScore(oldS,S);
+  }
+  clr();SEL=[];
+}
+
+function clr(){document.querySelectorAll('.t.sel').forEach(function(c){c.classList.remove('sel');});}
+function showPop(t,x,y){var d=document.createElement('div');d.className='sp';d.textContent=t;d.style.left=x+'px';d.style.top=y+'px';document.body.appendChild(d);setTimeout(function(){d.remove();},800);}
+
+// === 타이머 (원형) ===
+function updateTimerRing(){
+  var pct=TL/120;
+  var offset=CIRC*(1-pct);
+  var ring=document.getElementById('tmRing');
+  ring.style.strokeDashoffset=offset;
+  if(TL<=30){ring.classList.add('warn');}else{ring.classList.remove('warn');}
+}
+function tick(){
+  TL--;
+  var m=Math.floor(TL/60),s=TL%60;
+  var el=document.getElementById('tm');
+  el.textContent=m+':'+String(s).padStart(2,'0');
+  updateTimerRing();
+  if(TL<=10){el.classList.add('warn');}else{el.classList.remove('warn');}
+  // 배경 긴장감
+  if(TL<=30)document.body.className='tense';
+  else if(ON)document.body.className='playing';
+  if(TL<=0){clearInterval(TI);end();}
+}
+
+// === 시작 ===
+function startGame(){document.getElementById('startOv').classList.add('hide');go();}
+function go(){
+  S=0;ON=true;TL=120;COMBO=0;
+  document.getElementById('ov').classList.remove('on');
+  T=makeBoard();draw();
+  document.getElementById('sc').textContent='0';
+  document.getElementById('tm').textContent='2:00';
+  document.getElementById('tm').classList.remove('warn');
+  document.getElementById('tmRing').style.strokeDashoffset='0';
+  document.getElementById('tmRing').classList.remove('warn');
+  document.body.className='playing';
+  clearInterval(TI);TI=setInterval(tick,1000);
+}
+
+// === 게임 끝 ===
+function end(){
+  ON=false;clearInterval(TI);
+  document.body.className='';
+  saveHistory(S);
+  document.getElementById('fs').textContent=S;
+  var isTop=isTopScore(S);
+  var nr=document.getElementById('nameRow');
+  var fb=document.getElementById('fb');
+  document.getElementById('ol').textContent=S===0?"시간 종료!":'게임 종료';
+  if(isTop&&S>0){
+    nr.classList.add('show');
+    fb.textContent='🎉 최고 기록 달성!';
+    fb.className='ob nw';
+    document.getElementById('playBtn').textContent='저장하고 다시 하기';
+  }else{
+    nr.classList.remove('show');
+    fb.textContent=S===0?'하나도 못 터뜨렸어요...':(_currentRanks.length>0?'1위: '+_currentRanks[0].score:'');
+    fb.className='ob';
+    document.getElementById('playBtn').textContent='▶ 다시 하기';
+  }
+  document.getElementById('nameInput').value='';
+  document.getElementById('ov').classList.add('on');
+}
+function onPlayAgain(){
+  var nr=document.getElementById('nameRow');
+  if(nr.classList.contains('show')){
+    var name=document.getElementById('nameInput').value.trim()||'Player';
+    saveRank(name,S);
+  }
+  go();
+}
+var SHARE_URL='https://tangerin10.web.app/ko/?v='+Date.now();
+var SHARE_TEXT='🍊 Tangerine 10에서 '+S+'점 달성! 2분 안에 10을 만들어라! ';
+
+function getShareText(){return '🍊 Tangerine 10에서 '+S+'점 달성! 2분 안에 10을 만들어라! '+SHARE_URL;}
+
+function shareX(){
+  var text=encodeURIComponent('🍊 Tangerine 10에서 '+S+'점 달성!\n2분 안에 귤을 터뜨려라! #Make10Game\n'+SHARE_URL);
+  window.open('https://twitter.com/intent/tweet?text='+text,'_blank');
+}
+
+function shareKakao(){
+  if(!window.Kakao){alert('잠시 후 다시 시도해주세요.');return;}
+  if(!Kakao.isInitialized())Kakao.init('455b415360c00b8af8c31a830fc33ef3');
+  Kakao.Share.sendDefault({
+    objectType:'feed',
+    content:{
+      title:'🍊 Tangerine 10',
+      description:'나 '+S+'점 달성! 2분 안에 귤 터뜨리기 게임. 도전해봐!',
+      imageUrl:'https://tangerin10.web.app/og-tangerin10.png?v=7',
+      imageWidth:800,
+      imageHeight:600,
+      link:{mobileWebUrl:SHARE_URL,webUrl:SHARE_URL}
+    },
+    buttons:[{title:'게임 하러 가기',link:{mobileWebUrl:SHARE_URL,webUrl:SHARE_URL}}]
+  });
+}
+
+function shareFB(){
+  var url=encodeURIComponent(SHARE_URL);
+  window.open('https://www.facebook.com/sharer/sharer.php?u='+url,'_blank');
+}
+
+function cp(){
+  navigator.clipboard.writeText(getShareText()).then(function(){alert('Copied!');});
+}
+
+listenRanks();
+renderHistory();
+</script>
+</body>
+</html>

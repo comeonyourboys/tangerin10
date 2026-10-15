@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#f97316">
+<title>귤게임 하는 법 — 규칙·점수·콤보 총정리</title>
+<meta name="description" content="귤게임 Tangerine 10의 모든 규칙. 120초 제한, 합이 정확히 10이어야 터지는 규칙, 터뜨린 개수로 매기는 점수, 콤보 배율까지 정리했습니다.">
+<link rel="canonical" href="https://tangerin10.web.app/ko/how-to-play">
+<link rel="alternate" hreflang="ko" href="https://tangerin10.web.app/ko/how-to-play"><link rel="alternate" hreflang="en" href="https://tangerin10.web.app/how-to-play"><link rel="alternate" hreflang="x-default" href="https://tangerin10.web.app/how-to-play">
+<meta name="robots" content="index, follow">
+<meta name="google-site-verification" content="8nUCFYxTph7TOTN0ZC0zWvamYgyQMd026qCLSBL9YgE">
+<meta name="google-site-verification" content="WjzFs7iu4kDSzcJKM5QyAqGDAqx9J1P0uj-Ry4z1_NU">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Tangerine 10">
+<meta property="og:title" content="귤게임 하는 법 — 규칙·점수·콤보 총정리">
+<meta property="og:description" content="귤게임 Tangerine 10의 모든 규칙. 120초 제한, 합이 정확히 10이어야 터지는 규칙, 터뜨린 개수로 매기는 점수, 콤보 배율까지 정리했습니다.">
+<meta property="og:url" content="https://tangerin10.web.app/ko/how-to-play">
+<meta property="og:image" content="https://tangerin10.web.app/og-tangerin10.png?v=7">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="귤게임 Tangerine 10 숫자 퍼즐">
+<meta property="og:locale" content="ko_KR">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="귤게임 하는 법 — 규칙·점수·콤보 총정리">
+<meta name="twitter:description" content="귤게임 Tangerine 10의 모든 규칙. 120초 제한, 합이 정확히 10이어야 터지는 규칙, 터뜨린 개수로 매기는 점수, 콤보 배율까지 정리했습니다.">
+<meta name="twitter:image" content="https://tangerin10.web.app/og-tangerin10.png?v=7">
+<link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/png" href="/favicon.png" sizes="512x512"><link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Outfit',-apple-system,BlinkMacSystemFont,sans-serif;color:#1a1a1a;background:#fff;line-height:1.7;-webkit-text-size-adjust:100%;}
+a{color:#f97316;}
+.wrap{max-width:780px;margin:0 auto;padding:0 20px;}
+.topbar{border-bottom:1px solid #f0f0f0;position:sticky;top:0;background:rgba(255,255,255,.95);backdrop-filter:blur(8px);z-index:20;}
+.topbar .wrap{display:flex;align-items:center;justify-content:space-between;height:56px;gap:14px;}
+.logo{display:flex;align-items:baseline;gap:5px;text-decoration:none;white-space:nowrap;}
+.logo-t{font-size:16px;font-weight:600;color:#999;}
+.logo-10{font-size:22px;font-weight:900;color:#f97316;letter-spacing:-1px;}
+.nav{display:flex;gap:2px;flex-wrap:wrap;justify-content:flex-end;}
+.nav a{font-size:13px;font-weight:600;color:#777;text-decoration:none;padding:6px 9px;border-radius:8px;white-space:nowrap;}
+.nav a:hover,.nav a.on{background:#fff4ea;color:#ea580c;}
+.crumb{font-size:12px;color:#aaa;margin:16px 0 4px;}
+.crumb a{color:#f97316;text-decoration:none;}
+h1{font-size:clamp(25px,5vw,32px);font-weight:900;letter-spacing:-.6px;margin:14px 0 8px;line-height:1.25;}
+.lead{font-size:16px;color:#666;margin-bottom:26px;line-height:1.75;}
+h2{font-size:20px;font-weight:800;margin:34px 0 12px;letter-spacing:-.3px;}
+h3{font-size:16px;font-weight:700;margin:22px 0 8px;}
+p{font-size:16px;color:#333;margin-bottom:14px;}
+ul,ol{margin:0 0 16px 20px;}
+li{font-size:15.5px;color:#333;margin-bottom:8px;line-height:1.7;}
+.box{background:#fff8f2;border:1px solid #ffe4cc;border-radius:14px;padding:18px 20px;margin:18px 0;}
+.box p:last-child,.box ul:last-child,.box li:last-child{margin-bottom:0;}
+.box strong{color:#ea580c;}
+table{width:100%;border-collapse:collapse;margin:16px 0;font-size:15px;background:#fff;border-radius:12px;overflow:hidden;border:1px solid #f0f0f0;}
+th,td{padding:11px 14px;text-align:left;border-bottom:1px solid #f5f5f5;}
+th{background:#fafafa;font-weight:700;font-size:13.5px;color:#777;}
+tr:last-child th,tr:last-child td{border-bottom:none;}
+td b{color:#ea580c;}
+.tbl-wrap{overflow-x:auto;}
+.cta{display:inline-block;background:#f97316;color:#fff;font-weight:800;font-size:16px;padding:13px 26px;border-radius:999px;text-decoration:none;margin:10px 0 6px;}
+.cta:hover{background:#ea580c;}
+.faq-q{font-weight:800;font-size:16.5px;margin:24px 0 6px;}
+.ad-wrap{margin:34px 0 0;}
+.disclose{font-size:11px;color:#c4c4c4;text-align:center;margin-top:6px;}
+footer{border-top:1px solid #f0f0f0;margin-top:36px;padding:24px 0 46px;}
+.ftr-nav{display:flex;flex-wrap:wrap;justify-content:center;gap:2px 0;}
+.ftr-nav a{font-size:12.5px;color:#888;text-decoration:none;padding:4px 9px;}
+.ftr-note{font-size:11.5px;color:#bbb;text-align:center;margin-top:10px;line-height:1.8;}
+@media(max-width:600px){.nav a{font-size:12px;padding:5px 7px;}p,li{font-size:15px;}}
+.r-sum{background:#fff8f2;border:1px solid #ffe4cc;border-radius:12px;padding:12px 16px;font-size:14.5px;color:#7a4a1f;}
+.r-empty{color:#999;}
+</style>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"HowTo","name":"귤게임 Tangerine 10 하는 법","inLanguage":"ko","step":[{"@type":"HowToStep","name":"게임 시작","text":"시작을 누르면 1~9 숫자가 적힌 귤 판이 깔리고 120초 타이머가 돕니다."},{"@type":"HowToStep","name":"네모 그리기","text":"누른 채 끌어서 네모를 그리면 가운데가 안에 들어온 귤이 선택됩니다."},{"@type":"HowToStep","name":"정확히 10 만들기","text":"선택한 숫자의 합이 정확히 10이면 귤이 터지고 점수가 오릅니다."},{"@type":"HowToStep","name":"콤보 이어가기","text":"2초 안에 다시 터뜨리면 콤보 배율이 쌓여 콤보 20에서 5배가 됩니다."}]}</script>
+</head>
+<body>
+<header class="topbar"><div class="wrap">
+  <a class="logo" href="/ko/"><span class="logo-t">🍊 Tangerine</span><span class="logo-10">10</span></a>
+  <nav class="nav"><a href="/ko/">게임</a><a href="/ko/how-to-play" class="on">게임 방법</a><a href="/ko/strategy">공략</a><a href="/ko/faq">FAQ</a><a href="/ko/records">기록</a><a href="/ko/about">소개</a><a href="/ko/contact">문의</a><a href="/how-to-play" hreflang="en">English</a></nav>
+</div></header>
+<main class="wrap">
+
+<nav class="crumb"><a href="/ko/">홈</a> › 게임 방법</nav>
+<h1>귤게임 Tangerine 10 하는 법</h1>
+<p class="lead">Tangerine 10은 2분짜리 숫자 퍼즐입니다. 숫자의 합이 정확히 10이 되도록 귤을 네모로 묶으면 귤이 터집니다. 게임이 따로 알려 주지 않는 규칙까지 전부 정리했습니다.</p>
+
+<h2>게임판</h2>
+<p>게임을 시작할 때마다 새 귤 판이 깔립니다. 귤마다 1부터 9까지의 숫자가 무작위로 붙어 있어서 같은 판이 두 번 나오지 않습니다. 판 크기는 화면에 따라 다릅니다.</p>
+<div class="tbl-wrap"><table><tbody>
+<tr><th>PC</th><td>10줄 × 17칸 — <b>귤 170개</b></td></tr>
+<tr><th>휴대폰</th><td>12줄 × 14칸 — <b>귤 168개</b></td></tr>
+<tr><th>숫자</th><td>1~9, 무작위 배치</td></tr>
+<tr><th>제한 시간</th><td><b>120초</b></td></tr>
+</tbody></table></div>
+
+<h2>가장 중요한 규칙 하나</h2>
+<p>판 위를 누른 채 끌어서 네모를 그립니다. 귤의 <b>가운데</b>가 네모 안에 들어오면 선택됩니다. 손을 떼면 선택한 숫자를 더하는데, 합이 <b>정확히 10</b>이면 귤이 터지고 점수가 올라갑니다. 9나 11처럼 10이 아니면 아무 일도 일어나지 않습니다.</p>
+<div class="box">
+  <p><strong>정확히 10이어야 합니다.</strong> "10 이하"나 "10의 배수"가 아닙니다. 3 + 7은 터지지만, 3 + 7 + 1이나 3 + 6은 터지지 않습니다.</p>
+</div>
+<p>선택이 네모 모양이라 숫자만큼 끄는 모양도 중요합니다. 대각선으로 떨어진 귤 두 개를 한 네모로 잡을 수는 있지만, 그 네모는 나머지 두 모서리에 있는 귤까지 같이 잡습니다. 이미 터뜨린 자리는 빈칸이 되어 계산에서 빠지기 때문에, 판이 비어 갈수록 묶기가 쉬워집니다.</p>
+
+<h2>점수 계산법</h2>
+<p>점수는 숫자의 합이 아닙니다. <b>터뜨린 귤의 개수</b>에 그때의 콤보 배율을 곱한 값입니다.</p>
+<div class="tbl-wrap"><table><tbody>
+<tr><th>한 번에 얻는 점수</th><td>터뜨린 귤 개수 × 콤보 배율 (소수점 버림)</td></tr>
+<tr><th>1 + 9를 터뜨리면</th><td>귤 2개 → 기본 2점</td></tr>
+<tr><th>1 + 2 + 3 + 4를 터뜨리면</th><td>귤 4개 → 기본 4점</td></tr>
+</tbody></table></div>
+<p>이 게임에서 가장 중요한 부분입니다. 합이 10인 두 개는 2점, 합이 10인 작은 숫자 네 개는 4점입니다. 귤에 적힌 숫자는 점수와 상관이 없고, 몇 개를 없앴는지만 셉니다.</p>
+
+<h2>콤보 배율</h2>
+<p>쉬지 않고 연달아 터뜨리면 콤보가 쌓입니다. 배율은 단계적으로 올라가고, 높은 단계에서 크게 뜁니다.</p>
+<div class="tbl-wrap"><table>
+<thead><tr><th>콤보</th><th>배율</th><th>귤 4개를 터뜨리면</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>×1</td><td>4점</td></tr>
+<tr><td>2 – 4</td><td><b>×1.5</b></td><td>6점</td></tr>
+<tr><td>5 – 9</td><td><b>×2</b></td><td>8점</td></tr>
+<tr><td>10 – 19</td><td><b>×3</b></td><td>12점</td></tr>
+<tr><td>20 이상</td><td><b>×5</b></td><td>20점</td></tr>
+</tbody></table></div>
+<div class="box">
+  <p><strong>콤보는 2초 뒤에 끊깁니다.</strong> 한 번 터뜨릴 때마다 2초 카운트다운이 다시 시작됩니다. 더 좋은 자리를 찾느라 2초를 넘기면 콤보가 0으로 돌아가고 배율도 같이 사라집니다.</p>
+</div>
+<p>이 2초가 Tangerine 10의 진짜 난이도입니다. 짝을 찾는 건 쉽습니다. 2초 안에 다음 짝을 찾는 걸 스무 번 연속으로 해내는 게 어렵습니다.</p>
+
+<h2>조작</h2>
+<ul>
+  <li><b>마우스:</b> 왼쪽 버튼을 누른 채 네모를 그리고, 놓으면 선택이 확정됩니다.</li>
+  <li><b>터치:</b> 손가락 하나로 누른 채 끕니다. 끄는 동안 화면이 스크롤되지 않아 어디서든 네모를 시작할 수 있습니다.</li>
+  <li><b>다시 시작:</b> 위쪽의 둥근 화살표 버튼을 누르면 바로 새 판이 시작됩니다.</li>
+</ul>
+
+<h2>게임이 끝나면</h2>
+<p>120초가 지나면 판이 잠기고 점수가 확정됩니다. 몇 점을 얻었는지 보여 주고, 기록을 내 브라우저에 저장하며, 이름을 입력하면 전체 랭킹에도 올라갑니다. 내 기록은 브라우저에 저장되므로 사이트 데이터를 지우면 함께 사라집니다.</p>
+<p><a class="cta" href="/ko/">귤게임 하러 가기</a></p>
+<p>처음이라면 <a href="/ko/strategy">공략</a>도 읽어 보세요. 큰 네모를 노리는 게 왜 보통 손해인지 설명합니다.</p>
+
+</main>
+<div class="wrap ad-wrap" style="display:flex;justify-content:center"><ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-vwzzWFnt83j2lDmM" data-ad-width="320" data-ad-height="50"></ins><script async src="https://t1.kakaocdn.net/kas/static/ba.min.js"></script></div>
+<footer><div class="wrap">
+  <div class="ftr-nav"><a href="/ko/">게임</a><a href="/ko/how-to-play">게임 방법</a><a href="/ko/strategy">공략</a><a href="/ko/faq">FAQ</a><a href="/ko/records">기록</a><a href="/ko/about">소개</a><a href="/ko/contact">문의</a><a href="/ko/privacy">개인정보처리방침</a><a href="/how-to-play" hreflang="en">English</a></div>
+  <p class="ftr-note">Tangerine 10은 무료 브라우저 퍼즐 게임입니다. 회원가입·설치 없이 바로 할 수 있습니다. © 2026 Tangerine 10</p>
+</div></footer>
+</body>
+</html>
