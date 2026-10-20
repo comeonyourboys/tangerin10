@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#f97316">
+<title>Tangerine 10 Analysis — Board Statistics, Bot Strategies and Combinations</title>
+<meta name="description" content="Simulation studies of Tangerine 10 built from the game code: 100,000 random boards, four automatic players under the real scoring rules, and every combination that makes ten.">
+<link rel="canonical" href="https://tangerin10.web.app/analysis">
+<link rel="alternate" hreflang="en" href="https://tangerin10.web.app/analysis"><link rel="alternate" hreflang="ko" href="https://tangerin10.web.app/ko/analysis"><link rel="alternate" hreflang="x-default" href="https://tangerin10.web.app/analysis">
+<meta name="robots" content="index, follow">
+<meta name="google-site-verification" content="8nUCFYxTph7TOTN0ZC0zWvamYgyQMd026qCLSBL9YgE">
+<meta name="google-site-verification" content="WjzFs7iu4kDSzcJKM5QyAqGDAqx9J1P0uj-Ry4z1_NU">
+<meta name="google-adsense-account" content="ca-pub-5479403345572412">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Tangerine 10">
+<meta property="og:title" content="Tangerine 10 Analysis — Board Statistics, Bot Strategies and Combinations">
+<meta property="og:description" content="Simulation studies of Tangerine 10 built from the game code: 100,000 random boards, four automatic players under the real scoring rules, and every combination that makes ten.">
+<meta property="og:url" content="https://tangerin10.web.app/analysis">
+<meta property="og:image" content="https://tangerin10.web.app/og-tangerin10.png?v=7">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Tangerine 10 number puzzle">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Tangerine 10 Analysis — Board Statistics, Bot Strategies and Combinations">
+<meta name="twitter:description" content="Simulation studies of Tangerine 10 built from the game code: 100,000 random boards, four automatic players under the real scoring rules, and every combination that makes ten.">
+<meta name="twitter:image" content="https://tangerin10.web.app/og-tangerin10.png?v=7">
+<link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/png" href="/favicon.png" sizes="512x512"><link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Outfit',-apple-system,BlinkMacSystemFont,sans-serif;color:#1a1a1a;background:#fff;line-height:1.7;-webkit-text-size-adjust:100%;}
+a{color:#f97316;}
+.wrap{max-width:780px;margin:0 auto;padding:0 20px;}
+.topbar{border-bottom:1px solid #f0f0f0;position:sticky;top:0;background:rgba(255,255,255,.95);backdrop-filter:blur(8px);z-index:20;}
+.topbar .wrap{display:flex;align-items:center;justify-content:space-between;height:56px;gap:14px;}
+.logo{display:flex;align-items:baseline;gap:5px;text-decoration:none;white-space:nowrap;}
+.logo-t{font-size:16px;font-weight:600;color:#999;}
+.logo-10{font-size:22px;font-weight:900;color:#f97316;letter-spacing:-1px;}
+.nav{display:flex;gap:2px;flex-wrap:wrap;justify-content:flex-end;}
+.nav a{font-size:13px;font-weight:600;color:#777;text-decoration:none;padding:6px 9px;border-radius:8px;white-space:nowrap;}
+.nav a:hover,.nav a.on{background:#fff4ea;color:#ea580c;}
+.crumb{font-size:12px;color:#aaa;margin:16px 0 4px;}
+.crumb a{color:#f97316;text-decoration:none;}
+h1{font-size:clamp(25px,5vw,32px);font-weight:900;letter-spacing:-.6px;margin:14px 0 8px;line-height:1.25;}
+.lead{font-size:16px;color:#666;margin-bottom:26px;line-height:1.75;}
+h2{font-size:20px;font-weight:800;margin:34px 0 12px;letter-spacing:-.3px;}
+h3{font-size:16px;font-weight:700;margin:22px 0 8px;}
+p{font-size:16px;color:#333;margin-bottom:14px;}
+ul,ol{margin:0 0 16px 20px;}
+li{font-size:15.5px;color:#333;margin-bottom:8px;line-height:1.7;}
+.box{background:#fff8f2;border:1px solid #ffe4cc;border-radius:14px;padding:18px 20px;margin:18px 0;}
+.box p:last-child,.box ul:last-child,.box li:last-child{margin-bottom:0;}
+.box strong{color:#ea580c;}
+table{width:100%;border-collapse:collapse;margin:16px 0;font-size:15px;background:#fff;border-radius:12px;overflow:hidden;border:1px solid #f0f0f0;}
+th,td{padding:11px 14px;text-align:left;border-bottom:1px solid #f5f5f5;}
+th{background:#fafafa;font-weight:700;font-size:13.5px;color:#777;}
+tr:last-child th,tr:last-child td{border-bottom:none;}
+td b{color:#ea580c;}
+.tbl-wrap{overflow-x:auto;}
+.cta{display:inline-block;background:#f97316;color:#fff;font-weight:800;font-size:16px;padding:13px 26px;border-radius:999px;text-decoration:none;margin:10px 0 6px;}
+.cta:hover{background:#ea580c;}
+.faq-q{font-weight:800;font-size:16.5px;margin:24px 0 6px;}
+.ad-wrap{margin:34px 0 0;}
+.disclose{font-size:11px;color:#c4c4c4;text-align:center;margin-top:6px;}
+footer{border-top:1px solid #f0f0f0;margin-top:36px;padding:24px 0 46px;}
+.ftr-nav{display:flex;flex-wrap:wrap;justify-content:center;gap:2px 0;}
+.ftr-nav a{font-size:12.5px;color:#888;text-decoration:none;padding:4px 9px;}
+.ftr-note{font-size:11.5px;color:#bbb;text-align:center;margin-top:10px;line-height:1.8;}
+@media(max-width:600px){.nav a{font-size:12px;padding:5px 7px;}p,li{font-size:15px;}}
+.fig{margin:20px 0;padding:14px 14px 10px;border:1px solid #f0f0f0;border-radius:14px;background:#fffdfb;}
+.fig figcaption{font-size:13px;color:#888;margin-top:8px;text-align:center;}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.88em;background:#f6f6f6;padding:1px 5px;border-radius:5px;}
+.updated{font-size:13px;color:#aaa;margin:-2px 0 18px;}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin:18px 0;}
+.card{display:block;border:1px solid #ffe4cc;background:#fff8f2;border-radius:14px;padding:16px 18px;text-decoration:none;color:#444;}
+.card b{display:block;color:#ea580c;font-size:16px;margin-bottom:6px;}
+.card span{display:block;font-size:14.5px;line-height:1.65;}
+.r-sum{background:#fff8f2;border:1px solid #ffe4cc;border-radius:12px;padding:12px 16px;font-size:14.5px;color:#7a4a1f;}
+.r-empty{color:#999;}
+</style>
+
+</head>
+<body>
+<header class="topbar"><div class="wrap">
+  <a class="logo" href="/"><span class="logo-t">🍊 Tangerine</span><span class="logo-10">10</span></a>
+  <nav class="nav"><a href="/">Play</a><a href="/how-to-play">How to Play</a><a href="/strategy">Strategy</a><a href="/analysis" class="on">Analysis</a><a href="/faq">FAQ</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/ko/analysis" hreflang="ko">한국어</a></nav>
+</div></header>
+<main class="wrap">
+
+<nav class="crumb"><a href="/">Home</a> › Analysis</nav>
+<h1>Tangerine 10 by the numbers</h1>
+<p class="lead">Three studies built from the game's own code: what a random board contains, which play style scores most, and every way to make ten. Each one comes from a simulation script, not from guesswork.</p>
+<div class="cards">
+<a class="card" href="/board-statistics"><b>What 100,000 Tangerine 10 boards look like</b><span>A fresh desktop board offers 54.65 moves on average, 34.77 of them adjacent pairs. 64.94% of nines start with no 1 beside them.</span></a>
+<a class="card" href="/bot-strategies"><b>Pairs or big boxes? Four bots, 120 seconds, real scoring rules</b><span>With a fast hand, pairs-first averaged 473.31 points against 334.54 for biggest-box-first. At 3 seconds a move the order flips: 95.42 vs 83.5.</span></a>
+<a class="card" href="/make-ten-combinations"><b>Every way to make ten, and how often each one shows up</b><span>29 combinations of two to five numbers make ten. Two random tiles do it 11.1% of the time, five only 0.21%.</span></a>
+</div>
+<h2>How these were made</h2>
+<p>The script <code>scripts/simulate.mjs</code> copies the line of game code that fills a board — a random whole number from 1 to 9 in every cell — and uses a fixed random seed so the results can be reproduced exactly. It generated 100,000 boards for each board size, and ran four automatic players for 5,000 games under each of three speed assumptions, using the real 120-second timer, two-second combo window and multiplier table. The pages read their numbers straight from the script's output file.</p>
+<p>For the rules themselves, see <a href="/how-to-play">How to Play</a>; for practical habits, the <a href="/strategy">strategy guide</a>.</p>
+
+</main>
+<div class="wrap ad-wrap" style="display:flex;justify-content:center"><ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-vwzzWFnt83j2lDmM" data-ad-width="320" data-ad-height="50"></ins><script async src="https://t1.kakaocdn.net/kas/static/ba.min.js"></script></div>
+<footer><div class="wrap">
+  <div class="ftr-nav"><a href="/">Play</a><a href="/how-to-play">How to Play</a><a href="/strategy">Strategy</a><a href="/analysis">Analysis</a><a href="/faq">FAQ</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/privacy">Privacy Policy</a><a href="/ko/analysis" hreflang="ko">한국어</a></div>
+  <p class="ftr-note">Tangerine 10 is a free browser puzzle game. No sign-up, no download. © 2026 Tangerine 10</p>
+</div></footer>
+</body>
+</html>

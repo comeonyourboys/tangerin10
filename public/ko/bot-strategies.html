@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#f97316">
+<title>귤게임 봇 전략 비교 — 짝 먼저 vs 큰 네모 먼저</title>
+<meta name="description" content="귤게임 실제 규칙(콤보 2초, 배율)대로 움직이는 자동 플레이 봇 네 개를 세 가지 속도로 5,000판씩 돌려 120초 점수를 비교했습니다.">
+<link rel="canonical" href="https://tangerin10.web.app/ko/bot-strategies">
+<link rel="alternate" hreflang="ko" href="https://tangerin10.web.app/ko/bot-strategies"><link rel="alternate" hreflang="en" href="https://tangerin10.web.app/bot-strategies"><link rel="alternate" hreflang="x-default" href="https://tangerin10.web.app/bot-strategies">
+<meta name="robots" content="index, follow">
+<meta name="google-site-verification" content="8nUCFYxTph7TOTN0ZC0zWvamYgyQMd026qCLSBL9YgE">
+<meta name="google-site-verification" content="WjzFs7iu4kDSzcJKM5QyAqGDAqx9J1P0uj-Ry4z1_NU">
+<meta name="google-adsense-account" content="ca-pub-5479403345572412">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Tangerine 10">
+<meta property="og:title" content="귤게임 봇 전략 비교 — 짝 먼저 vs 큰 네모 먼저">
+<meta property="og:description" content="귤게임 실제 규칙(콤보 2초, 배율)대로 움직이는 자동 플레이 봇 네 개를 세 가지 속도로 5,000판씩 돌려 120초 점수를 비교했습니다.">
+<meta property="og:url" content="https://tangerin10.web.app/ko/bot-strategies">
+<meta property="og:image" content="https://tangerin10.web.app/og-tangerin10.png?v=7">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="귤게임 Tangerine 10 숫자 퍼즐">
+<meta property="og:locale" content="ko_KR">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="귤게임 봇 전략 비교 — 짝 먼저 vs 큰 네모 먼저">
+<meta name="twitter:description" content="귤게임 실제 규칙(콤보 2초, 배율)대로 움직이는 자동 플레이 봇 네 개를 세 가지 속도로 5,000판씩 돌려 120초 점수를 비교했습니다.">
+<meta name="twitter:image" content="https://tangerin10.web.app/og-tangerin10.png?v=7">
+<link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/png" href="/favicon.png" sizes="512x512"><link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Outfit',-apple-system,BlinkMacSystemFont,sans-serif;color:#1a1a1a;background:#fff;line-height:1.7;-webkit-text-size-adjust:100%;}
+a{color:#f97316;}
+.wrap{max-width:780px;margin:0 auto;padding:0 20px;}
+.topbar{border-bottom:1px solid #f0f0f0;position:sticky;top:0;background:rgba(255,255,255,.95);backdrop-filter:blur(8px);z-index:20;}
+.topbar .wrap{display:flex;align-items:center;justify-content:space-between;height:56px;gap:14px;}
+.logo{display:flex;align-items:baseline;gap:5px;text-decoration:none;white-space:nowrap;}
+.logo-t{font-size:16px;font-weight:600;color:#999;}
+.logo-10{font-size:22px;font-weight:900;color:#f97316;letter-spacing:-1px;}
+.nav{display:flex;gap:2px;flex-wrap:wrap;justify-content:flex-end;}
+.nav a{font-size:13px;font-weight:600;color:#777;text-decoration:none;padding:6px 9px;border-radius:8px;white-space:nowrap;}
+.nav a:hover,.nav a.on{background:#fff4ea;color:#ea580c;}
+.crumb{font-size:12px;color:#aaa;margin:16px 0 4px;}
+.crumb a{color:#f97316;text-decoration:none;}
+h1{font-size:clamp(25px,5vw,32px);font-weight:900;letter-spacing:-.6px;margin:14px 0 8px;line-height:1.25;}
+.lead{font-size:16px;color:#666;margin-bottom:26px;line-height:1.75;}
+h2{font-size:20px;font-weight:800;margin:34px 0 12px;letter-spacing:-.3px;}
+h3{font-size:16px;font-weight:700;margin:22px 0 8px;}
+p{font-size:16px;color:#333;margin-bottom:14px;}
+ul,ol{margin:0 0 16px 20px;}
+li{font-size:15.5px;color:#333;margin-bottom:8px;line-height:1.7;}
+.box{background:#fff8f2;border:1px solid #ffe4cc;border-radius:14px;padding:18px 20px;margin:18px 0;}
+.box p:last-child,.box ul:last-child,.box li:last-child{margin-bottom:0;}
+.box strong{color:#ea580c;}
+table{width:100%;border-collapse:collapse;margin:16px 0;font-size:15px;background:#fff;border-radius:12px;overflow:hidden;border:1px solid #f0f0f0;}
+th,td{padding:11px 14px;text-align:left;border-bottom:1px solid #f5f5f5;}
+th{background:#fafafa;font-weight:700;font-size:13.5px;color:#777;}
+tr:last-child th,tr:last-child td{border-bottom:none;}
+td b{color:#ea580c;}
+.tbl-wrap{overflow-x:auto;}
+.cta{display:inline-block;background:#f97316;color:#fff;font-weight:800;font-size:16px;padding:13px 26px;border-radius:999px;text-decoration:none;margin:10px 0 6px;}
+.cta:hover{background:#ea580c;}
+.faq-q{font-weight:800;font-size:16.5px;margin:24px 0 6px;}
+.ad-wrap{margin:34px 0 0;}
+.disclose{font-size:11px;color:#c4c4c4;text-align:center;margin-top:6px;}
+footer{border-top:1px solid #f0f0f0;margin-top:36px;padding:24px 0 46px;}
+.ftr-nav{display:flex;flex-wrap:wrap;justify-content:center;gap:2px 0;}
+.ftr-nav a{font-size:12.5px;color:#888;text-decoration:none;padding:4px 9px;}
+.ftr-note{font-size:11.5px;color:#bbb;text-align:center;margin-top:10px;line-height:1.8;}
+@media(max-width:600px){.nav a{font-size:12px;padding:5px 7px;}p,li{font-size:15px;}}
+.fig{margin:20px 0;padding:14px 14px 10px;border:1px solid #f0f0f0;border-radius:14px;background:#fffdfb;}
+.fig figcaption{font-size:13px;color:#888;margin-top:8px;text-align:center;}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.88em;background:#f6f6f6;padding:1px 5px;border-radius:5px;}
+.updated{font-size:13px;color:#aaa;margin:-2px 0 18px;}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin:18px 0;}
+.card{display:block;border:1px solid #ffe4cc;background:#fff8f2;border-radius:14px;padding:16px 18px;text-decoration:none;color:#444;}
+.card b{display:block;color:#ea580c;font-size:16px;margin-bottom:6px;}
+.card span{display:block;font-size:14.5px;line-height:1.65;}
+.r-sum{background:#fff8f2;border:1px solid #ffe4cc;border-radius:12px;padding:12px 16px;font-size:14.5px;color:#7a4a1f;}
+.r-empty{color:#999;}
+</style>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"짝이 나을까, 큰 네모가 나을까 — 봇 네 개로 120초 점수 비교","description":"귤게임 실제 규칙(콤보 2초, 배율)대로 움직이는 자동 플레이 봇 네 개를 세 가지 속도로 5,000판씩 돌려 120초 점수를 비교했습니다.","inLanguage":"ko","datePublished":"2026-10-20","mainEntityOfPage":"https://tangerin10.web.app/ko/bot-strategies","author":{"@type":"Organization","name":"Tangerine 10","url":"https://tangerin10.web.app"},"publisher":{"@type":"Organization","name":"Tangerine 10","url":"https://tangerin10.web.app"}}</script>
+</head>
+<body>
+<header class="topbar"><div class="wrap">
+  <a class="logo" href="/ko/"><span class="logo-t">🍊 Tangerine</span><span class="logo-10">10</span></a>
+  <nav class="nav"><a href="/ko/">게임</a><a href="/ko/how-to-play">게임 방법</a><a href="/ko/strategy">공략</a><a href="/ko/analysis">분석</a><a href="/ko/faq">FAQ</a><a href="/ko/about">소개</a><a href="/ko/contact">문의</a><a href="/bot-strategies" hreflang="en">English</a></nav>
+</div></header>
+<main class="wrap">
+
+<nav class="crumb"><a href="/ko/">홈</a> › <a href="/ko/analysis">분석</a> › 봇 전략 비교</nav>
+<h1>짝이 나을까, 큰 네모가 나을까 — 봇 네 개로 120초 점수 비교</h1>
+<p class="lead">숫자 10 만들기 게임의 공략은 보통 감으로 나옵니다. 이 페이지는 그 감을 직접 시험해 봅니다. 묶음을 고르는 기준이 다른 자동 플레이 봇 네 개가 귤게임의 실제 점수·콤보·타이머 규칙 그대로 설정마다 5,000판씩 플레이했습니다.</p>
+
+<h2>봇이 따르는 규칙</h2>
+<p>봇은 게임을 단순하게 바꾼 버전이 아니라, 브라우저에서 돌아가는 코드와 같은 규칙으로 플레이합니다.</p>
+<ul>
+  <li>게임의 <code>makeBoard</code> 식 그대로 1~9 무작위 숫자로 만든 새 10×17 판(휴대폰 실험은 12×14).</li>
+  <li>남은 귤의 합이 정확히 10인 네모가 한 번의 수입니다. 터진 칸은 빈칸이 되어 계산에서 빠지므로, 나중에는 빈칸을 가로질러 넓게 잡을 수 있습니다.</li>
+  <li>한 번 터뜨릴 때마다 <code>floor(귤 수 × 배율)</code>점. 배율은 콤보 1에서 ×1, 2~4 ×1.5, 5~9 ×2, 10~19 ×3, 20부터 ×5입니다.</li>
+  <li>터뜨린 뒤 2초 넘게 다음 묶음을 못 터뜨리면 콤보가 0으로 돌아갑니다. 게임의 2초 타이머와 같습니다.</li>
+  <li>120초가 지나면 끝나고, 그 전에 합이 10인 네모가 하나도 안 남으면 그때 끝납니다.</li>
+</ul>
+
+<h2>네 가지 전략</h2>
+<p>봇은 판 전체를 한 번에 정확히 보고, 잘못 끄는 일도 없습니다. 차이는 가능한 묶음이 여러 개일 때 무엇을 고르느냐뿐입니다.</p>
+<div class="tbl-wrap"><table><thead><tr><th>봇</th><th>고르는 기준</th></tr></thead><tbody><tr><td>짝 먼저</td><td>귤 수가 가장 적은 묶음. 같으면 왼쪽 위에 가까운 것.</td></tr><tr><td>가장 큰 네모 먼저</td><td>귤 수가 가장 많은 묶음.</td></tr><tr><td>아무 묶음이나</td><td>가능한 묶음 중 아무거나 무작위로.</td></tr><tr><td>큰 숫자 먼저</td><td>가장 큰 숫자가 들어간 묶음(9·8을 가능할 때 먼저 처리). 같으면 귤 수가 적은 것.</td></tr></tbody></table></div>
+
+<h2>가정이 들어간 부분: 속도</h2>
+<p>봇은 생각할 시간이 필요 없어서, 한 번 터뜨리는 데 몇 초가 걸리는지는 시뮬레이션이 정해 줘야 합니다. 실제 사람이 얼마나 걸리는지 잰 자료는 없습니다. 아는 척하는 대신 속도 모델 세 가지를 모두 돌려 결과를 다 보여 드립니다.</p>
+<div class="tbl-wrap"><table><thead><tr><th>속도 모델</th><th>한 번에 걸리는 시간</th><th>뜻</th></tr></thead><tbody><tr><td>빠름: 한 번에 1.5초</td><td>매번 1.5초</td><td>콤보를 절대 놓치지 않는 빠른 손.</td></tr><tr><td>크기 비례: 0.9초 + 귤 하나당 0.5초</td><td>0.9초 + 귤 수 × 0.5초</td><td>큰 네모일수록 오래 걸림. 짝은 1.9초라 콤보가 이어지고, 세 개짜리는 2.4초라 끊김.</td></tr><tr><td>느림: 한 번에 3초</td><td>매번 3초</td><td>콤보를 한 번도 못 잇는 신중한 손.</td></tr></tbody></table></div>
+
+<h2>PC 판 결과</h2>
+<h3>빠름: 한 번에 1.5초</h3>
+<div class="tbl-wrap"><table><thead><tr><th>전략</th><th>평균 점수</th><th>하위 10%–상위 10%</th><th>터뜨린 귤</th><th>터뜨린 횟수</th><th>최장 콤보</th><th>수가 바닥난 판</th></tr></thead><tbody><tr><td>짝 먼저</td><td><b>473.31</b></td><td>376–571</td><td>114.46</td><td>51.82</td><td>51.82</td><td>100%</td></tr><tr><td>큰 숫자 먼저</td><td><b>463.93</b></td><td>366–559</td><td>113.01</td><td>50.89</td><td>50.89</td><td>100%</td></tr><tr><td>아무 묶음이나</td><td><b>395.74</b></td><td>321–470</td><td>103.52</td><td>43.48</td><td>43.48</td><td>100%</td></tr><tr><td>가장 큰 네모 먼저</td><td><b>334.54</b></td><td>269–399</td><td>97.97</td><td>38.65</td><td>38.65</td><td>100%</td></tr></tbody></table></div>
+<h3>크기 비례: 0.9초 + 귤 하나당 0.5초</h3>
+<div class="tbl-wrap"><table><thead><tr><th>전략</th><th>평균 점수</th><th>하위 10%–상위 10%</th><th>터뜨린 귤</th><th>터뜨린 횟수</th><th>최장 콤보</th><th>수가 바닥난 판</th></tr></thead><tbody><tr><td>짝 먼저</td><td><b>304.27</b></td><td>234–376</td><td>113.32</td><td>51.41</td><td>35.41</td><td>87.78%</td></tr><tr><td>큰 숫자 먼저</td><td><b>210.08</b></td><td>160–267</td><td>112.27</td><td>50.61</td><td>18.83</td><td>90.78%</td></tr><tr><td>아무 묶음이나</td><td><b>144.44</b></td><td>120–169</td><td>103.53</td><td>43.49</td><td>9.09</td><td>99.76%</td></tr><tr><td>가장 큰 네모 먼저</td><td><b>152.55</b></td><td>120–191</td><td>97.97</td><td>38.64</td><td>15.14</td><td>99.98%</td></tr></tbody></table></div>
+<h3>느림: 한 번에 3초</h3>
+<div class="tbl-wrap"><table><thead><tr><th>전략</th><th>평균 점수</th><th>하위 10%–상위 10%</th><th>터뜨린 귤</th><th>터뜨린 횟수</th><th>최장 콤보</th><th>수가 바닥난 판</th></tr></thead><tbody><tr><td>짝 먼저</td><td><b>83.5</b></td><td>80–88</td><td>83.5</td><td>39.89</td><td>1</td><td>4.84%</td></tr><tr><td>큰 숫자 먼저</td><td><b>85.66</b></td><td>82–89</td><td>85.66</td><td>39.87</td><td>1</td><td>6.24%</td></tr><tr><td>아무 묶음이나</td><td><b>93.91</b></td><td>87–100</td><td>93.91</td><td>39.21</td><td>1</td><td>28.24%</td></tr><tr><td>가장 큰 네모 먼저</td><td><b>95.42</b></td><td>84–105</td><td>95.42</td><td>37.42</td><td>1</td><td>65.58%</td></tr></tbody></table></div>
+<figure class="fig"><svg viewBox="0 0 640 344" role="img" aria-label="전략·속도별 120초 평균 점수 (PC 판)" style="width:100%;height:auto;display:block"><text x="142" y="22" text-anchor="end" font-size="13" fill="#555">빠름 · 짝 먼저</text><rect x="150" y="9" width="420.0" height="17" rx="4" fill="#f97316"/><text x="576.0" y="22" font-size="13" fill="#333" font-weight="700">473.31</text><text x="142" y="50" text-anchor="end" font-size="13" fill="#555">빠름 · 큰 숫자 먼저</text><rect x="150" y="37" width="411.7" height="17" rx="4" fill="#f97316"/><text x="567.7" y="50" font-size="13" fill="#333" font-weight="700">463.93</text><text x="142" y="78" text-anchor="end" font-size="13" fill="#555">빠름 · 아무 묶음이나</text><rect x="150" y="65" width="351.2" height="17" rx="4" fill="#f97316"/><text x="507.2" y="78" font-size="13" fill="#333" font-weight="700">395.74</text><text x="142" y="106" text-anchor="end" font-size="13" fill="#555">빠름 · 가장 큰 네모 먼저</text><rect x="150" y="93" width="296.9" height="17" rx="4" fill="#f97316"/><text x="452.9" y="106" font-size="13" fill="#333" font-weight="700">334.54</text><text x="142" y="134" text-anchor="end" font-size="13" fill="#555">크기 · 짝 먼저</text><rect x="150" y="121" width="270.0" height="17" rx="4" fill="#f97316"/><text x="426.0" y="134" font-size="13" fill="#333" font-weight="700">304.27</text><text x="142" y="162" text-anchor="end" font-size="13" fill="#555">크기 · 큰 숫자 먼저</text><rect x="150" y="149" width="186.4" height="17" rx="4" fill="#f97316"/><text x="342.4" y="162" font-size="13" fill="#333" font-weight="700">210.08</text><text x="142" y="190" text-anchor="end" font-size="13" fill="#555">크기 · 아무 묶음이나</text><rect x="150" y="177" width="128.2" height="17" rx="4" fill="#f97316"/><text x="284.2" y="190" font-size="13" fill="#333" font-weight="700">144.44</text><text x="142" y="218" text-anchor="end" font-size="13" fill="#555">크기 · 가장 큰 네모 먼저</text><rect x="150" y="205" width="135.4" height="17" rx="4" fill="#f97316"/><text x="291.4" y="218" font-size="13" fill="#333" font-weight="700">152.55</text><text x="142" y="246" text-anchor="end" font-size="13" fill="#555">느림 · 짝 먼저</text><rect x="150" y="233" width="74.1" height="17" rx="4" fill="#f97316"/><text x="230.1" y="246" font-size="13" fill="#333" font-weight="700">83.5</text><text x="142" y="274" text-anchor="end" font-size="13" fill="#555">느림 · 큰 숫자 먼저</text><rect x="150" y="261" width="76.0" height="17" rx="4" fill="#f97316"/><text x="232.0" y="274" font-size="13" fill="#333" font-weight="700">85.66</text><text x="142" y="302" text-anchor="end" font-size="13" fill="#555">느림 · 아무 묶음이나</text><rect x="150" y="289" width="83.3" height="17" rx="4" fill="#f97316"/><text x="239.3" y="302" font-size="13" fill="#333" font-weight="700">93.91</text><text x="142" y="330" text-anchor="end" font-size="13" fill="#555">느림 · 가장 큰 네모 먼저</text><rect x="150" y="317" width="84.7" height="17" rx="4" fill="#f97316"/><text x="240.7" y="330" font-size="13" fill="#333" font-weight="700">95.42</text></svg><figcaption>전략·속도별 120초 평균 점수 (PC 판)</figcaption></figure>
+
+<h2>발견 1: 손이 빠르면 짝이 크게 이긴다</h2>
+<p>한 번에 1.5초일 때 짝 먼저 봇은 평균 <b>473.31점</b>, 큰 네모 먼저 봇은 334.54점이었습니다. 138.8점 차이인데, 이 속도에서는 어느 봇도 콤보를 끊기지 않으니 콤보 때문이 아닙니다. 차이는 판이 바닥나기 전까지 터뜨린 귤 수에서 납니다. 짝 먼저는 114.46개, 큰 네모 먼저는 97.97개였습니다.</p>
+<p>큰 네모가 작은 숫자를 먹어 치우기 때문으로 보입니다. 귤 다섯 개로 10을 만드는 네모는 1, 2, 3 같은 작은 숫자로 이루어지는데, 바로 그 작은 숫자들이 나중에 8, 9, 7과 짝을 이룰 수 있었던 숫자입니다. 일찍 써 버리면 큰 숫자들은 짝 없이 남습니다. 짝을 먼저 고르면 쓸모가 많은 작은 숫자가 판에 더 오래 남습니다.</p>
+
+<h2>발견 2: 빠른 사람은 시간보다 판이 먼저 바닥난다</h2>
+<p>빠른 속도 표에서 가장 놀라운 숫자는 마지막 칸입니다. 봇 네 개 모두 5,000판 전부에서 시간보다 둘 수 있는 묶음이 먼저 떨어졌습니다. 짝 먼저 봇은 평균 77.7초, 큰 네모 먼저 봇은 58초에 막힌 판을 만났습니다. 그 뒤로는 어떻게 네모를 그려도 합이 정확히 10이 되지 않습니다. 판을 다 비운 게임은 하나도 없었습니다. 짝 먼저 봇이 가장 잘한 판도 170개 중 164개를 터뜨리는 데 그쳤고, 보통은 56개쯤이 남았습니다.</p>
+<p>이는 점수에 천장이 있다는 뜻입니다. 충분히 빠른 사람에게 한계는 120초가 아니라 아직 짝지을 수 있는 귤이 몇 개 남았느냐이고, 그건 앞에서 무엇을 터뜨렸느냐에 달려 있습니다.</p>
+
+<h2>발견 3: 큰 네모가 시간을 잡아먹으면 차이가 더 벌어진다</h2>
+<p>크기 비례 모델에서는 짝은 여전히 콤보를 잇지만 그보다 큰 묶음은 콤보를 끊습니다. 짝 먼저 봇은 판마다 콤보가 9.97번쯤 끊기며(이 봇은 판 어디에도 짝이 없을 때만 큰 네모를 고릅니다) 304.27점으로 내려왔습니다. 큰 네모 먼저 봇은 판마다 14.6번 끊기며 152.55점까지 떨어졌습니다. 아무거나 봇은 144.44점으로 가장 낮았습니다. 이 모델에서 짝 먼저는 큰 네모 먼저의 2.0배를 얻었습니다.</p>
+
+<h2>발견 4: 콤보를 못 이으면 결론이 뒤집힌다</h2>
+<p>한 번에 3초가 걸리면 콤보가 한 번도 이어지지 않아 배율은 늘 ×1이고, 점수는 그냥 터뜨린 귤 수입니다. 이때는 순위가 뒤집힙니다. 큰 네모 먼저가 95.42점, 아무거나 93.91점, 짝 먼저는 83.5점뿐이었습니다. 120초에 40번 남짓 둘 수 있으니, 셋을 잡을 수 있을 때 셋을 잡는 봇이 한 번에 더 많이 지웁니다.</p>
+<p>이 실험의 솔직한 결론은 이렇습니다. "짝을 먼저"는 언제나 맞는 규칙이 아닙니다. 2초 안에 연달아 터뜨릴 만큼 빠른 사람에게 맞는 규칙이고, 콤보 제도가 바로 그걸 노리고 만들어졌습니다. 아직 판에 익숙하지 않아 연속을 못 잇는 사람은 큰 네모를 잡아도 손해가 거의 없습니다.</p>
+
+<h2>큰 숫자를 먼저 치우면?</h2>
+<p>큰 숫자 먼저 봇은 9와 8을 살릴 수 있을 때 살리자는 생각을 시험합니다. 빠른 속도에서 463.93점으로 짝 먼저보다 조금 낮았고, 터뜨린 귤도 113.01개로 114.46개보다 적었습니다. 짝이 있는데도 8을 빼내려고 세 개짜리 네모를 고를 때가 있어서 조금 손해를 봅니다. 차이가 작아서 나쁜 습관은 아니지만 도움이 되지도 않습니다.</p>
+
+<h2>판 자체가 결정하는 몫</h2>
+<p>봇은 머뭇거리지도 숫자를 잘못 보지도 않으니, 봇의 두 게임 사이에 생기는 차이는 순전히 판에서 옵니다. 그래서 운이 얼마나 작용하는지 재기에 좋습니다. 빠른 속도의 짝 먼저 봇은 하위 10% 게임이 376점 이하, 상위 10% 게임이 571점 이상이었고, 가장 못한 게임은 201점, 가장 잘한 게임은 721점이었습니다. 평균 473.31점에 표준편차는 76.6점이었습니다.</p>
+<p>똑같은 실력이라도 숫자가 어떻게 깔렸느냐에 따라 어떤 판에서는 다른 판보다 1.5배를 얻을 수 있다는 뜻입니다. 연달아 한 두 판의 점수가 20~30점 차이 나는 건 실력이 늘었는지에 대해 거의 아무것도 말해 주지 않습니다. 한 판의 점수보다 여러 판의 평균이 훨씬 좋은 잣대이고, 랭킹도 마찬가지입니다. 최고 점수에는 실력과 함께 좋은 판의 몫도 들어 있습니다.</p>
+<p>느린 모델은 반대쪽을 보여 줍니다. 한 번에 3초면 짝 먼저 봇의 점수는 대부분 80~88점의 훨씬 좁은 범위에 모였습니다. 대부분의 게임에서 판보다 시계가 먼저 한계가 됐고, 한 번 터뜨릴 때마다 귤 하나당 똑같이 1점을 얻었기 때문입니다.</p>
+
+<h2>휴대폰 판</h2>
+<p>12×14 휴대폰 판도 거의 같은 그림입니다. 빠른 속도에서 짝 먼저 470.04점, 큰 네모 먼저 331.57점이었고, 느린 모델에서는 역시 큰 네모 먼저가 94.92점으로 짝 먼저(83.49점)를 이겼습니다.</p>
+<div class="tbl-wrap"><table><thead><tr><th>전략</th><th>평균 점수</th><th>하위 10%–상위 10%</th><th>터뜨린 귤</th><th>터뜨린 횟수</th><th>최장 콤보</th><th>수가 바닥난 판</th></tr></thead><tbody><tr><td>짝 먼저</td><td><b>302.11</b></td><td>231–372</td><td>112.82</td><td>51.19</td><td>35.19</td><td>88.94%</td></tr><tr><td>큰 숫자 먼저</td><td><b>208.86</b></td><td>161–265</td><td>111.7</td><td>50.38</td><td>18.78</td><td>91.6%</td></tr><tr><td>아무 묶음이나</td><td><b>143</b></td><td>118–169</td><td>102.54</td><td>43.08</td><td>9.06</td><td>99.86%</td></tr><tr><td>가장 큰 네모 먼저</td><td><b>151.92</b></td><td>120–191</td><td>97.3</td><td>38.4</td><td>15.19</td><td>100%</td></tr></tbody></table></div>
+
+<h2>봇이 알려 주지 못하는 것</h2>
+<p>이 봇들은 가능한 묶음을 한눈에 전부 봅니다. 사람은 그렇지 않고, 다음 짝을 찾는 시간은 판이 얼마나 복잡한지, 얼마나 지쳤는지, 마우스인지 엄지인지에 따라 달라집니다. 그래서 속도 모델을 측정값이 아니라 가정이라고 밝혔고, 빠른 모델의 점수가 대부분의 사람이 내는 점수보다 높을 것도 그 때문입니다. 이 실험이 믿을 만하게 보여 주는 건 효과의 방향입니다. 속도마다 어떤 전략이 무엇을 이기는지, 그리고 왜 그런지입니다. 이를 습관으로 바꾸는 방법은 <a href="/ko/strategy">공략</a>에, 봇이 따른 규칙은 <a href="/ko/how-to-play">게임 방법</a>에 있습니다.</p>
+<h2>이 숫자를 다시 만들어 보려면</h2>
+<p>이 페이지의 수치는 모두 Node.js로 돌리는 스크립트 하나, <code>scripts/simulate.mjs</code>에서 나왔습니다. 게임의 <code>makeBoard</code> 한 줄(칸마다 <code>Math.floor(난수 × 9) + 1</code>)을 그대로 옮기고, 브라우저 난수 대신 시드(20261020)를 고정한 난수를 써서 몇 번을 돌려도 같은 결과가 나오게 했습니다. 스크립트가 결과를 JSON 파일로 남기고 이 페이지는 그 파일로 만들어지기 때문에, 여기 있는 숫자 중 손으로 적은 것은 없습니다. 시드를 바꾸면 소수점 아래는 조금 달라지지만 결론은 그대로입니다.</p>
+<p><a class="cta" href="/ko/">짝 먼저 규칙 직접 해 보기</a></p>
+</main>
+<div class="wrap ad-wrap" style="display:flex;justify-content:center"><ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-vwzzWFnt83j2lDmM" data-ad-width="320" data-ad-height="50"></ins><script async src="https://t1.kakaocdn.net/kas/static/ba.min.js"></script></div>
+<footer><div class="wrap">
+  <div class="ftr-nav"><a href="/ko/">게임</a><a href="/ko/how-to-play">게임 방법</a><a href="/ko/strategy">공략</a><a href="/ko/analysis">분석</a><a href="/ko/faq">FAQ</a><a href="/ko/about">소개</a><a href="/ko/contact">문의</a><a href="/ko/privacy">개인정보처리방침</a><a href="/bot-strategies" hreflang="en">English</a></div>
+  <p class="ftr-note">Tangerine 10은 무료 브라우저 퍼즐 게임입니다. 회원가입·설치 없이 바로 할 수 있습니다. © 2026 Tangerine 10</p>
+</div></footer>
+</body>
+</html>

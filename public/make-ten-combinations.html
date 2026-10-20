@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#f97316">
+<title>Every Way to Make Ten in Tangerine 10 — Combinations and How Often They Appear</title>
+<meta name="description" content="All 29 combinations of two to five numbers from 1 to 9 that add up to ten, the exact odds of each, and how often each appears as a clearable box on a fresh Tangerine 10 board.">
+<link rel="canonical" href="https://tangerin10.web.app/make-ten-combinations">
+<link rel="alternate" hreflang="en" href="https://tangerin10.web.app/make-ten-combinations"><link rel="alternate" hreflang="ko" href="https://tangerin10.web.app/ko/make-ten-combinations"><link rel="alternate" hreflang="x-default" href="https://tangerin10.web.app/make-ten-combinations">
+<meta name="robots" content="index, follow">
+<meta name="google-site-verification" content="8nUCFYxTph7TOTN0ZC0zWvamYgyQMd026qCLSBL9YgE">
+<meta name="google-site-verification" content="WjzFs7iu4kDSzcJKM5QyAqGDAqx9J1P0uj-Ry4z1_NU">
+<meta name="google-adsense-account" content="ca-pub-5479403345572412">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Tangerine 10">
+<meta property="og:title" content="Every Way to Make Ten in Tangerine 10 — Combinations and How Often They Appear">
+<meta property="og:description" content="All 29 combinations of two to five numbers from 1 to 9 that add up to ten, the exact odds of each, and how often each appears as a clearable box on a fresh Tangerine 10 board.">
+<meta property="og:url" content="https://tangerin10.web.app/make-ten-combinations">
+<meta property="og:image" content="https://tangerin10.web.app/og-tangerin10.png?v=7">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Tangerine 10 number puzzle">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Every Way to Make Ten in Tangerine 10 — Combinations and How Often They Appear">
+<meta name="twitter:description" content="All 29 combinations of two to five numbers from 1 to 9 that add up to ten, the exact odds of each, and how often each appears as a clearable box on a fresh Tangerine 10 board.">
+<meta name="twitter:image" content="https://tangerin10.web.app/og-tangerin10.png?v=7">
+<link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/png" href="/favicon.png" sizes="512x512"><link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Outfit',-apple-system,BlinkMacSystemFont,sans-serif;color:#1a1a1a;background:#fff;line-height:1.7;-webkit-text-size-adjust:100%;}
+a{color:#f97316;}
+.wrap{max-width:780px;margin:0 auto;padding:0 20px;}
+.topbar{border-bottom:1px solid #f0f0f0;position:sticky;top:0;background:rgba(255,255,255,.95);backdrop-filter:blur(8px);z-index:20;}
+.topbar .wrap{display:flex;align-items:center;justify-content:space-between;height:56px;gap:14px;}
+.logo{display:flex;align-items:baseline;gap:5px;text-decoration:none;white-space:nowrap;}
+.logo-t{font-size:16px;font-weight:600;color:#999;}
+.logo-10{font-size:22px;font-weight:900;color:#f97316;letter-spacing:-1px;}
+.nav{display:flex;gap:2px;flex-wrap:wrap;justify-content:flex-end;}
+.nav a{font-size:13px;font-weight:600;color:#777;text-decoration:none;padding:6px 9px;border-radius:8px;white-space:nowrap;}
+.nav a:hover,.nav a.on{background:#fff4ea;color:#ea580c;}
+.crumb{font-size:12px;color:#aaa;margin:16px 0 4px;}
+.crumb a{color:#f97316;text-decoration:none;}
+h1{font-size:clamp(25px,5vw,32px);font-weight:900;letter-spacing:-.6px;margin:14px 0 8px;line-height:1.25;}
+.lead{font-size:16px;color:#666;margin-bottom:26px;line-height:1.75;}
+h2{font-size:20px;font-weight:800;margin:34px 0 12px;letter-spacing:-.3px;}
+h3{font-size:16px;font-weight:700;margin:22px 0 8px;}
+p{font-size:16px;color:#333;margin-bottom:14px;}
+ul,ol{margin:0 0 16px 20px;}
+li{font-size:15.5px;color:#333;margin-bottom:8px;line-height:1.7;}
+.box{background:#fff8f2;border:1px solid #ffe4cc;border-radius:14px;padding:18px 20px;margin:18px 0;}
+.box p:last-child,.box ul:last-child,.box li:last-child{margin-bottom:0;}
+.box strong{color:#ea580c;}
+table{width:100%;border-collapse:collapse;margin:16px 0;font-size:15px;background:#fff;border-radius:12px;overflow:hidden;border:1px solid #f0f0f0;}
+th,td{padding:11px 14px;text-align:left;border-bottom:1px solid #f5f5f5;}
+th{background:#fafafa;font-weight:700;font-size:13.5px;color:#777;}
+tr:last-child th,tr:last-child td{border-bottom:none;}
+td b{color:#ea580c;}
+.tbl-wrap{overflow-x:auto;}
+.cta{display:inline-block;background:#f97316;color:#fff;font-weight:800;font-size:16px;padding:13px 26px;border-radius:999px;text-decoration:none;margin:10px 0 6px;}
+.cta:hover{background:#ea580c;}
+.faq-q{font-weight:800;font-size:16.5px;margin:24px 0 6px;}
+.ad-wrap{margin:34px 0 0;}
+.disclose{font-size:11px;color:#c4c4c4;text-align:center;margin-top:6px;}
+footer{border-top:1px solid #f0f0f0;margin-top:36px;padding:24px 0 46px;}
+.ftr-nav{display:flex;flex-wrap:wrap;justify-content:center;gap:2px 0;}
+.ftr-nav a{font-size:12.5px;color:#888;text-decoration:none;padding:4px 9px;}
+.ftr-note{font-size:11.5px;color:#bbb;text-align:center;margin-top:10px;line-height:1.8;}
+@media(max-width:600px){.nav a{font-size:12px;padding:5px 7px;}p,li{font-size:15px;}}
+.fig{margin:20px 0;padding:14px 14px 10px;border:1px solid #f0f0f0;border-radius:14px;background:#fffdfb;}
+.fig figcaption{font-size:13px;color:#888;margin-top:8px;text-align:center;}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.88em;background:#f6f6f6;padding:1px 5px;border-radius:5px;}
+.updated{font-size:13px;color:#aaa;margin:-2px 0 18px;}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin:18px 0;}
+.card{display:block;border:1px solid #ffe4cc;background:#fff8f2;border-radius:14px;padding:16px 18px;text-decoration:none;color:#444;}
+.card b{display:block;color:#ea580c;font-size:16px;margin-bottom:6px;}
+.card span{display:block;font-size:14.5px;line-height:1.65;}
+.r-sum{background:#fff8f2;border:1px solid #ffe4cc;border-radius:12px;padding:12px 16px;font-size:14.5px;color:#7a4a1f;}
+.r-empty{color:#999;}
+</style>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Every way to make ten, and how often each one shows up","description":"All 29 combinations of two to five numbers from 1 to 9 that add up to ten, the exact odds of each, and how often each appears as a clearable box on a fresh Tangerine 10 board.","inLanguage":"en","datePublished":"2026-10-20","mainEntityOfPage":"https://tangerin10.web.app/make-ten-combinations","author":{"@type":"Organization","name":"Tangerine 10","url":"https://tangerin10.web.app"},"publisher":{"@type":"Organization","name":"Tangerine 10","url":"https://tangerin10.web.app"}}</script>
+</head>
+<body>
+<header class="topbar"><div class="wrap">
+  <a class="logo" href="/"><span class="logo-t">🍊 Tangerine</span><span class="logo-10">10</span></a>
+  <nav class="nav"><a href="/">Play</a><a href="/how-to-play">How to Play</a><a href="/strategy">Strategy</a><a href="/analysis">Analysis</a><a href="/faq">FAQ</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/ko/make-ten-combinations" hreflang="ko">한국어</a></nav>
+</div></header>
+<main class="wrap">
+
+<nav class="crumb"><a href="/">Home</a> › <a href="/analysis">Analysis</a> › Make-ten combinations</nav>
+<h1>Every way to make ten, and how often each one shows up</h1>
+<p class="lead">There are only so many ways to make ten from the numbers 1 to 9. This page lists every one of them from two to five numbers, works out exactly how likely each is, and then checks how often each actually turns up as a clearable box on 100,000 simulated Tangerine 10 boards.</p>
+
+<h2>How many combinations exist</h2>
+<p>Count the combinations as sets of numbers, ignoring order — 3+7 and 7+3 are the same thing on the board, because a box does not care which corner a number sits in. Using numbers from 1 to 9 and allowing repeats, there are exactly <b>5</b> ways to make ten with two numbers, <b>8</b> with three, <b>9</b> with four and <b>7</b> with five. That is 29 combinations in the range a player will realistically use. Beyond five numbers there are 12 more, ending with ten ones, but as the board statistics show, boxes that large almost never exist on a real board.</p>
+<div class="tbl-wrap"><table><thead><tr><th>Size</th><th>Count</th><th>Combinations</th></tr></thead><tbody><tr><td>2</td><td>5</td><td>1+9, 2+8, 3+7, 4+6, 5+5</td></tr><tr><td>3</td><td>8</td><td>1+1+8, 1+2+7, 1+3+6, 1+4+5, 2+2+6, 2+3+5, 2+4+4, 3+3+4</td></tr><tr><td>4</td><td>9</td><td>1+1+1+7, 1+1+2+6, 1+1+3+5, 1+1+4+4, 1+2+2+5, 1+2+3+4, 1+3+3+3, 2+2+2+4, 2+2+3+3</td></tr><tr><td>5</td><td>7</td><td>1+1+1+1+6, 1+1+1+2+5, 1+1+1+3+4, 1+1+2+2+4, 1+1+2+3+3, 1+2+2+2+3, 2+2+2+2+2</td></tr><tr><td>6–10</td><td>12</td><td>1+1+1+1+1+5, 1+1+1+1+2+4, 1+1+1+1+3+3, 1+1+1+2+2+3, 1+1+2+2+2+2, 1+1+1+1+1+1+4, 1+1+1+1+1+2+3, 1+1+1+1+2+2+2, 1+1+1+1+1+1+1+3, 1+1+1+1+1+1+2+2, 1+1+1+1+1+1+1+1+2, 1+1+1+1+1+1+1+1+1+1</td></tr></tbody></table></div>
+
+<h2>The full table with odds and frequency</h2>
+<p>The table below gives three numbers for each combination. <b>Orders</b> is how many different sequences of tiles produce it: 1+9 can appear as 1 then 9 or 9 then 1, so it has two, while 5+5 has only one. <b>Chance</b> is the exact probability that a group of that many random tiles is this combination, which is the number of orders divided by 9 to the power of the group size. <b>Per board</b> is how many times the combination appeared as a clearable rectangle on an average fresh desktop board in the simulation.</p>
+<div class="tbl-wrap"><table><thead><tr><th>Size</th><th>Combination</th><th>Orders</th><th>Chance for random tiles</th><th>Per fresh desktop board</th></tr></thead><tbody><tr><td>2</td><td><b>1+9</b></td><td>2</td><td>2.4691%</td><td>7.728</td></tr><tr><td>2</td><td><b>2+8</b></td><td>2</td><td>2.4691%</td><td>7.7128</td></tr><tr><td>2</td><td><b>3+7</b></td><td>2</td><td>2.4691%</td><td>7.7313</td></tr><tr><td>2</td><td><b>4+6</b></td><td>2</td><td>2.4691%</td><td>7.7337</td></tr><tr><td>2</td><td><b>5+5</b></td><td>1</td><td>1.2346%</td><td>3.8685</td></tr><tr><td>3</td><td><b>1+1+8</b></td><td>3</td><td>0.4115%</td><td>1.1778</td></tr><tr><td>3</td><td><b>1+2+7</b></td><td>6</td><td>0.823%</td><td>2.3462</td></tr><tr><td>3</td><td><b>1+3+6</b></td><td>6</td><td>0.823%</td><td>2.3558</td></tr><tr><td>3</td><td><b>1+4+5</b></td><td>6</td><td>0.823%</td><td>2.3633</td></tr><tr><td>3</td><td><b>2+2+6</b></td><td>3</td><td>0.4115%</td><td>1.1689</td></tr><tr><td>3</td><td><b>2+3+5</b></td><td>6</td><td>0.823%</td><td>2.3481</td></tr><tr><td>3</td><td><b>2+4+4</b></td><td>3</td><td>0.4115%</td><td>1.1798</td></tr><tr><td>3</td><td><b>3+3+4</b></td><td>3</td><td>0.4115%</td><td>1.1728</td></tr><tr><td>4</td><td><b>1+1+1+7</b></td><td>4</td><td>0.061%</td><td>0.2469</td></tr><tr><td>4</td><td><b>1+1+2+6</b></td><td>12</td><td>0.1829%</td><td>0.7332</td></tr><tr><td>4</td><td><b>1+1+3+5</b></td><td>12</td><td>0.1829%</td><td>0.7414</td></tr><tr><td>4</td><td><b>1+1+4+4</b></td><td>6</td><td>0.0914%</td><td>0.3673</td></tr><tr><td>4</td><td><b>1+2+2+5</b></td><td>12</td><td>0.1829%</td><td>0.7361</td></tr><tr><td>4</td><td><b>1+2+3+4</b></td><td>24</td><td>0.3658%</td><td>1.4679</td></tr><tr><td>4</td><td><b>1+3+3+3</b></td><td>4</td><td>0.061%</td><td>0.2446</td></tr><tr><td>4</td><td><b>2+2+2+4</b></td><td>4</td><td>0.061%</td><td>0.2455</td></tr><tr><td>4</td><td><b>2+2+3+3</b></td><td>6</td><td>0.0914%</td><td>0.3705</td></tr><tr><td>5</td><td><b>1+1+1+1+6</b></td><td>5</td><td>0.0085%</td><td>0.0197</td></tr><tr><td>5</td><td><b>1+1+1+2+5</b></td><td>20</td><td>0.0339%</td><td>0.0785</td></tr><tr><td>5</td><td><b>1+1+1+3+4</b></td><td>20</td><td>0.0339%</td><td>0.0793</td></tr><tr><td>5</td><td><b>1+1+2+2+4</b></td><td>30</td><td>0.0508%</td><td>0.1173</td></tr><tr><td>5</td><td><b>1+1+2+3+3</b></td><td>30</td><td>0.0508%</td><td>0.1178</td></tr><tr><td>5</td><td><b>1+2+2+2+3</b></td><td>20</td><td>0.0339%</td><td>0.0793</td></tr><tr><td>5</td><td><b>2+2+2+2+2</b></td><td>1</td><td>0.0017%</td><td>0.0037</td></tr></tbody></table></div>
+
+<h2>Why 5+5 is half as common as every other pair</h2>
+<p>All five pairs look equally simple, but they are not equally common. Each of 1+9, 2+8, 3+7 and 4+6 appeared about 7.734 times per board, while 5+5 appeared 3.8685 times — almost exactly half. The reason is the orders column. Two neighbouring cells make 1+9 if the first is 1 and the second is 9, or the other way round: two chances out of 81. They only make 5+5 if both are 5: one chance out of 81. The simulation reproduces that two-to-one ratio almost perfectly.</p>
+<p>The same effect runs through the larger combinations. Among the triples, the four with three different numbers (1+2+7, 1+3+6, 1+4+5 and 2+3+5) each have six orders and each appeared about 2.3462 times per board. Triples with a repeated number, like 1+1+8 or 2+4+4, have only three orders and appeared about half as often. Among the fours, 1+2+3+4 is the only combination with four different numbers. It has 24 orders, which makes it by far the most common four-tangerine box at 1.4679 per board.</p>
+
+<h2>The odds shrink fast with size</h2>
+<p>Add up the chances for each size and you get the probability that a random group of that many tiles makes ten at all.</p>
+<div class="tbl-wrap"><table><thead><tr><th>Group size</th><th>Ways (ordered)</th><th>Chance it adds to ten</th></tr></thead><tbody><tr><td>2</td><td>9</td><td><b>11.111%</b></td></tr><tr><td>3</td><td>36</td><td><b>4.938%</b></td></tr><tr><td>4</td><td>84</td><td><b>1.280%</b></td></tr><tr><td>5</td><td>126</td><td><b>0.213%</b></td></tr></tbody></table></div>
+<figure class="fig"><svg viewBox="0 0 640 120" role="img" aria-label="Chance that a random group of tiles adds up to exactly ten" style="width:100%;height:auto;display:block"><text x="142" y="22" text-anchor="end" font-size="13" fill="#555">2 tiles</text><rect x="150" y="9" width="420.0" height="17" rx="4" fill="#f97316"/><text x="576.0" y="22" font-size="13" fill="#333" font-weight="700">11.111%</text><text x="142" y="50" text-anchor="end" font-size="13" fill="#555">3 tiles</text><rect x="150" y="37" width="186.7" height="17" rx="4" fill="#f97316"/><text x="342.7" y="50" font-size="13" fill="#333" font-weight="700">4.938%</text><text x="142" y="78" text-anchor="end" font-size="13" fill="#555">4 tiles</text><rect x="150" y="65" width="48.4" height="17" rx="4" fill="#f97316"/><text x="204.4" y="78" font-size="13" fill="#333" font-weight="700">1.280%</text><text x="142" y="106" text-anchor="end" font-size="13" fill="#555">5 tiles</text><rect x="150" y="93" width="8.1" height="17" rx="4" fill="#f97316"/><text x="164.1" y="106" font-size="13" fill="#333" font-weight="700">0.213%</text></svg><figcaption>Chance that a random group of tiles adds up to exactly ten</figcaption></figure>
+<p>Two random tiles make ten one time in nine. Three random tiles do it about one time in twenty. By five tiles the chance has dropped to roughly one in five hundred. On top of that, a larger group also needs the right shape: on a fresh board, five tiles in a box means a 1×5 strip, since 5 is prime and nothing else fits. That double squeeze is why a fresh board offers dozens of pairs and usually no five-tangerine box at all.</p>
+
+<h2>Which combinations really appear on a board</h2>
+<p>Put the two effects together and you get the list of the most common boxes on a fresh desktop board. These twelve make up the large majority of all opening moves.</p>
+<figure class="fig"><svg viewBox="0 0 640 344" role="img" aria-label="Most common make-ten boxes on a fresh desktop board (per board)" style="width:100%;height:auto;display:block"><text x="142" y="22" text-anchor="end" font-size="13" fill="#555">4+6</text><rect x="150" y="9" width="420.0" height="17" rx="4" fill="#f97316"/><text x="576.0" y="22" font-size="13" fill="#333" font-weight="700">7.734</text><text x="142" y="50" text-anchor="end" font-size="13" fill="#555">3+7</text><rect x="150" y="37" width="419.8" height="17" rx="4" fill="#f97316"/><text x="575.8" y="50" font-size="13" fill="#333" font-weight="700">7.731</text><text x="142" y="78" text-anchor="end" font-size="13" fill="#555">1+9</text><rect x="150" y="65" width="419.7" height="17" rx="4" fill="#f97316"/><text x="575.7" y="78" font-size="13" fill="#333" font-weight="700">7.728</text><text x="142" y="106" text-anchor="end" font-size="13" fill="#555">2+8</text><rect x="150" y="93" width="418.9" height="17" rx="4" fill="#f97316"/><text x="574.9" y="106" font-size="13" fill="#333" font-weight="700">7.713</text><text x="142" y="134" text-anchor="end" font-size="13" fill="#555">5+5</text><rect x="150" y="121" width="210.1" height="17" rx="4" fill="#f97316"/><text x="366.1" y="134" font-size="13" fill="#333" font-weight="700">3.868</text><text x="142" y="162" text-anchor="end" font-size="13" fill="#555">1+4+5</text><rect x="150" y="149" width="128.3" height="17" rx="4" fill="#f97316"/><text x="284.3" y="162" font-size="13" fill="#333" font-weight="700">2.363</text><text x="142" y="190" text-anchor="end" font-size="13" fill="#555">1+3+6</text><rect x="150" y="177" width="127.9" height="17" rx="4" fill="#f97316"/><text x="283.9" y="190" font-size="13" fill="#333" font-weight="700">2.356</text><text x="142" y="218" text-anchor="end" font-size="13" fill="#555">2+3+5</text><rect x="150" y="205" width="127.5" height="17" rx="4" fill="#f97316"/><text x="283.5" y="218" font-size="13" fill="#333" font-weight="700">2.348</text><text x="142" y="246" text-anchor="end" font-size="13" fill="#555">1+2+7</text><rect x="150" y="233" width="127.4" height="17" rx="4" fill="#f97316"/><text x="283.4" y="246" font-size="13" fill="#333" font-weight="700">2.346</text><text x="142" y="274" text-anchor="end" font-size="13" fill="#555">1+2+3+4</text><rect x="150" y="261" width="79.7" height="17" rx="4" fill="#f97316"/><text x="235.7" y="274" font-size="13" fill="#333" font-weight="700">1.468</text><text x="142" y="302" text-anchor="end" font-size="13" fill="#555">2+4+4</text><rect x="150" y="289" width="64.1" height="17" rx="4" fill="#f97316"/><text x="220.1" y="302" font-size="13" fill="#333" font-weight="700">1.18</text><text x="142" y="330" text-anchor="end" font-size="13" fill="#555">1+1+8</text><rect x="150" y="317" width="64.0" height="17" rx="4" fill="#f97316"/><text x="220.0" y="330" font-size="13" fill="#333" font-weight="700">1.178</text></svg><figcaption>Most common make-ten boxes on a fresh desktop board (per board)</figcaption></figure>
+<p>Four pairs share the top spots, then 5+5, then the four triples with all-different numbers, then 1+2+3+4. Every combination that involves a repeated number sits lower than its all-different neighbours, for the same reason 5+5 trails the other pairs.</p>
+
+<h2>How much of the board a short list covers</h2>
+<p>Because a few combinations are so much more common than the rest, a short list covers most of what a fresh board offers. The table adds up the per-board frequencies above and divides by the total number of moves on an average desktop board (54.65).</p>
+<div class="tbl-wrap"><table><thead><tr><th>Combinations you know</th><th>How many</th><th>Share of all opening moves they cover</th></tr></thead><tbody><tr><td>The five pairs</td><td>5</td><td><b>63.6%</b></td></tr><tr><td>+ the four all-different triples</td><td>9</td><td><b>80.9%</b></td></tr><tr><td>+ the other four triples</td><td>13</td><td><b>89.5%</b></td></tr><tr><td>+ 1+2+3+4</td><td>14</td><td><b>92.1%</b></td></tr></tbody></table></div>
+<p>The five pairs alone account for about 64% of the moves on an opening board. Adding just four triples lifts that to 81%, and with fourteen combinations in total you have seen 92% of everything a fresh board contains. The other 15 combinations of four or five numbers, plus the 12 longer ones, share what is left. This is the strongest argument in the data for learning a small set well rather than a large set loosely: those extra 15 combinations would add only a few percentage points of coverage while costing search time on every drag.</p>
+<p>The coverage also explains a common experience in the first few games. New players often find the board "full of almost-tens" — a 4 next to a 5, a 3 next to an 8. Those near misses are not bad luck. With only one pair in nine adjacent links making exactly ten, eight in nine do not, and most of those land close to ten simply because most pairs of numbers from 1 to 9 add up to something between 6 and 14.</p>
+
+<h2>Combinations during a game, not just at the start</h2>
+<p>A fresh board has no holes. As tangerines are cleared, rectangles start to stretch over empty cells, and combinations that were impossible become reachable. The bot experiment records the size of every move each bot made. A bot that always picks the biggest available box made 59.63% of its moves with pairs, 28.96% with three tangerines, 9.97% with four and 1.45% with five or more — even while actively searching for large boxes. A bot that prefers pairs made 80.28% of its moves with pairs. Large combinations are not just rare at the start; they stay rare for the whole game.</p>
+
+<h2>Using the list</h2>
+<p>You do not need to memorise all 41 combinations. The data says the five pairs and four all-different triples cover almost everything a board offers. How to train your eye on those is covered in the <a href="/strategy">strategy guide</a>, and the full statistics of a fresh board, including how often each digit is stranded, are on the <a href="/board-statistics">board statistics</a> page.</p>
+<h2>Reproducing these numbers</h2>
+<p>Everything on this page comes from one script, <code>scripts/simulate.mjs</code>, run with Node.js. It copies the game's <code>makeBoard</code> line exactly — each cell gets <code>Math.floor(random × 9) + 1</code> — but swaps the browser's random number generator for a seeded one (seed 20261020) so the same run produces the same numbers every time. The script writes its results to a JSON file, and this page is built from that file, so no figure here was typed by hand. Change the seed and the decimals will move a little; the conclusions will not.</p>
+<p><a class="cta" href="/">Spot some combinations</a></p>
+</main>
+<div class="wrap ad-wrap" style="display:flex;justify-content:center"><ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-vwzzWFnt83j2lDmM" data-ad-width="320" data-ad-height="50"></ins><script async src="https://t1.kakaocdn.net/kas/static/ba.min.js"></script></div>
+<footer><div class="wrap">
+  <div class="ftr-nav"><a href="/">Play</a><a href="/how-to-play">How to Play</a><a href="/strategy">Strategy</a><a href="/analysis">Analysis</a><a href="/faq">FAQ</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/privacy">Privacy Policy</a><a href="/ko/make-ten-combinations" hreflang="ko">한국어</a></div>
+  <p class="ftr-note">Tangerine 10 is a free browser puzzle game. No sign-up, no download. © 2026 Tangerine 10</p>
+</div></footer>
+</body>
+</html>

@@ -70,6 +70,14 @@ footer{border-top:1px solid #f0f0f0;margin-top:36px;padding:24px 0 46px;}
 .ftr-nav a{font-size:12.5px;color:#888;text-decoration:none;padding:4px 9px;}
 .ftr-note{font-size:11.5px;color:#bbb;text-align:center;margin-top:10px;line-height:1.8;}
 @media(max-width:600px){.nav a{font-size:12px;padding:5px 7px;}p,li{font-size:15px;}}
+.fig{margin:20px 0;padding:14px 14px 10px;border:1px solid #f0f0f0;border-radius:14px;background:#fffdfb;}
+.fig figcaption{font-size:13px;color:#888;margin-top:8px;text-align:center;}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.88em;background:#f6f6f6;padding:1px 5px;border-radius:5px;}
+.updated{font-size:13px;color:#aaa;margin:-2px 0 18px;}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin:18px 0;}
+.card{display:block;border:1px solid #ffe4cc;background:#fff8f2;border-radius:14px;padding:16px 18px;text-decoration:none;color:#444;}
+.card b{display:block;color:#ea580c;font-size:16px;margin-bottom:6px;}
+.card span{display:block;font-size:14.5px;line-height:1.65;}
 .r-sum{background:#fff8f2;border:1px solid #ffe4cc;border-radius:12px;padding:12px 16px;font-size:14.5px;color:#7a4a1f;}
 .r-empty{color:#999;}
 </style>
@@ -78,7 +86,7 @@ footer{border-top:1px solid #f0f0f0;margin-top:36px;padding:24px 0 46px;}
 <body>
 <header class="topbar"><div class="wrap">
   <a class="logo" href="/"><span class="logo-t">🍊 Tangerine</span><span class="logo-10">10</span></a>
-  <nav class="nav"><a href="/">Play</a><a href="/how-to-play" class="on">How to Play</a><a href="/strategy">Strategy</a><a href="/faq">FAQ</a><a href="/records">Records</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/ko/how-to-play" hreflang="ko">한국어</a></nav>
+  <nav class="nav"><a href="/">Play</a><a href="/how-to-play" class="on">How to Play</a><a href="/strategy">Strategy</a><a href="/analysis">Analysis</a><a href="/faq">FAQ</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/ko/how-to-play" hreflang="ko">한국어</a></nav>
 </div></header>
 <main class="wrap">
 
@@ -87,13 +95,16 @@ footer{border-top:1px solid #f0f0f0;margin-top:36px;padding:24px 0 46px;}
 <p class="lead">Tangerine 10 is a two-minute number puzzle. You drag a box around tangerines whose numbers add up to exactly ten, and they pop. Here is every rule, including the ones the game never spells out.</p>
 
 <h2>The board</h2>
-<p>Every game starts with a fresh grid of tangerines. Each one carries a number from 1 to 9, drawn at random, so no two games are ever the same. The grid size depends on your screen.</p>
+<p>Every game starts with a fresh grid of tangerines. Each one carries a number from 1 to 9, drawn at random, so no two games are ever the same. The grid size depends on how wide your browser window is.</p>
 <div class="tbl-wrap"><table><tbody>
-<tr><th>Desktop</th><td>10 rows × 17 columns — <b>170 tangerines</b></td></tr>
-<tr><th>Mobile</th><td>12 rows × 14 columns — <b>168 tangerines</b></td></tr>
+<tr><th>Computers and most tablets</th><td>10 rows × 17 columns — <b>170 tangerines</b></td></tr>
+<tr><th>Phones (window 600 px wide or less)</th><td>12 rows × 14 columns — <b>168 tangerines</b></td></tr>
 <tr><th>Numbers</th><td>1 to 9, randomly distributed</td></tr>
 <tr><th>Time limit</th><td><b>120 seconds</b></td></tr>
 </tbody></table></div>
+
+<h3>Which board does a tablet get?</h3>
+<p>The game picks the board once, when the page loads, from the width of the browser window in CSS pixels. A window 600 pixels wide or narrower gets the 12 × 14 phone board; anything wider gets the 10 × 17 board. Tablets report widths well above 600 even in portrait — an iPad in portrait is 768 pixels wide or more — so tablets get the 17-column board, scaled down to fit the screen. Rotating the device or resizing the window does not change the board until you reload the page. A small tablet held in portrait shows fairly small tangerines; turning it to landscape before the page loads gives each tangerine more room.</p>
 
 <h2>The one rule that matters</h2>
 <p>Press and drag to draw a rectangle across the board. Every tangerine whose center falls inside that rectangle gets selected. When you release, the game adds up the selected numbers. If the total is <b>exactly 10</b>, those tangerines pop and you score. If it is 9, or 11, or anything else, nothing happens and you try again.</p>
@@ -130,19 +141,24 @@ footer{border-top:1px solid #f0f0f0;margin-top:36px;padding:24px 0 46px;}
 <h2>Controls</h2>
 <ul>
   <li><b>Mouse:</b> hold the left button, drag a box, release to submit the selection.</li>
-  <li><b>Touch:</b> press and drag with one finger. The board does not scroll while you drag, so you can start a box anywhere.</li>
-  <li><b>Restart:</b> the circular arrow button in the top bar starts a new board immediately.</li>
+  <li><b>Touch:</b> press and drag with one finger. While a game is running, a touch that starts on the board draws a box instead of scrolling the page. Touches anywhere else scroll as usual.</li>
+  <li><b>Restart:</b> the circular arrow button in the top bar ends the current game straight away and shows the result card. Press Play Again for a new board.</li>
 </ul>
 
 <h2>When the game ends</h2>
-<p>At 120 seconds the board locks and your score is final. The game shows how many tangerines you cleared, saves the run to your local history, and submits the score to the global leaderboard. Your history lives in your own browser, so clearing site data will erase it.</p>
+<p>At 120 seconds the board locks, your score is final, and a result card appears over the board.</p>
+<ul>
+  <li><b>My History</b> adds the run to a list of your last five games. The list exists only while the page is open; it is not stored on your device, so reloading the page clears it.</li>
+  <li><b>The leaderboard is not automatic.</b> If your score beats the current third place, a name box appears on the result card. Type a name and press <b>Save &amp; Play Again</b> — only then is the score uploaded. An empty box is saved as "Player". If you close the page or press nothing, the score is not sent anywhere.</li>
+  <li>Scores that do not reach the top three show the current best score instead, and the button simply starts a new board.</li>
+</ul>
 <p><a class="cta" href="/">Play Tangerine 10</a></p>
 <p>New to the game? Read the <a href="/strategy">strategy guide</a> next — it explains why chasing big rectangles is usually the wrong instinct.</p>
 
 </main>
 <div class="wrap ad-wrap" style="display:flex;justify-content:center"><ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-vwzzWFnt83j2lDmM" data-ad-width="320" data-ad-height="50"></ins><script async src="https://t1.kakaocdn.net/kas/static/ba.min.js"></script></div>
 <footer><div class="wrap">
-  <div class="ftr-nav"><a href="/">Play</a><a href="/how-to-play">How to Play</a><a href="/strategy">Strategy</a><a href="/faq">FAQ</a><a href="/records">Records</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/privacy">Privacy Policy</a><a href="/ko/how-to-play" hreflang="ko">한국어</a></div>
+  <div class="ftr-nav"><a href="/">Play</a><a href="/how-to-play">How to Play</a><a href="/strategy">Strategy</a><a href="/analysis">Analysis</a><a href="/faq">FAQ</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/privacy">Privacy Policy</a><a href="/ko/how-to-play" hreflang="ko">한국어</a></div>
   <p class="ftr-note">Tangerine 10 is a free browser puzzle game. No sign-up, no download. © 2026 Tangerine 10</p>
 </div></footer>
 </body>

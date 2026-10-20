@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#f97316">
-<title>About Tangerine 10 — Who Makes This Game</title>
-<meta name="description" content="Who builds Tangerine 10, why a 120-second make-ten puzzle, how scores are stored, what the game costs, and how to get in touch.">
+<title>About Tangerine 10 — Who Runs It and How It Is Made</title>
+<meta name="description" content="Who runs Tangerine 10, how the game and this site are made (including the use of an AI coding assistant), how scores are stored, and where ads appear.">
 <link rel="canonical" href="https://tangerin10.web.app/about">
 <link rel="alternate" hreflang="en" href="https://tangerin10.web.app/about"><link rel="alternate" hreflang="ko" href="https://tangerin10.web.app/ko/about"><link rel="alternate" hreflang="x-default" href="https://tangerin10.web.app/about">
 <meta name="robots" content="index, follow">
@@ -14,8 +14,8 @@
 <meta name="google-adsense-account" content="ca-pub-5479403345572412">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Tangerine 10">
-<meta property="og:title" content="About Tangerine 10 — Who Makes This Game">
-<meta property="og:description" content="Who builds Tangerine 10, why a 120-second make-ten puzzle, how scores are stored, what the game costs, and how to get in touch.">
+<meta property="og:title" content="About Tangerine 10 — Who Runs It and How It Is Made">
+<meta property="og:description" content="Who runs Tangerine 10, how the game and this site are made (including the use of an AI coding assistant), how scores are stored, and where ads appear.">
 <meta property="og:url" content="https://tangerin10.web.app/about">
 <meta property="og:image" content="https://tangerin10.web.app/og-tangerin10.png?v=7">
 <meta property="og:image:width" content="1200">
@@ -23,8 +23,8 @@
 <meta property="og:image:alt" content="Tangerine 10 number puzzle">
 <meta property="og:locale" content="en_US">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="About Tangerine 10 — Who Makes This Game">
-<meta name="twitter:description" content="Who builds Tangerine 10, why a 120-second make-ten puzzle, how scores are stored, what the game costs, and how to get in touch.">
+<meta name="twitter:title" content="About Tangerine 10 — Who Runs It and How It Is Made">
+<meta name="twitter:description" content="Who runs Tangerine 10, how the game and this site are made (including the use of an AI coding assistant), how scores are stored, and where ads appear.">
 <meta name="twitter:image" content="https://tangerin10.web.app/og-tangerin10.png?v=7">
 <link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/png" href="/favicon.png" sizes="512x512"><link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">
@@ -70,6 +70,14 @@ footer{border-top:1px solid #f0f0f0;margin-top:36px;padding:24px 0 46px;}
 .ftr-nav a{font-size:12.5px;color:#888;text-decoration:none;padding:4px 9px;}
 .ftr-note{font-size:11.5px;color:#bbb;text-align:center;margin-top:10px;line-height:1.8;}
 @media(max-width:600px){.nav a{font-size:12px;padding:5px 7px;}p,li{font-size:15px;}}
+.fig{margin:20px 0;padding:14px 14px 10px;border:1px solid #f0f0f0;border-radius:14px;background:#fffdfb;}
+.fig figcaption{font-size:13px;color:#888;margin-top:8px;text-align:center;}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.88em;background:#f6f6f6;padding:1px 5px;border-radius:5px;}
+.updated{font-size:13px;color:#aaa;margin:-2px 0 18px;}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin:18px 0;}
+.card{display:block;border:1px solid #ffe4cc;background:#fff8f2;border-radius:14px;padding:16px 18px;text-decoration:none;color:#444;}
+.card b{display:block;color:#ea580c;font-size:16px;margin-bottom:6px;}
+.card span{display:block;font-size:14.5px;line-height:1.65;}
 .r-sum{background:#fff8f2;border:1px solid #ffe4cc;border-radius:12px;padding:12px 16px;font-size:14.5px;color:#7a4a1f;}
 .r-empty{color:#999;}
 </style>
@@ -78,41 +86,43 @@ footer{border-top:1px solid #f0f0f0;margin-top:36px;padding:24px 0 46px;}
 <body>
 <header class="topbar"><div class="wrap">
   <a class="logo" href="/"><span class="logo-t">🍊 Tangerine</span><span class="logo-10">10</span></a>
-  <nav class="nav"><a href="/">Play</a><a href="/how-to-play">How to Play</a><a href="/strategy">Strategy</a><a href="/faq">FAQ</a><a href="/records">Records</a><a href="/about" class="on">About</a><a href="/contact">Contact</a><a href="/ko/about" hreflang="ko">한국어</a></nav>
+  <nav class="nav"><a href="/">Play</a><a href="/how-to-play">How to Play</a><a href="/strategy">Strategy</a><a href="/analysis">Analysis</a><a href="/faq">FAQ</a><a href="/about" class="on">About</a><a href="/contact">Contact</a><a href="/ko/about" hreflang="ko">한국어</a></nav>
 </div></header>
 <main class="wrap">
 
 <h1>About Tangerine 10</h1>
-<p class="updated">Last updated: September 30, 2026</p>
+<p class="updated">Last updated: October 20, 2026</p>
 
 <h2>What this is</h2>
 <p>Tangerine 10 is a free browser puzzle. A grid fills with numbered tangerines, and you drag a rectangle around any group whose numbers add up to exactly ten. Clear as many as you can before the 120-second timer runs out. There is no sign-up, no download, and no app store.</p>
-<p>The rule is old — the same make-ten mechanic has appeared in arcade and mobile games for years. What this version adds is a short, honest format: two minutes, one board, a score you can compare. No lives to wait for, no currency to buy, no tutorial to sit through.</p>
+<p>The make-ten rule is not new: puzzles where you drag a box over numbers that add up to ten are often called the apple game or fruit box. This version keeps the format short — two minutes, one board, a score you can compare — and adds a combo multiplier that rewards clearing without pauses.</p>
 
-<h2>Who makes it</h2>
-<p>Tangerine 10 is built and run by one person, a software engineer based in Seoul who builds small web projects outside of work. It is not a studio, a startup, or a company. There is no team behind the game and no investor to answer to.</p>
-<p>That matters for what you can expect. Bugs get fixed when there is time. Features arrive slowly, if at all. Nothing gets shut down abruptly to chase a business model.</p>
+<h2>Who runs it</h2>
+<p>Tangerine 10 is made and run by one person, a software engineer in Seoul, as a personal side project outside of work. It is not a company product and has no team or investors behind it. The operator can be reached at <a href="mailto:comeonyourboyz@gmail.com">comeonyourboyz@gmail.com</a> or through the <a href="/contact">contact page</a>.</p>
+<p>Because it is a one-person project, bug fixes and new features arrive when there is time.</p>
 
-<h2>Why it was made this way</h2>
-<p><b>Two minutes, not twenty.</b> The timer is short on purpose. A puzzle you can finish during a coffee break gets played; one that demands a session gets closed.</p>
-<p><b>No account.</b> Asking for an email before someone has played a single round is a bad trade. Scores are saved without one.</p>
-<p><b>It works on a phone.</b> The board is sized to be tapped with a thumb. Most people who open the game are on a phone, so that is the case it is built for first.</p>
+<h2>How it is made</h2>
+<p>The game and this website were built with substantial help from an AI coding assistant (Anthropic's Claude). The assistant wrote much of the code and the first drafts of these pages. The operator decides what gets built, checks the rules against the game's actual code, plays and tests every change, and is responsible for everything published here.</p>
+<p>The figures on the <a href="/analysis">analysis pages</a> are not AI estimates. They are the output of a simulation script that runs the game's own board code — 100,000 boards and thousands of automatic games — and those pages are generated directly from the script's output file.</p>
 
-<h2>How scores work</h2>
-<p>Your score comes from the number of tiles you clear, multiplied by a combo bonus that grows while you keep clearing without pausing. Speed beats size — several quick pairs usually outscore one large rectangle.</p>
-<p>High scores are stored in Firebase Realtime Database with whatever ranking name you type. Your own recent sessions are kept in your browser's local storage and never leave your device. No email address, phone number, or account identity is collected at any point. The <a href="/privacy">privacy policy</a> covers this in full.</p>
+<h2>Why it works this way</h2>
+<p><b>Two minutes, not twenty.</b> The timer is short on purpose, so a game fits into a short break.</p>
+<p><b>No account.</b> You can play without giving any personal information. Saving a leaderboard score only needs a name you make up.</p>
+<p><b>It works on a phone.</b> On narrow screens the board switches to a 12 × 14 layout so each tangerine stays large enough to drag with a thumb.</p>
 
-<h2>What it costs</h2>
-<p>The game is free and always will be. There is nothing to buy inside it — no hints, no extra time, no cosmetic items. Hosting is paid for out of pocket, and advertising is meant to offset that. Ads are placed at the edges of the page, never inside the board or between rounds, because an ad that interrupts a 120-second game ruins the game.</p>
+<h2>How scores are stored</h2>
+<p>When your score reaches the top three and you choose to save it, the name you typed, the score and the date are stored in Firebase Realtime Database and shown on the leaderboard. The My History panel exists only in the open page and is not stored anywhere. No email address, phone number or account identity is collected at any point. The <a href="/privacy">privacy policy</a> covers this in full.</p>
 
-<h2>Getting in touch</h2>
-<p>Found a bug, hit a score that looks wrong, or want to suggest something? Corrections are welcome — if a rule on <a href="/how-to-play">How to Play</a> or an answer in the <a href="/faq">FAQ</a> is wrong or unclear, saying so is genuinely useful.</p>
-<p>See the <a href="/contact">contact page</a> for how to reach the person who runs this.</p>
+<h2>Advertising</h2>
+<p>The game is free and there is nothing to buy inside it — no hints, no extra time, no cosmetic items. Hosting is paid for out of pocket, and advertising helps offset that. Ads appear below the page content, never over the board or between rounds. This page, the contact page, the privacy policy and the error page carry no ads.</p>
+
+<h2>Corrections</h2>
+<p>If a rule on <a href="/how-to-play">How to Play</a> or an answer in the <a href="/faq">FAQ</a> is wrong or unclear, please say so through the <a href="/contact">contact page</a>.</p>
 
 </main>
-<div class="wrap ad-wrap" style="display:flex;justify-content:center"><ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-vwzzWFnt83j2lDmM" data-ad-width="320" data-ad-height="50"></ins><script async src="https://t1.kakaocdn.net/kas/static/ba.min.js"></script></div>
+
 <footer><div class="wrap">
-  <div class="ftr-nav"><a href="/">Play</a><a href="/how-to-play">How to Play</a><a href="/strategy">Strategy</a><a href="/faq">FAQ</a><a href="/records">Records</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/privacy">Privacy Policy</a><a href="/ko/about" hreflang="ko">한국어</a></div>
+  <div class="ftr-nav"><a href="/">Play</a><a href="/how-to-play">How to Play</a><a href="/strategy">Strategy</a><a href="/analysis">Analysis</a><a href="/faq">FAQ</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/privacy">Privacy Policy</a><a href="/ko/about" hreflang="ko">한국어</a></div>
   <p class="ftr-note">Tangerine 10 is a free browser puzzle game. No sign-up, no download. © 2026 Tangerine 10</p>
 </div></footer>
 </body>

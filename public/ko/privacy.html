@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#f97316">
 <title>개인정보처리방침 — 귤게임 Tangerine 10</title>
-<meta name="description" content="귤게임 Tangerine 10이 저장하는 정보와 쿠키·광고 처리 방침.">
+<meta name="description" content="귤게임 Tangerine 10이 저장하는 정보, Google 애드센스 등 광고 쿠키 사용과 맞춤 광고 거부 방법, 랭킹 기록 삭제 방법.">
 <link rel="canonical" href="https://tangerin10.web.app/ko/privacy">
 <link rel="alternate" hreflang="ko" href="https://tangerin10.web.app/ko/privacy"><link rel="alternate" hreflang="en" href="https://tangerin10.web.app/privacy"><link rel="alternate" hreflang="x-default" href="https://tangerin10.web.app/privacy">
 <meta name="robots" content="noindex, follow">
@@ -15,7 +15,7 @@
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Tangerine 10">
 <meta property="og:title" content="개인정보처리방침 — 귤게임 Tangerine 10">
-<meta property="og:description" content="귤게임 Tangerine 10이 저장하는 정보와 쿠키·광고 처리 방침.">
+<meta property="og:description" content="귤게임 Tangerine 10이 저장하는 정보, Google 애드센스 등 광고 쿠키 사용과 맞춤 광고 거부 방법, 랭킹 기록 삭제 방법.">
 <meta property="og:url" content="https://tangerin10.web.app/ko/privacy">
 <meta property="og:image" content="https://tangerin10.web.app/og-tangerin10.png?v=7">
 <meta property="og:image:width" content="1200">
@@ -24,7 +24,7 @@
 <meta property="og:locale" content="ko_KR">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="개인정보처리방침 — 귤게임 Tangerine 10">
-<meta name="twitter:description" content="귤게임 Tangerine 10이 저장하는 정보와 쿠키·광고 처리 방침.">
+<meta name="twitter:description" content="귤게임 Tangerine 10이 저장하는 정보, Google 애드센스 등 광고 쿠키 사용과 맞춤 광고 거부 방법, 랭킹 기록 삭제 방법.">
 <meta name="twitter:image" content="https://tangerin10.web.app/og-tangerin10.png?v=7">
 <link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/png" href="/favicon.png" sizes="512x512"><link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">
@@ -70,6 +70,14 @@ footer{border-top:1px solid #f0f0f0;margin-top:36px;padding:24px 0 46px;}
 .ftr-nav a{font-size:12.5px;color:#888;text-decoration:none;padding:4px 9px;}
 .ftr-note{font-size:11.5px;color:#bbb;text-align:center;margin-top:10px;line-height:1.8;}
 @media(max-width:600px){.nav a{font-size:12px;padding:5px 7px;}p,li{font-size:15px;}}
+.fig{margin:20px 0;padding:14px 14px 10px;border:1px solid #f0f0f0;border-radius:14px;background:#fffdfb;}
+.fig figcaption{font-size:13px;color:#888;margin-top:8px;text-align:center;}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.88em;background:#f6f6f6;padding:1px 5px;border-radius:5px;}
+.updated{font-size:13px;color:#aaa;margin:-2px 0 18px;}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin:18px 0;}
+.card{display:block;border:1px solid #ffe4cc;background:#fff8f2;border-radius:14px;padding:16px 18px;text-decoration:none;color:#444;}
+.card b{display:block;color:#ea580c;font-size:16px;margin-bottom:6px;}
+.card span{display:block;font-size:14.5px;line-height:1.65;}
 .r-sum{background:#fff8f2;border:1px solid #ffe4cc;border-radius:12px;padding:12px 16px;font-size:14.5px;color:#7a4a1f;}
 .r-empty{color:#999;}
 </style>
@@ -78,30 +86,39 @@ footer{border-top:1px solid #f0f0f0;margin-top:36px;padding:24px 0 46px;}
 <body>
 <header class="topbar"><div class="wrap">
   <a class="logo" href="/ko/"><span class="logo-t">🍊 Tangerine</span><span class="logo-10">10</span></a>
-  <nav class="nav"><a href="/ko/">게임</a><a href="/ko/how-to-play">게임 방법</a><a href="/ko/strategy">공략</a><a href="/ko/faq">FAQ</a><a href="/ko/records">기록</a><a href="/ko/about">소개</a><a href="/ko/contact">문의</a><a href="/privacy" hreflang="en">English</a></nav>
+  <nav class="nav"><a href="/ko/">게임</a><a href="/ko/how-to-play">게임 방법</a><a href="/ko/strategy">공략</a><a href="/ko/analysis">분석</a><a href="/ko/faq">FAQ</a><a href="/ko/about">소개</a><a href="/ko/contact">문의</a><a href="/privacy" hreflang="en">English</a></nav>
 </div></header>
 <main class="wrap">
 
 <h1>개인정보처리방침</h1>
-<p class="updated">최종 수정: 2026년 10월 15일</p>
+<p class="updated">최종 수정: 2026년 10월 20일</p>
 
 <h2>개요</h2>
-<p>Tangerine 10(이하 "게임")은 tangerin10.web.app에서 제공하는 무료 브라우저 숫자 퍼즐 게임입니다. 이용자의 개인정보를 보호하기 위해 노력합니다.</p>
+<p>이 방침은 Tangerine 10(tangerin10.web.app, 이하 "사이트")이 무엇을 저장하는지, 어떤 외부 서비스를 쓰는지, 광고 쿠키가 어떻게 쓰이는지 설명합니다. 사이트는 개인 한 사람이 운영합니다. <a href="/ko/about">소개</a>를 봐 주세요.</p>
+
+<h2>이용 대상</h2>
+<p>Tangerine 10은 숫자 퍼즐을 좋아하는 일반 이용자를 위한 사이트입니다. 아동을 대상으로 만든 사이트가 아니며, 이용자의 나이를 묻지 않습니다.</p>
 
 <h2>수집하는 정보</h2>
-<p><b>게임 데이터:</b> 게임 점수와 랭킹에 입력한 이름은 Firebase Realtime Database에 저장됩니다. 이메일, 전화번호, 그 밖의 신원 정보는 수집하지 않습니다.</p>
-<p><b>로컬 저장소:</b> 내 최근 기록은 브라우저의 로컬 저장소에 저장합니다. 이 데이터는 이용자의 기기에만 남고 서버로 전송되지 않습니다.</p>
+<p><b>랭킹 기록.</b> 점수가 3위 안에 들고 저장하고 다시 하기를 누른 경우에만, 입력한 이름(최대 12자)과 점수, 날짜가 Google Firebase Realtime Database에 저장되고 랭킹에 공개됩니다. 실명이 보이길 원하지 않으면 별명을 쓰세요.</p>
+<p><b>게임이 수집하는 다른 정보는 없습니다.</b> 계정이 없고, 이메일이나 전화번호를 묻지 않습니다. 내 기록 칸은 열려 있는 페이지 안에만 있고 새로고침하면 사라집니다. 게임은 기기에 쿠키나 로컬 저장소를 쓰지 않습니다.</p>
 
-<h2>외부 서비스</h2>
-<p><b>카카오 애드핏:</b> 광고 게재에 카카오 애드핏을 사용합니다. 카카오는 이전 방문 기록을 바탕으로 광고를 보여 주기 위해 쿠키를 사용할 수 있습니다. <a href="https://info.ad.daum.net/optoutko.do" target="_blank" rel="noopener">카카오 맞춤형 광고 안내</a>에서 맞춤형 광고를 거부할 수 있으며, 거부해도 광고는 계속 표시되지만 관련성이 낮은 광고가 나올 수 있습니다.</p>
-<p><b>Firebase:</b> 호스팅과 데이터베이스에 Google Firebase를 사용합니다. Firebase는 <a href="https://firebase.google.com/support/privacy" target="_blank" rel="noopener">Firebase 개인정보 보호</a>에 설명된 대로 이용 데이터를 수집할 수 있습니다.</p>
-<p><b>카카오 SDK:</b> 공유 기능에 카카오 공유 SDK를 사용합니다. 공유 기능을 쓸 때는 카카오의 개인정보처리방침이 적용됩니다.</p>
+<h2>광고와 쿠키</h2>
+<p><b>Google 애드센스.</b> 이 사이트는 광고 게재에 Google 애드센스를 사용하거나 사용할 수 있습니다. Google을 비롯한 제3자 공급업체는 쿠키를 사용하여 이용자가 이 사이트나 다른 사이트를 이전에 방문한 기록을 바탕으로 광고를 게재합니다. Google은 광고 쿠키를 사용하여 이용자의 이 사이트 방문 및 인터넷의 다른 사이트 방문 기록을 바탕으로 Google과 파트너가 이용자에게 맞춤 광고를 게재할 수 있도록 합니다.</p>
+<p>맞춤 광고는 Google 광고 설정(<a href="https://adssettings.google.com" target="_blank" rel="noopener">https://adssettings.google.com</a>)에서 사용 중지할 수 있습니다. 제3자 공급업체의 맞춤 광고용 쿠키 사용은 <a href="https://www.aboutads.info/choices" target="_blank" rel="noopener">https://www.aboutads.info/choices</a>에서 사용 중지할 수 있습니다. Google이 파트너 사이트의 정보를 어떻게 쓰는지는 <a href="https://policies.google.com/technologies/partner-sites" target="_blank" rel="noopener">policies.google.com/technologies/partner-sites</a>에 설명되어 있습니다.</p>
+<p><b>카카오 애드핏.</b> 일부 페이지에는 카카오 애드핏 광고가 나옵니다. 카카오는 이전 방문 기록을 바탕으로 광고를 보여 주기 위해 쿠키를 사용할 수 있습니다. <a href="https://info.ad.daum.net/optoutko.do" target="_blank" rel="noopener">카카오 맞춤형 광고 안내</a>에서 맞춤형 광고를 거부할 수 있으며, 거부해도 광고는 계속 표시되지만 관련성이 낮은 광고가 나올 수 있습니다.</p>
+<p>사이트가 직접 쿠키를 설정하지는 않습니다. 브라우저 설정에서 쿠키를 막거나 지울 수 있고, 쿠키가 없어도 게임은 됩니다.</p>
 
-<h2>쿠키</h2>
-<p>게임이 직접 쿠키를 설정하지는 않습니다. 외부 서비스(카카오 애드핏, Firebase)가 각자의 개인정보처리방침에 따라 쿠키를 설정할 수 있습니다.</p>
+<h2>그 밖의 외부 서비스</h2>
+<p><b>Firebase(Google).</b> 사이트는 Firebase Hosting에서 제공되고 랭킹은 Firebase Realtime Database를 씁니다. 모든 웹 서버처럼 Firebase는 페이지를 열 때 IP 주소와 브라우저 정보를 받습니다. <a href="https://firebase.google.com/support/privacy" target="_blank" rel="noopener">Firebase 개인정보 보호</a>를 참고하세요.</p>
+<p><b>Google Fonts.</b> 글꼴을 Google 서버에서 불러오며, 이때 Google이 IP 주소를 받습니다.</p>
+<p><b>카카오 공유 SDK.</b> 게임 화면은 카카오 공유 라이브러리를 불러옵니다. 카카오 공유 버튼을 쓰면 카카오의 개인정보처리방침이 적용됩니다.</p>
 
 <h2>아동의 개인정보</h2>
-<p>이 게임은 모든 연령이 이용할 수 있습니다. 만 14세 미만 아동의 개인정보를 알면서 수집하지 않습니다.</p>
+<p>사이트가 일반 이용자를 대상으로 하므로 만 14세 미만 아동의 개인정보를 알면서 수집하지 않습니다. 아동을 알아볼 수 있는 이름이 랭킹에 저장된 것 같다면 메일로 알려 주세요. 지우겠습니다.</p>
+
+<h2>내 정보 지우기</h2>
+<p>랭킹 기록을 지우려면 랭킹에 보이는 이름, 점수, 날짜를 메일로 보내 주세요. 기록은 고치지 않고 지웁니다.</p>
 
 <h2>방침의 변경</h2>
 <p>이 방침은 바뀔 수 있으며, 바뀌면 수정일과 함께 이 페이지에 게시합니다.</p>
@@ -110,9 +127,9 @@ footer{border-top:1px solid #f0f0f0;margin-top:36px;padding:24px 0 46px;}
 <p>개인정보처리방침에 관한 문의는 <a href="mailto:comeonyourboyz@gmail.com">comeonyourboyz@gmail.com</a>으로 보내거나 <a href="/ko/contact">문의하기</a> 페이지를 봐 주세요.</p>
 
 </main>
-<div class="wrap ad-wrap" style="display:flex;justify-content:center"><ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-vwzzWFnt83j2lDmM" data-ad-width="320" data-ad-height="50"></ins><script async src="https://t1.kakaocdn.net/kas/static/ba.min.js"></script></div>
+
 <footer><div class="wrap">
-  <div class="ftr-nav"><a href="/ko/">게임</a><a href="/ko/how-to-play">게임 방법</a><a href="/ko/strategy">공략</a><a href="/ko/faq">FAQ</a><a href="/ko/records">기록</a><a href="/ko/about">소개</a><a href="/ko/contact">문의</a><a href="/ko/privacy">개인정보처리방침</a><a href="/privacy" hreflang="en">English</a></div>
+  <div class="ftr-nav"><a href="/ko/">게임</a><a href="/ko/how-to-play">게임 방법</a><a href="/ko/strategy">공략</a><a href="/ko/analysis">분석</a><a href="/ko/faq">FAQ</a><a href="/ko/about">소개</a><a href="/ko/contact">문의</a><a href="/ko/privacy">개인정보처리방침</a><a href="/privacy" hreflang="en">English</a></div>
   <p class="ftr-note">Tangerine 10은 무료 브라우저 퍼즐 게임입니다. 회원가입·설치 없이 바로 할 수 있습니다. © 2026 Tangerine 10</p>
 </div></footer>
 </body>

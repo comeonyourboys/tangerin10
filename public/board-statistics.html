@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#f97316">
+<title>Tangerine 10 Board Statistics — 100,000 Simulated Boards</title>
+<meta name="description" content="A simulation of 100,000 fresh Tangerine 10 boards: how many moves a new board offers, how many pairs, which digits get stranded, and how often a 9 starts with no 1 beside it.">
+<link rel="canonical" href="https://tangerin10.web.app/board-statistics">
+<link rel="alternate" hreflang="en" href="https://tangerin10.web.app/board-statistics"><link rel="alternate" hreflang="ko" href="https://tangerin10.web.app/ko/board-statistics"><link rel="alternate" hreflang="x-default" href="https://tangerin10.web.app/board-statistics">
+<meta name="robots" content="index, follow">
+<meta name="google-site-verification" content="8nUCFYxTph7TOTN0ZC0zWvamYgyQMd026qCLSBL9YgE">
+<meta name="google-site-verification" content="WjzFs7iu4kDSzcJKM5QyAqGDAqx9J1P0uj-Ry4z1_NU">
+<meta name="google-adsense-account" content="ca-pub-5479403345572412">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Tangerine 10">
+<meta property="og:title" content="Tangerine 10 Board Statistics — 100,000 Simulated Boards">
+<meta property="og:description" content="A simulation of 100,000 fresh Tangerine 10 boards: how many moves a new board offers, how many pairs, which digits get stranded, and how often a 9 starts with no 1 beside it.">
+<meta property="og:url" content="https://tangerin10.web.app/board-statistics">
+<meta property="og:image" content="https://tangerin10.web.app/og-tangerin10.png?v=7">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Tangerine 10 number puzzle">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Tangerine 10 Board Statistics — 100,000 Simulated Boards">
+<meta name="twitter:description" content="A simulation of 100,000 fresh Tangerine 10 boards: how many moves a new board offers, how many pairs, which digits get stranded, and how often a 9 starts with no 1 beside it.">
+<meta name="twitter:image" content="https://tangerin10.web.app/og-tangerin10.png?v=7">
+<link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/png" href="/favicon.png" sizes="512x512"><link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Outfit',-apple-system,BlinkMacSystemFont,sans-serif;color:#1a1a1a;background:#fff;line-height:1.7;-webkit-text-size-adjust:100%;}
+a{color:#f97316;}
+.wrap{max-width:780px;margin:0 auto;padding:0 20px;}
+.topbar{border-bottom:1px solid #f0f0f0;position:sticky;top:0;background:rgba(255,255,255,.95);backdrop-filter:blur(8px);z-index:20;}
+.topbar .wrap{display:flex;align-items:center;justify-content:space-between;height:56px;gap:14px;}
+.logo{display:flex;align-items:baseline;gap:5px;text-decoration:none;white-space:nowrap;}
+.logo-t{font-size:16px;font-weight:600;color:#999;}
+.logo-10{font-size:22px;font-weight:900;color:#f97316;letter-spacing:-1px;}
+.nav{display:flex;gap:2px;flex-wrap:wrap;justify-content:flex-end;}
+.nav a{font-size:13px;font-weight:600;color:#777;text-decoration:none;padding:6px 9px;border-radius:8px;white-space:nowrap;}
+.nav a:hover,.nav a.on{background:#fff4ea;color:#ea580c;}
+.crumb{font-size:12px;color:#aaa;margin:16px 0 4px;}
+.crumb a{color:#f97316;text-decoration:none;}
+h1{font-size:clamp(25px,5vw,32px);font-weight:900;letter-spacing:-.6px;margin:14px 0 8px;line-height:1.25;}
+.lead{font-size:16px;color:#666;margin-bottom:26px;line-height:1.75;}
+h2{font-size:20px;font-weight:800;margin:34px 0 12px;letter-spacing:-.3px;}
+h3{font-size:16px;font-weight:700;margin:22px 0 8px;}
+p{font-size:16px;color:#333;margin-bottom:14px;}
+ul,ol{margin:0 0 16px 20px;}
+li{font-size:15.5px;color:#333;margin-bottom:8px;line-height:1.7;}
+.box{background:#fff8f2;border:1px solid #ffe4cc;border-radius:14px;padding:18px 20px;margin:18px 0;}
+.box p:last-child,.box ul:last-child,.box li:last-child{margin-bottom:0;}
+.box strong{color:#ea580c;}
+table{width:100%;border-collapse:collapse;margin:16px 0;font-size:15px;background:#fff;border-radius:12px;overflow:hidden;border:1px solid #f0f0f0;}
+th,td{padding:11px 14px;text-align:left;border-bottom:1px solid #f5f5f5;}
+th{background:#fafafa;font-weight:700;font-size:13.5px;color:#777;}
+tr:last-child th,tr:last-child td{border-bottom:none;}
+td b{color:#ea580c;}
+.tbl-wrap{overflow-x:auto;}
+.cta{display:inline-block;background:#f97316;color:#fff;font-weight:800;font-size:16px;padding:13px 26px;border-radius:999px;text-decoration:none;margin:10px 0 6px;}
+.cta:hover{background:#ea580c;}
+.faq-q{font-weight:800;font-size:16.5px;margin:24px 0 6px;}
+.ad-wrap{margin:34px 0 0;}
+.disclose{font-size:11px;color:#c4c4c4;text-align:center;margin-top:6px;}
+footer{border-top:1px solid #f0f0f0;margin-top:36px;padding:24px 0 46px;}
+.ftr-nav{display:flex;flex-wrap:wrap;justify-content:center;gap:2px 0;}
+.ftr-nav a{font-size:12.5px;color:#888;text-decoration:none;padding:4px 9px;}
+.ftr-note{font-size:11.5px;color:#bbb;text-align:center;margin-top:10px;line-height:1.8;}
+@media(max-width:600px){.nav a{font-size:12px;padding:5px 7px;}p,li{font-size:15px;}}
+.fig{margin:20px 0;padding:14px 14px 10px;border:1px solid #f0f0f0;border-radius:14px;background:#fffdfb;}
+.fig figcaption{font-size:13px;color:#888;margin-top:8px;text-align:center;}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.88em;background:#f6f6f6;padding:1px 5px;border-radius:5px;}
+.updated{font-size:13px;color:#aaa;margin:-2px 0 18px;}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin:18px 0;}
+.card{display:block;border:1px solid #ffe4cc;background:#fff8f2;border-radius:14px;padding:16px 18px;text-decoration:none;color:#444;}
+.card b{display:block;color:#ea580c;font-size:16px;margin-bottom:6px;}
+.card span{display:block;font-size:14.5px;line-height:1.65;}
+.r-sum{background:#fff8f2;border:1px solid #ffe4cc;border-radius:12px;padding:12px 16px;font-size:14.5px;color:#7a4a1f;}
+.r-empty{color:#999;}
+</style>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"What 100,000 Tangerine 10 boards look like","description":"A simulation of 100,000 fresh Tangerine 10 boards: how many moves a new board offers, how many pairs, which digits get stranded, and how often a 9 starts with no 1 beside it.","inLanguage":"en","datePublished":"2026-10-20","mainEntityOfPage":"https://tangerin10.web.app/board-statistics","author":{"@type":"Organization","name":"Tangerine 10","url":"https://tangerin10.web.app"},"publisher":{"@type":"Organization","name":"Tangerine 10","url":"https://tangerin10.web.app"}}</script>
+</head>
+<body>
+<header class="topbar"><div class="wrap">
+  <a class="logo" href="/"><span class="logo-t">🍊 Tangerine</span><span class="logo-10">10</span></a>
+  <nav class="nav"><a href="/">Play</a><a href="/how-to-play">How to Play</a><a href="/strategy">Strategy</a><a href="/analysis">Analysis</a><a href="/faq">FAQ</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/ko/board-statistics" hreflang="ko">한국어</a></nav>
+</div></header>
+<main class="wrap">
+
+<nav class="crumb"><a href="/">Home</a> › <a href="/analysis">Analysis</a> › Board statistics</nav>
+<h1>What 100,000 Tangerine 10 boards look like</h1>
+<p class="lead">Every Tangerine 10 game deals a new random board. To see what a "typical" board actually contains, we generated 100,000 desktop boards and 100,000 mobile boards with the game's own board code and counted every move available before the first drag.</p>
+
+<h2>How the simulation works</h2>
+<p>The game builds a board with one line of code: every cell receives a whole number from 1 to 9, each equally likely, independent of its neighbours. There is no shuffling of a fixed deck, no guarantee of a certain number of nines and no check that the board is solvable. The simulation reproduces that line exactly and then looks at the board the way the selection box does.</p>
+<p>A <b>move</b> here means any rectangle whose tangerines add up to exactly ten. On a fresh board nothing has been cleared yet, so a rectangle selects every tangerine inside it. That has a useful consequence: two tangerines can only be cleared together as a pair if they sit directly next to each other, horizontally or vertically. Any larger rectangle would sweep up a third tangerine. Diagonal neighbours need a 2×2 box, which always holds four numbers.</p>
+<p>Desktop boards are 10 rows by 17 columns (170 tangerines). Phones narrower than 600 pixels get 12 rows by 14 columns (168 tangerines). Both were simulated separately because the shape changes how many cells sit on an edge, and edges matter more than you might expect.</p>
+
+<h2>How many moves a new board offers</h2>
+<p>The average fresh desktop board offers <b>54.65</b> distinct rectangles that add up to ten. That number varies far less than intuition suggests. Nine boards out of ten fall between 45 and 64 moves, the thinnest board in the whole run had 25, and the richest had 89. Mobile boards are almost identical: 54.24 moves on average, between 45 and 64 for nine boards in ten.</p>
+<div class="tbl-wrap"><table><thead><tr><th></th><th>Desktop 10×17</th><th>Mobile 12×14</th></tr></thead><tbody><tr><td>All moves (mean)</td><td><b>54.65</b></td><td><b>54.24</b></td></tr><tr><td>All moves (10th–90th percentile)</td><td>45–64</td><td>45–64</td></tr><tr><td>All moves (min / max)</td><td>25 / 89</td><td>26 / 90</td></tr><tr><td>Adjacent pairs (mean)</td><td><b>34.77</b></td><td><b>34.46</b></td></tr><tr><td>Adjacent pairs (min / max)</td><td>11 / 60</td><td>14 / 61</td></tr><tr><td>Boards with no pair at all</td><td>0</td><td>0</td></tr><tr><td>Tangerines in no move at the start</td><td>75.08 of 170</td><td>73.9 of 168</td></tr></tbody></table></div>
+<p>Two figures stand out. First, pairs dominate: 34.77 of the 54.65 opening moves on a desktop board are two adjacent tangerines. Second, not a single board in 200,000 started without a pair. The leanest board still had 11 of them, so a game can never open with nothing to do.</p>
+<figure class="fig"><svg viewBox="0 0 640 260" role="img" aria-label="Share of desktop boards by number of adjacent pairs at the start" style="width:100%;height:auto;display:block"><text x="142" y="22" text-anchor="end" font-size="13" fill="#555">15–19</text><rect x="150" y="9" width="2.2" height="17" rx="4" fill="#f97316"/><text x="158.2" y="22" font-size="13" fill="#333" font-weight="700">0.2%</text><text x="142" y="50" text-anchor="end" font-size="13" fill="#555">20–24</text><rect x="150" y="37" width="35.3" height="17" rx="4" fill="#f97316"/><text x="191.3" y="50" font-size="13" fill="#333" font-weight="700">2.7%</text><text x="142" y="78" text-anchor="end" font-size="13" fill="#555">25–29</text><rect x="150" y="65" width="191.8" height="17" rx="4" fill="#f97316"/><text x="347.8" y="78" font-size="13" fill="#333" font-weight="700">14.5%</text><text x="142" y="106" text-anchor="end" font-size="13" fill="#555">30–34</text><rect x="150" y="93" width="420.0" height="17" rx="4" fill="#f97316"/><text x="576.0" y="106" font-size="13" fill="#333" font-weight="700">31.7%</text><text x="142" y="134" text-anchor="end" font-size="13" fill="#555">35–39</text><rect x="150" y="121" width="416.6" height="17" rx="4" fill="#f97316"/><text x="572.6" y="134" font-size="13" fill="#333" font-weight="700">31.4%</text><text x="142" y="162" text-anchor="end" font-size="13" fill="#555">40–44</text><rect x="150" y="149" width="201.6" height="17" rx="4" fill="#f97316"/><text x="357.6" y="162" font-size="13" fill="#333" font-weight="700">15.2%</text><text x="142" y="190" text-anchor="end" font-size="13" fill="#555">45–49</text><rect x="150" y="177" width="51.5" height="17" rx="4" fill="#f97316"/><text x="207.5" y="190" font-size="13" fill="#333" font-weight="700">3.9%</text><text x="142" y="218" text-anchor="end" font-size="13" fill="#555">50–54</text><rect x="150" y="205" width="6.8" height="17" rx="4" fill="#f97316"/><text x="162.8" y="218" font-size="13" fill="#333" font-weight="700">0.5%</text><text x="142" y="246" text-anchor="end" font-size="13" fill="#555">55–59</text><rect x="150" y="233" width="2.0" height="17" rx="4" fill="#f97316"/><text x="158.0" y="246" font-size="13" fill="#333" font-weight="700">0.1%</text></svg><figcaption>Share of desktop boards by number of adjacent pairs at the start</figcaption></figure>
+<p>The distribution is a bell curve centred in the mid-thirties. That is what you would expect from a board of 170 independent cells: a desktop board has 313 horizontal and vertical neighbour links, and each link is a pair with probability 9 in 81, or one in nine. 313 divided by nine is 34.8, and the simulation landed on 34.77. The arithmetic and the simulation agree, which is a good sign that the simulation is counting the right thing.</p>
+
+<h2>Moves by size</h2>
+<p>Larger boxes exist, but they thin out quickly. The table counts how many moves of each size an average fresh board contains.</p>
+<div class="tbl-wrap"><table><thead><tr><th>Tangerines in the box</th><th>Desktop (per board)</th><th>Mobile (per board)</th><th>Share of desktop moves</th></tr></thead><tbody><tr><td>2</td><td>34.774</td><td>34.457</td><td>63.6%</td></tr><tr><td>3</td><td>14.113</td><td>14.036</td><td>25.8%</td></tr><tr><td>4</td><td>5.153</td><td>5.139</td><td>9.4%</td></tr><tr><td>5</td><td>0.496</td><td>0.496</td><td>0.9%</td></tr><tr><td>6</td><td>0.11</td><td>0.112</td><td>0.2%</td></tr><tr><td>7</td><td>0.003</td><td>0.004</td><td>0.0%</td></tr></tbody></table></div>
+<p>Three-tangerine moves are worth looking for, at roughly 14.113 per board. Four-tangerine moves appear about 5.153 times. Five or more is rare: about 0.61 per board in total, which means most opening boards contain none at all. A player who scans for big boxes at the start of a game is mostly scanning for something that is not there.</p>
+<p>The shapes follow the same pattern. The most common rectangles on a fresh desktop board are:</p>
+<div class="tbl-wrap"><table><thead><tr><th>Box shape (rows × columns)</th><th>Per desktop board</th></tr></thead><tbody><tr><td>1x2</td><td>17.793</td></tr><tr><td>2x1</td><td>16.981</td></tr><tr><td>1x3</td><td>7.402</td></tr><tr><td>3x1</td><td>6.711</td></tr><tr><td>2x2</td><td>1.847</td></tr><tr><td>1x4</td><td>1.791</td></tr><tr><td>4x1</td><td>1.516</td></tr><tr><td>1x5</td><td>0.278</td></tr><tr><td>5x1</td><td>0.218</td></tr><tr><td>2x3</td><td>0.031</td></tr></tbody></table></div>
+<p>Horizontal and vertical pairs are almost equally common; horizontal ones edge ahead on desktop simply because a 17-column board has more side-by-side links than top-to-bottom ones. A 2×2 square that adds to ten — four tangerines, all small — turns up about 1.847 times per board.</p>
+
+<h2>Every digit is equally common, but not equally useful</h2>
+<p>Each digit appears about 18.91 times on a desktop board, exactly as a uniform draw predicts. Each tangerine also has, on average, about 0.409 neighbours that complete a pair with it, whatever its number. The difference between digits shows up somewhere else: in how many tangerines of each number are part of <i>no</i> move at all when the game begins.</p>
+<div class="tbl-wrap"><table><thead><tr><th>Digit</th><th>Per desktop board</th><th>Pair partners next to it (avg)</th><th>In no move at the start</th></tr></thead><tbody><tr><td>1</td><td>18.89</td><td>0.409</td><td><b>21.11%</b></td></tr><tr><td>2</td><td>18.86</td><td>0.409</td><td><b>27.07%</b></td></tr><tr><td>3</td><td>18.9</td><td>0.409</td><td><b>33.09%</b></td></tr><tr><td>4</td><td>18.88</td><td>0.41</td><td><b>39.09%</b></td></tr><tr><td>5</td><td>18.91</td><td>0.409</td><td><b>44.96%</b></td></tr><tr><td>6</td><td>18.9</td><td>0.409</td><td><b>50.67%</b></td></tr><tr><td>7</td><td>18.88</td><td>0.409</td><td><b>55.86%</b></td></tr><tr><td>8</td><td>18.88</td><td>0.408</td><td><b>60.69%</b></td></tr><tr><td>9</td><td>18.9</td><td>0.409</td><td><b>64.94%</b></td></tr></tbody></table></div>
+<figure class="fig"><svg viewBox="0 0 640 260" role="img" aria-label="Desktop: share of each digit that belongs to no move on a fresh board" style="width:100%;height:auto;display:block"><text x="142" y="22" text-anchor="end" font-size="13" fill="#555">Digit 1</text><rect x="150" y="9" width="88.7" height="17" rx="4" fill="#f97316"/><text x="244.7" y="22" font-size="13" fill="#333" font-weight="700">21.11%</text><text x="142" y="50" text-anchor="end" font-size="13" fill="#555">Digit 2</text><rect x="150" y="37" width="113.7" height="17" rx="4" fill="#f97316"/><text x="269.7" y="50" font-size="13" fill="#333" font-weight="700">27.07%</text><text x="142" y="78" text-anchor="end" font-size="13" fill="#555">Digit 3</text><rect x="150" y="65" width="139.0" height="17" rx="4" fill="#f97316"/><text x="295.0" y="78" font-size="13" fill="#333" font-weight="700">33.09%</text><text x="142" y="106" text-anchor="end" font-size="13" fill="#555">Digit 4</text><rect x="150" y="93" width="164.2" height="17" rx="4" fill="#f97316"/><text x="320.2" y="106" font-size="13" fill="#333" font-weight="700">39.09%</text><text x="142" y="134" text-anchor="end" font-size="13" fill="#555">Digit 5</text><rect x="150" y="121" width="188.8" height="17" rx="4" fill="#f97316"/><text x="344.8" y="134" font-size="13" fill="#333" font-weight="700">44.96%</text><text x="142" y="162" text-anchor="end" font-size="13" fill="#555">Digit 6</text><rect x="150" y="149" width="212.8" height="17" rx="4" fill="#f97316"/><text x="368.8" y="162" font-size="13" fill="#333" font-weight="700">50.67%</text><text x="142" y="190" text-anchor="end" font-size="13" fill="#555">Digit 7</text><rect x="150" y="177" width="234.6" height="17" rx="4" fill="#f97316"/><text x="390.6" y="190" font-size="13" fill="#333" font-weight="700">55.86%</text><text x="142" y="218" text-anchor="end" font-size="13" fill="#555">Digit 8</text><rect x="150" y="205" width="254.9" height="17" rx="4" fill="#f97316"/><text x="410.9" y="218" font-size="13" fill="#333" font-weight="700">60.69%</text><text x="142" y="246" text-anchor="end" font-size="13" fill="#555">Digit 9</text><rect x="150" y="233" width="272.7" height="17" rx="4" fill="#f97316"/><text x="428.7" y="246" font-size="13" fill="#333" font-weight="700">64.94%</text></svg><figcaption>Desktop: share of each digit that belongs to no move on a fresh board</figcaption></figure>
+<p>The pattern is a clean staircase. Only 21.11% of ones are stuck at the start, against 64.94% of nines. The reason is that small numbers have more ways to reach ten. A 1 can finish a pair with a 9, but it can also sit inside 1+2+7, 1+3+6, 1+4+5, 1+1+8 and a dozen longer combinations. A 9 has exactly one possible partner. Every step up the number line removes options, and in the table each step up adds between 4.3 and 6.0 percentage points.</p>
+
+<h2>How often a 9 starts stranded</h2>
+<p>For a 9, "in no move" has a precise meaning: none of the cells touching it holds a 1. That can be checked with plain probability, which gives a second, independent way to test the simulation. Each neighbour is a 1 with probability one in nine, so a 9 in the middle of the board (four neighbours) is stranded with probability (8/9)<sup>4</sup> = 62.4%. On an edge it has three neighbours, (8/9)<sup>3</sup> = 70.2%; in a corner two, (8/9)<sup>2</sup> = 79.0%.</p>
+<div class="tbl-wrap"><table><thead><tr><th>Position on a 10×17 board</th><th>Cells</th><th>Chance a 9 there has no adjacent 1</th></tr></thead><tbody><tr><td>Interior</td><td>120</td><td>62.4%</td></tr><tr><td>Edge</td><td>46</td><td>70.2%</td></tr><tr><td>Corner</td><td>4</td><td>79.0%</td></tr><tr><td><b>Whole board (weighted)</b></td><td>170</td><td><b>64.93%</b></td></tr></tbody></table></div>
+<p>Weighting by how many cells of each kind exist gives 64.93% for the whole board. The simulation measured <b>64.94%</b>. Roughly two nines in three start the game with no way out.</p>
+<p>There is also a harder limit that no amount of skill gets around. A 9 can only ever leave the board together with exactly one 1, and each 1 can only be used once. On 46.77% of desktop boards the nines outnumber the ones, and on average 2.45 nines per board have no 1 left to pair with even in a perfect game. On the most lopsided board in the run, 25 nines were left without a possible partner. Since ones also disappear into combinations like 1+2+7, the real number of unclearable nines in a typical game is higher still.</p>
+
+<h2>What the numbers mean for a player</h2>
+<p>Three practical readings follow from the data. A fresh board is never empty of options: there are always dozens of pairs, so a slow opening is a scanning problem, not a board problem. Big boxes are rare at the start and grow more common only as holes open up, which you can see in the <a href="/bot-strategies">bot experiment</a>. And nines are the least useful number on the board by a wide margin. How to turn that into a habit is covered in the <a href="/strategy">strategy guide</a>, so it is not repeated here. The complete list of combinations, with odds, is on the <a href="/make-ten-combinations">make-ten combinations</a> page.</p>
+<h2>Reproducing these numbers</h2>
+<p>Everything on this page comes from one script, <code>scripts/simulate.mjs</code>, run with Node.js. It copies the game's <code>makeBoard</code> line exactly — each cell gets <code>Math.floor(random × 9) + 1</code> — but swaps the browser's random number generator for a seeded one (seed 20261020) so the same run produces the same numbers every time. The script writes its results to a JSON file, and this page is built from that file, so no figure here was typed by hand. Change the seed and the decimals will move a little; the conclusions will not.</p>
+<p><a class="cta" href="/">Play a board</a></p>
+</main>
+<div class="wrap ad-wrap" style="display:flex;justify-content:center"><ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-vwzzWFnt83j2lDmM" data-ad-width="320" data-ad-height="50"></ins><script async src="https://t1.kakaocdn.net/kas/static/ba.min.js"></script></div>
+<footer><div class="wrap">
+  <div class="ftr-nav"><a href="/">Play</a><a href="/how-to-play">How to Play</a><a href="/strategy">Strategy</a><a href="/analysis">Analysis</a><a href="/faq">FAQ</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/privacy">Privacy Policy</a><a href="/ko/board-statistics" hreflang="ko">한국어</a></div>
+  <p class="ftr-note">Tangerine 10 is a free browser puzzle game. No sign-up, no download. © 2026 Tangerine 10</p>
+</div></footer>
+</body>
+</html>

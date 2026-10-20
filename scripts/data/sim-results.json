@@ -1,0 +1,2337 @@
+{
+ "generatedBy": "scripts/simulate.mjs",
+ "seed": 20261020,
+ "boardsPerSize": 100000,
+ "gamesPerSetting": 5000,
+ "board": {
+  "desktop": {
+   "R": 10,
+   "C": 17,
+   "tiles": 170,
+   "boards": 100000,
+   "moves": {
+    "mean": 54.65,
+    "sd": 7.35,
+    "min": 25,
+    "p10": 45,
+    "median": 55,
+    "p90": 64,
+    "max": 89
+   },
+   "pairs": {
+    "mean": 34.77,
+    "sd": 5.58,
+    "min": 11,
+    "p10": 28,
+    "median": 35,
+    "p90": 42,
+    "max": 60
+   },
+   "pairsHist": {
+    "11": 1,
+    "14": 3,
+    "15": 3,
+    "16": 9,
+    "17": 19,
+    "18": 46,
+    "19": 86,
+    "20": 182,
+    "21": 260,
+    "22": 435,
+    "23": 724,
+    "24": 1063,
+    "25": 1534,
+    "26": 2137,
+    "27": 2781,
+    "28": 3555,
+    "29": 4453,
+    "30": 5227,
+    "31": 5888,
+    "32": 6530,
+    "33": 6891,
+    "34": 7126,
+    "35": 7119,
+    "36": 6979,
+    "37": 6326,
+    "38": 5764,
+    "39": 5216,
+    "40": 4362,
+    "41": 3658,
+    "42": 2977,
+    "43": 2344,
+    "44": 1859,
+    "45": 1357,
+    "46": 1004,
+    "47": 686,
+    "48": 506,
+    "49": 326,
+    "50": 193,
+    "51": 149,
+    "52": 89,
+    "53": 47,
+    "54": 32,
+    "55": 17,
+    "56": 16,
+    "57": 10,
+    "58": 7,
+    "59": 2,
+    "60": 2
+   },
+   "zeroPairBoards": 0,
+   "bySize": [
+    {
+     "k": 2,
+     "perBoard": 34.774
+    },
+    {
+     "k": 3,
+     "perBoard": 14.113
+    },
+    {
+     "k": 4,
+     "perBoard": 5.153
+    },
+    {
+     "k": 5,
+     "perBoard": 0.496
+    },
+    {
+     "k": 6,
+     "perBoard": 0.11
+    },
+    {
+     "k": 7,
+     "perBoard": 0.003
+    }
+   ],
+   "deadTiles": {
+    "mean": 75.08,
+    "sd": 10.36,
+    "min": 32,
+    "p10": 62,
+    "median": 75,
+    "p90": 88,
+    "max": 123
+   },
+   "digits": [
+    {
+     "d": 1,
+     "perBoard": 18.89,
+     "partnersPerTile": 0.409,
+     "noMoveAtStartPct": 21.11
+    },
+    {
+     "d": 2,
+     "perBoard": 18.86,
+     "partnersPerTile": 0.409,
+     "noMoveAtStartPct": 27.07
+    },
+    {
+     "d": 3,
+     "perBoard": 18.9,
+     "partnersPerTile": 0.409,
+     "noMoveAtStartPct": 33.09
+    },
+    {
+     "d": 4,
+     "perBoard": 18.88,
+     "partnersPerTile": 0.41,
+     "noMoveAtStartPct": 39.09
+    },
+    {
+     "d": 5,
+     "perBoard": 18.91,
+     "partnersPerTile": 0.409,
+     "noMoveAtStartPct": 44.96
+    },
+    {
+     "d": 6,
+     "perBoard": 18.9,
+     "partnersPerTile": 0.409,
+     "noMoveAtStartPct": 50.67
+    },
+    {
+     "d": 7,
+     "perBoard": 18.88,
+     "partnersPerTile": 0.409,
+     "noMoveAtStartPct": 55.86
+    },
+    {
+     "d": 8,
+     "perBoard": 18.88,
+     "partnersPerTile": 0.408,
+     "noMoveAtStartPct": 60.69
+    },
+    {
+     "d": 9,
+     "perBoard": 18.9,
+     "partnersPerTile": 0.409,
+     "noMoveAtStartPct": 64.94
+    }
+   ],
+   "nineExcess": {
+    "mean": 2.45,
+    "sd": 3.61,
+    "min": 0,
+    "p10": 0,
+    "median": 0,
+    "p90": 8,
+    "max": 25,
+    "boardsPct": 46.77
+   },
+   "combosOnBoard": {
+    "1+1+3+5": 0.7414,
+    "4+6": 7.7337,
+    "1+2+3+4": 1.4679,
+    "1+4+5": 2.3633,
+    "1+2+2+2+3": 0.0793,
+    "1+9": 7.728,
+    "1+1+8": 1.1778,
+    "1+2+7": 2.3462,
+    "3+7": 7.7313,
+    "2+3+5": 2.3481,
+    "1+2+2+5": 0.7361,
+    "2+8": 7.7128,
+    "5+5": 3.8685,
+    "2+2+6": 1.1689,
+    "3+3+4": 1.1728,
+    "1+3+6": 2.3558,
+    "1+1+1+7": 0.2469,
+    "2+4+4": 1.1798,
+    "1+3+3+3": 0.2446,
+    "1+1+2+6": 0.7332,
+    "1+1+4+4": 0.3673,
+    "2+2+3+3": 0.3705,
+    "1+1+1+3+4": 0.0793,
+    "1+1+1+2+5": 0.0785,
+    "1+1+1+2+2+3": 0.0529,
+    "1+1+2+3+3": 0.1178,
+    "1+1+1+1+2+4": 0.0251,
+    "1+1+2+2+4": 0.1173,
+    "2+2+2+4": 0.2455,
+    "1+1+2+2+2+2": 0.0132,
+    "1+1+1+1+6": 0.0197,
+    "1+1+1+1+3+3": 0.0135,
+    "1+1+1+1+1+5": 0.0057,
+    "1+1+1+1+2+2+2": 0.0011,
+    "1+1+1+1+1+1+2+2": 0.0002,
+    "1+1+1+1+1+2+3": 0.0016,
+    "2+2+2+2+2": 0.0037,
+    "1+1+1+1+1+1+1+3": 0.0001,
+    "1+1+1+1+1+1+4": 0.0002
+   },
+   "topCombos": [
+    {
+     "key": "4+6",
+     "perBoard": 7.734
+    },
+    {
+     "key": "3+7",
+     "perBoard": 7.731
+    },
+    {
+     "key": "1+9",
+     "perBoard": 7.728
+    },
+    {
+     "key": "2+8",
+     "perBoard": 7.713
+    },
+    {
+     "key": "5+5",
+     "perBoard": 3.868
+    },
+    {
+     "key": "1+4+5",
+     "perBoard": 2.363
+    },
+    {
+     "key": "1+3+6",
+     "perBoard": 2.356
+    },
+    {
+     "key": "2+3+5",
+     "perBoard": 2.348
+    },
+    {
+     "key": "1+2+7",
+     "perBoard": 2.346
+    },
+    {
+     "key": "1+2+3+4",
+     "perBoard": 1.468
+    },
+    {
+     "key": "2+4+4",
+     "perBoard": 1.18
+    },
+    {
+     "key": "1+1+8",
+     "perBoard": 1.178
+    }
+   ],
+   "shapes": [
+    {
+     "key": "1x2",
+     "perBoard": 17.793
+    },
+    {
+     "key": "2x1",
+     "perBoard": 16.981
+    },
+    {
+     "key": "1x3",
+     "perBoard": 7.402
+    },
+    {
+     "key": "3x1",
+     "perBoard": 6.711
+    },
+    {
+     "key": "2x2",
+     "perBoard": 1.847
+    },
+    {
+     "key": "1x4",
+     "perBoard": 1.791
+    },
+    {
+     "key": "4x1",
+     "perBoard": 1.516
+    },
+    {
+     "key": "1x5",
+     "perBoard": 0.278
+    },
+    {
+     "key": "5x1",
+     "perBoard": 0.218
+    },
+    {
+     "key": "2x3",
+     "perBoard": 0.031
+    }
+   ]
+  },
+  "mobile": {
+   "R": 12,
+   "C": 14,
+   "tiles": 168,
+   "boards": 100000,
+   "moves": {
+    "mean": 54.24,
+    "sd": 7.33,
+    "min": 26,
+    "p10": 45,
+    "median": 54,
+    "p90": 64,
+    "max": 90
+   },
+   "pairs": {
+    "mean": 34.46,
+    "sd": 5.53,
+    "min": 14,
+    "p10": 27,
+    "median": 34,
+    "p90": 42,
+    "max": 61
+   },
+   "pairsHist": {
+    "14": 2,
+    "15": 5,
+    "16": 7,
+    "17": 26,
+    "18": 51,
+    "19": 101,
+    "20": 186,
+    "21": 304,
+    "22": 523,
+    "23": 785,
+    "24": 1145,
+    "25": 1694,
+    "26": 2245,
+    "27": 3008,
+    "28": 3825,
+    "29": 4602,
+    "30": 5560,
+    "31": 6073,
+    "32": 6734,
+    "33": 7123,
+    "34": 7188,
+    "35": 7152,
+    "36": 6821,
+    "37": 6352,
+    "38": 5705,
+    "39": 4970,
+    "40": 4039,
+    "41": 3451,
+    "42": 2734,
+    "43": 2133,
+    "44": 1670,
+    "45": 1152,
+    "46": 830,
+    "47": 578,
+    "48": 455,
+    "49": 291,
+    "50": 195,
+    "51": 110,
+    "52": 73,
+    "53": 46,
+    "54": 22,
+    "55": 13,
+    "56": 8,
+    "57": 7,
+    "58": 3,
+    "59": 2,
+    "61": 1
+   },
+   "zeroPairBoards": 0,
+   "bySize": [
+    {
+     "k": 2,
+     "perBoard": 34.457
+    },
+    {
+     "k": 3,
+     "perBoard": 14.036
+    },
+    {
+     "k": 4,
+     "perBoard": 5.139
+    },
+    {
+     "k": 5,
+     "perBoard": 0.496
+    },
+    {
+     "k": 6,
+     "perBoard": 0.112
+    },
+    {
+     "k": 7,
+     "perBoard": 0.004
+    }
+   ],
+   "deadTiles": {
+    "mean": 73.9,
+    "sd": 10.29,
+    "min": 30,
+    "p10": 61,
+    "median": 74,
+    "p90": 87,
+    "max": 118
+   },
+   "digits": [
+    {
+     "d": 1,
+     "perBoard": 18.69,
+     "partnersPerTile": 0.41,
+     "noMoveAtStartPct": 20.95
+    },
+    {
+     "d": 2,
+     "perBoard": 18.68,
+     "partnersPerTile": 0.409,
+     "noMoveAtStartPct": 26.81
+    },
+    {
+     "d": 3,
+     "perBoard": 18.67,
+     "partnersPerTile": 0.41,
+     "noMoveAtStartPct": 32.89
+    },
+    {
+     "d": 4,
+     "perBoard": 18.66,
+     "partnersPerTile": 0.41,
+     "noMoveAtStartPct": 38.93
+    },
+    {
+     "d": 5,
+     "perBoard": 18.67,
+     "partnersPerTile": 0.411,
+     "noMoveAtStartPct": 44.75
+    },
+    {
+     "d": 6,
+     "perBoard": 18.66,
+     "partnersPerTile": 0.41,
+     "noMoveAtStartPct": 50.49
+    },
+    {
+     "d": 7,
+     "perBoard": 18.64,
+     "partnersPerTile": 0.411,
+     "noMoveAtStartPct": 55.68
+    },
+    {
+     "d": 8,
+     "perBoard": 18.65,
+     "partnersPerTile": 0.41,
+     "noMoveAtStartPct": 60.58
+    },
+    {
+     "d": 9,
+     "perBoard": 18.68,
+     "partnersPerTile": 0.41,
+     "noMoveAtStartPct": 64.83
+    }
+   ],
+   "nineExcess": {
+    "mean": 2.42,
+    "sd": 3.56,
+    "min": 0,
+    "p10": 0,
+    "median": 0,
+    "p90": 8,
+    "max": 26,
+    "boardsPct": 46.67
+   },
+   "combosOnBoard": {
+    "3+7": 7.6571,
+    "1+9": 7.6676,
+    "2+3+5": 2.3426,
+    "1+2+2+5": 0.738,
+    "5+5": 3.8328,
+    "1+1+3+5": 0.7326,
+    "1+2+7": 2.3376,
+    "3+3+4": 1.1691,
+    "1+4+5": 2.3446,
+    "4+6": 7.6527,
+    "2+8": 7.6469,
+    "2+4+4": 1.1673,
+    "1+3+6": 2.3397,
+    "1+1+1+2+2+3": 0.0526,
+    "1+1+8": 1.1655,
+    "1+1+2+6": 0.731,
+    "1+1+1+1+1+2+3": 0.0017,
+    "1+1+1+1+2+4": 0.0263,
+    "1+2+3+4": 1.4667,
+    "1+1+1+7": 0.2461,
+    "2+2+3+3": 0.3677,
+    "2+2+2+4": 0.2431,
+    "1+2+2+2+3": 0.0792,
+    "1+1+2+2+4": 0.1187,
+    "2+2+6": 1.1696,
+    "1+3+3+3": 0.2469,
+    "1+1+4+4": 0.3666,
+    "1+1+2+3+3": 0.1182,
+    "1+1+2+2+2+2": 0.0141,
+    "1+1+1+3+4": 0.0794,
+    "1+1+1+1+3+3": 0.0133,
+    "1+1+1+1+6": 0.0195,
+    "1+1+1+2+5": 0.0773,
+    "1+1+1+1+2+2+2": 0.0017,
+    "1+1+1+1+1+5": 0.0057,
+    "2+2+2+2+2": 0.0041,
+    "1+1+1+1+1+1+2+2": 0.0003,
+    "1+1+1+1+1+1+4": 0.0003,
+    "1+1+1+1+1+1+1+3": 0.0001,
+    "1+1+1+1+1+1+1+1+2": 0
+   },
+   "topCombos": [
+    {
+     "key": "1+9",
+     "perBoard": 7.668
+    },
+    {
+     "key": "3+7",
+     "perBoard": 7.657
+    },
+    {
+     "key": "4+6",
+     "perBoard": 7.653
+    },
+    {
+     "key": "2+8",
+     "perBoard": 7.647
+    },
+    {
+     "key": "5+5",
+     "perBoard": 3.833
+    },
+    {
+     "key": "1+4+5",
+     "perBoard": 2.345
+    },
+    {
+     "key": "2+3+5",
+     "perBoard": 2.343
+    },
+    {
+     "key": "1+3+6",
+     "perBoard": 2.34
+    },
+    {
+     "key": "1+2+7",
+     "perBoard": 2.338
+    },
+    {
+     "key": "1+2+3+4",
+     "perBoard": 1.467
+    },
+    {
+     "key": "2+2+6",
+     "perBoard": 1.17
+    },
+    {
+     "key": "3+3+4",
+     "perBoard": 1.169
+    }
+   ],
+   "shapes": [
+    {
+     "key": "1x2",
+     "perBoard": 17.358
+    },
+    {
+     "key": "2x1",
+     "perBoard": 17.099
+    },
+    {
+     "key": "1x3",
+     "perBoard": 7.111
+    },
+    {
+     "key": "3x1",
+     "perBoard": 6.925
+    },
+    {
+     "key": "2x2",
+     "perBoard": 1.833
+    },
+    {
+     "key": "1x4",
+     "perBoard": 1.694
+    },
+    {
+     "key": "4x1",
+     "perBoard": 1.612
+    },
+    {
+     "key": "1x5",
+     "perBoard": 0.257
+    },
+    {
+     "key": "5x1",
+     "perBoard": 0.239
+    },
+    {
+     "key": "2x3",
+     "perBoard": 0.032
+    }
+   ]
+  }
+ },
+ "combos": [
+  {
+   "key": "1+9",
+   "k": 2,
+   "orders": 2,
+   "probPct": 2.4691
+  },
+  {
+   "key": "2+8",
+   "k": 2,
+   "orders": 2,
+   "probPct": 2.4691
+  },
+  {
+   "key": "3+7",
+   "k": 2,
+   "orders": 2,
+   "probPct": 2.4691
+  },
+  {
+   "key": "4+6",
+   "k": 2,
+   "orders": 2,
+   "probPct": 2.4691
+  },
+  {
+   "key": "5+5",
+   "k": 2,
+   "orders": 1,
+   "probPct": 1.2346
+  },
+  {
+   "key": "1+1+8",
+   "k": 3,
+   "orders": 3,
+   "probPct": 0.4115
+  },
+  {
+   "key": "1+2+7",
+   "k": 3,
+   "orders": 6,
+   "probPct": 0.823
+  },
+  {
+   "key": "1+3+6",
+   "k": 3,
+   "orders": 6,
+   "probPct": 0.823
+  },
+  {
+   "key": "1+4+5",
+   "k": 3,
+   "orders": 6,
+   "probPct": 0.823
+  },
+  {
+   "key": "2+2+6",
+   "k": 3,
+   "orders": 3,
+   "probPct": 0.4115
+  },
+  {
+   "key": "2+3+5",
+   "k": 3,
+   "orders": 6,
+   "probPct": 0.823
+  },
+  {
+   "key": "2+4+4",
+   "k": 3,
+   "orders": 3,
+   "probPct": 0.4115
+  },
+  {
+   "key": "3+3+4",
+   "k": 3,
+   "orders": 3,
+   "probPct": 0.4115
+  },
+  {
+   "key": "1+1+1+7",
+   "k": 4,
+   "orders": 4,
+   "probPct": 0.061
+  },
+  {
+   "key": "1+1+2+6",
+   "k": 4,
+   "orders": 12,
+   "probPct": 0.1829
+  },
+  {
+   "key": "1+1+3+5",
+   "k": 4,
+   "orders": 12,
+   "probPct": 0.1829
+  },
+  {
+   "key": "1+1+4+4",
+   "k": 4,
+   "orders": 6,
+   "probPct": 0.0914
+  },
+  {
+   "key": "1+2+2+5",
+   "k": 4,
+   "orders": 12,
+   "probPct": 0.1829
+  },
+  {
+   "key": "1+2+3+4",
+   "k": 4,
+   "orders": 24,
+   "probPct": 0.3658
+  },
+  {
+   "key": "1+3+3+3",
+   "k": 4,
+   "orders": 4,
+   "probPct": 0.061
+  },
+  {
+   "key": "2+2+2+4",
+   "k": 4,
+   "orders": 4,
+   "probPct": 0.061
+  },
+  {
+   "key": "2+2+3+3",
+   "k": 4,
+   "orders": 6,
+   "probPct": 0.0914
+  },
+  {
+   "key": "1+1+1+1+6",
+   "k": 5,
+   "orders": 5,
+   "probPct": 0.0085
+  },
+  {
+   "key": "1+1+1+2+5",
+   "k": 5,
+   "orders": 20,
+   "probPct": 0.0339
+  },
+  {
+   "key": "1+1+1+3+4",
+   "k": 5,
+   "orders": 20,
+   "probPct": 0.0339
+  },
+  {
+   "key": "1+1+2+2+4",
+   "k": 5,
+   "orders": 30,
+   "probPct": 0.0508
+  },
+  {
+   "key": "1+1+2+3+3",
+   "k": 5,
+   "orders": 30,
+   "probPct": 0.0508
+  },
+  {
+   "key": "1+2+2+2+3",
+   "k": 5,
+   "orders": 20,
+   "probPct": 0.0339
+  },
+  {
+   "key": "2+2+2+2+2",
+   "k": 5,
+   "orders": 1,
+   "probPct": 0.0017
+  },
+  {
+   "key": "1+1+1+1+1+5",
+   "k": 6,
+   "orders": 6,
+   "probPct": 0.0011
+  },
+  {
+   "key": "1+1+1+1+2+4",
+   "k": 6,
+   "orders": 30,
+   "probPct": 0.0056
+  },
+  {
+   "key": "1+1+1+1+3+3",
+   "k": 6,
+   "orders": 15,
+   "probPct": 0.0028
+  },
+  {
+   "key": "1+1+1+2+2+3",
+   "k": 6,
+   "orders": 60,
+   "probPct": 0.0113
+  },
+  {
+   "key": "1+1+2+2+2+2",
+   "k": 6,
+   "orders": 15,
+   "probPct": 0.0028
+  },
+  {
+   "key": "1+1+1+1+1+1+4",
+   "k": 7,
+   "orders": 7,
+   "probPct": 0.0001
+  },
+  {
+   "key": "1+1+1+1+1+2+3",
+   "k": 7,
+   "orders": 42,
+   "probPct": 0.0009
+  },
+  {
+   "key": "1+1+1+1+2+2+2",
+   "k": 7,
+   "orders": 35,
+   "probPct": 0.0007
+  },
+  {
+   "key": "1+1+1+1+1+1+1+3",
+   "k": 8,
+   "orders": 8,
+   "probPct": 0
+  },
+  {
+   "key": "1+1+1+1+1+1+2+2",
+   "k": 8,
+   "orders": 28,
+   "probPct": 0.0001
+  },
+  {
+   "key": "1+1+1+1+1+1+1+1+2",
+   "k": 9,
+   "orders": 9,
+   "probPct": 0
+  },
+  {
+   "key": "1+1+1+1+1+1+1+1+1+1",
+   "k": 10,
+   "orders": 1,
+   "probPct": 0
+  }
+ ],
+ "bots": {
+  "desktop": [
+   {
+    "strat": "pairs",
+    "stratLabel": "pairs-first",
+    "time": "fast",
+    "timeLabel": "every move 1.5 s",
+    "games": 5000,
+    "score": {
+     "mean": 473.31,
+     "sd": 76.6,
+     "min": 201,
+     "p10": 376,
+     "median": 471,
+     "p90": 571,
+     "max": 721
+    },
+    "cleared": {
+     "mean": 114.46,
+     "sd": 15.32,
+     "min": 60,
+     "p10": 95,
+     "median": 114,
+     "p90": 134,
+     "max": 164
+    },
+    "moves": {
+     "mean": 51.82,
+     "sd": 6.84,
+     "min": 29,
+     "p10": 43,
+     "median": 52,
+     "p90": 61,
+     "max": 75
+    },
+    "maxCombo": {
+     "mean": 51.82,
+     "sd": 6.84,
+     "min": 29,
+     "p10": 43,
+     "median": 52,
+     "p90": 61,
+     "max": 75
+    },
+    "comboBreaks": {
+     "mean": 0,
+     "sd": 0,
+     "min": 0,
+     "p10": 0,
+     "median": 0,
+     "p90": 0,
+     "max": 0
+    },
+    "stuckPct": 100,
+    "stuckAtMean": 77.7,
+    "sizeSharePct": {
+     "2": 80.28,
+     "3": 18.62,
+     "4": 1.04,
+     "5": 0.05
+    }
+   },
+   {
+    "strat": "big",
+    "stratLabel": "biggest-box-first",
+    "time": "fast",
+    "timeLabel": "every move 1.5 s",
+    "games": 5000,
+    "score": {
+     "mean": 334.54,
+     "sd": 50.69,
+     "min": 158,
+     "p10": 269,
+     "median": 336,
+     "p90": 399,
+     "max": 535
+    },
+    "cleared": {
+     "mean": 97.97,
+     "sd": 10.85,
+     "min": 58,
+     "p10": 84,
+     "median": 98,
+     "p90": 112,
+     "max": 143
+    },
+    "moves": {
+     "mean": 38.65,
+     "sd": 4.57,
+     "min": 23,
+     "p10": 33,
+     "median": 39,
+     "p90": 44,
+     "max": 56
+    },
+    "maxCombo": {
+     "mean": 38.65,
+     "sd": 4.57,
+     "min": 23,
+     "p10": 33,
+     "median": 39,
+     "p90": 44,
+     "max": 56
+    },
+    "comboBreaks": {
+     "mean": 0,
+     "sd": 0,
+     "min": 0,
+     "p10": 0,
+     "median": 0,
+     "p90": 0,
+     "max": 0
+    },
+    "stuckPct": 100,
+    "stuckAtMean": 58,
+    "sizeSharePct": {
+     "2": 59.63,
+     "3": 28.96,
+     "4": 9.97,
+     "5": 1.17,
+     "6": 0.27,
+     "7": 0.01
+    }
+   },
+   {
+    "strat": "random",
+    "stratLabel": "random-legal-move",
+    "time": "fast",
+    "timeLabel": "every move 1.5 s",
+    "games": 5000,
+    "score": {
+     "mean": 395.74,
+     "sd": 58.64,
+     "min": 191,
+     "p10": 321,
+     "median": 396,
+     "p90": 470,
+     "max": 605
+    },
+    "cleared": {
+     "mean": 103.52,
+     "sd": 11.82,
+     "min": 61,
+     "p10": 88,
+     "median": 104,
+     "p90": 119,
+     "max": 144
+    },
+    "moves": {
+     "mean": 43.48,
+     "sd": 5.06,
+     "min": 26,
+     "p10": 37,
+     "median": 43,
+     "p90": 50,
+     "max": 62
+    },
+    "maxCombo": {
+     "mean": 43.48,
+     "sd": 5.06,
+     "min": 26,
+     "p10": 37,
+     "median": 43,
+     "p90": 50,
+     "max": 62
+    },
+    "comboBreaks": {
+     "mean": 0,
+     "sd": 0,
+     "min": 0,
+     "p10": 0,
+     "median": 0,
+     "p90": 0,
+     "max": 0
+    },
+    "stuckPct": 100,
+    "stuckAtMean": 65.2,
+    "sizeSharePct": {
+     "2": 68.84,
+     "3": 24.96,
+     "4": 5.59,
+     "5": 0.54,
+     "6": 0.07
+    }
+   },
+   {
+    "strat": "high",
+    "stratLabel": "highest-number-first",
+    "time": "fast",
+    "timeLabel": "every move 1.5 s",
+    "games": 5000,
+    "score": {
+     "mean": 463.93,
+     "sd": 74.32,
+     "min": 210,
+     "p10": 366,
+     "median": 465,
+     "p90": 559,
+     "max": 694
+    },
+    "cleared": {
+     "mean": 113.01,
+     "sd": 14.83,
+     "min": 63,
+     "p10": 94,
+     "median": 113,
+     "p90": 132,
+     "max": 159
+    },
+    "moves": {
+     "mean": 50.89,
+     "sd": 6.57,
+     "min": 29,
+     "p10": 42,
+     "median": 51,
+     "p90": 59,
+     "max": 74
+    },
+    "maxCombo": {
+     "mean": 50.89,
+     "sd": 6.57,
+     "min": 29,
+     "p10": 42,
+     "median": 51,
+     "p90": 59,
+     "max": 74
+    },
+    "comboBreaks": {
+     "mean": 0,
+     "sd": 0,
+     "min": 0,
+     "p10": 0,
+     "median": 0,
+     "p90": 0,
+     "max": 0
+    },
+    "stuckPct": 100,
+    "stuckAtMean": 76.3,
+    "sizeSharePct": {
+     "2": 79.47,
+     "3": 19.04,
+     "4": 1.44,
+     "5": 0.05
+    }
+   },
+   {
+    "strat": "pairs",
+    "stratLabel": "pairs-first",
+    "time": "size",
+    "timeLabel": "0.9 s + 0.5 s per tangerine",
+    "games": 5000,
+    "score": {
+     "mean": 304.27,
+     "sd": 55.11,
+     "min": 130,
+     "p10": 234,
+     "median": 303,
+     "p90": 376,
+     "max": 507
+    },
+    "cleared": {
+     "mean": 113.32,
+     "sd": 13.51,
+     "min": 60,
+     "p10": 95,
+     "median": 114,
+     "p90": 130,
+     "max": 136
+    },
+    "moves": {
+     "mean": 51.41,
+     "sd": 6.15,
+     "min": 29,
+     "p10": 43,
+     "median": 52,
+     "p90": 59,
+     "max": 62
+    },
+    "maxCombo": {
+     "mean": 35.41,
+     "sd": 6.04,
+     "min": 15,
+     "p10": 28,
+     "median": 35,
+     "p90": 43,
+     "max": 60
+    },
+    "comboBreaks": {
+     "mean": 9.97,
+     "sd": 3.21,
+     "min": 1,
+     "p10": 6,
+     "median": 10,
+     "p90": 14,
+     "max": 22
+    },
+    "stuckPct": 87.78,
+    "stuckAtMean": 100.7,
+    "sizeSharePct": {
+     "2": 80.61,
+     "3": 18.39,
+     "4": 0.95,
+     "5": 0.05
+    }
+   },
+   {
+    "strat": "big",
+    "stratLabel": "biggest-box-first",
+    "time": "size",
+    "timeLabel": "0.9 s + 0.5 s per tangerine",
+    "games": 5000,
+    "score": {
+     "mean": 152.55,
+     "sd": 30.01,
+     "min": 76,
+     "p10": 120,
+     "median": 148,
+     "p90": 191,
+     "max": 308
+    },
+    "cleared": {
+     "mean": 97.97,
+     "sd": 10.85,
+     "min": 58,
+     "p10": 84,
+     "median": 98,
+     "p90": 112,
+     "max": 139
+    },
+    "moves": {
+     "mean": 38.64,
+     "sd": 4.57,
+     "min": 23,
+     "p10": 33,
+     "median": 39,
+     "p90": 44,
+     "max": 54
+    },
+    "maxCombo": {
+     "mean": 15.14,
+     "sd": 5.31,
+     "min": 5,
+     "p10": 9,
+     "median": 14,
+     "p90": 23,
+     "max": 39
+    },
+    "comboBreaks": {
+     "mean": 14.6,
+     "sd": 3.01,
+     "min": 3,
+     "p10": 11,
+     "median": 15,
+     "p90": 18,
+     "max": 25
+    },
+    "stuckPct": 99.98,
+    "stuckAtMean": 83.8,
+    "sizeSharePct": {
+     "2": 59.63,
+     "3": 28.96,
+     "4": 9.97,
+     "5": 1.17,
+     "6": 0.27,
+     "7": 0.01
+    }
+   },
+   {
+    "strat": "random",
+    "stratLabel": "random-legal-move",
+    "time": "size",
+    "timeLabel": "0.9 s + 0.5 s per tangerine",
+    "games": 5000,
+    "score": {
+     "mean": 144.44,
+     "sd": 19.87,
+     "min": 83,
+     "p10": 120,
+     "median": 144,
+     "p90": 169,
+     "max": 259
+    },
+    "cleared": {
+     "mean": 103.53,
+     "sd": 11.8,
+     "min": 61,
+     "p10": 88,
+     "median": 104,
+     "p90": 119,
+     "max": 139
+    },
+    "moves": {
+     "mean": 43.49,
+     "sd": 5.05,
+     "min": 26,
+     "p10": 37,
+     "median": 43,
+     "p90": 50,
+     "max": 58
+    },
+    "maxCombo": {
+     "mean": 9.09,
+     "sd": 3,
+     "min": 3,
+     "p10": 6,
+     "median": 9,
+     "p90": 13,
+     "max": 27
+    },
+    "comboBreaks": {
+     "mean": 13.18,
+     "sd": 3.06,
+     "min": 3,
+     "p10": 9,
+     "median": 13,
+     "p90": 17,
+     "max": 25
+    },
+    "stuckPct": 99.76,
+    "stuckAtMean": 90.8,
+    "sizeSharePct": {
+     "2": 68.83,
+     "3": 24.96,
+     "4": 5.59,
+     "5": 0.55,
+     "6": 0.07
+    }
+   },
+   {
+    "strat": "high",
+    "stratLabel": "highest-number-first",
+    "time": "size",
+    "timeLabel": "0.9 s + 0.5 s per tangerine",
+    "games": 5000,
+    "score": {
+     "mean": 210.08,
+     "sd": 42.75,
+     "min": 100,
+     "p10": 160,
+     "median": 205,
+     "p90": 267,
+     "max": 441
+    },
+    "cleared": {
+     "mean": 112.27,
+     "sd": 13.58,
+     "min": 63,
+     "p10": 94,
+     "median": 113,
+     "p90": 130,
+     "max": 137
+    },
+    "moves": {
+     "mean": 50.61,
+     "sd": 6.09,
+     "min": 29,
+     "p10": 42,
+     "median": 51,
+     "p90": 59,
+     "max": 62
+    },
+    "maxCombo": {
+     "mean": 18.83,
+     "sd": 6.23,
+     "min": 7,
+     "p10": 12,
+     "median": 18,
+     "p90": 27,
+     "max": 51
+    },
+    "comboBreaks": {
+     "mean": 10.29,
+     "sd": 3.12,
+     "min": 1,
+     "p10": 6,
+     "median": 10,
+     "p90": 14,
+     "max": 21
+    },
+    "stuckPct": 90.78,
+    "stuckAtMean": 100,
+    "sizeSharePct": {
+     "2": 79.67,
+     "3": 18.9,
+     "4": 1.39,
+     "5": 0.05
+    }
+   },
+   {
+    "strat": "pairs",
+    "stratLabel": "pairs-first",
+    "time": "slow",
+    "timeLabel": "every move 3 s",
+    "games": 5000,
+    "score": {
+     "mean": 83.5,
+     "sd": 3.3,
+     "min": 60,
+     "p10": 80,
+     "median": 83,
+     "p90": 88,
+     "max": 99
+    },
+    "cleared": {
+     "mean": 83.5,
+     "sd": 3.3,
+     "min": 60,
+     "p10": 80,
+     "median": 83,
+     "p90": 88,
+     "max": 99
+    },
+    "moves": {
+     "mean": 39.89,
+     "sd": 0.73,
+     "min": 29,
+     "p10": 40,
+     "median": 40,
+     "p90": 40,
+     "max": 40
+    },
+    "maxCombo": {
+     "mean": 1,
+     "sd": 0,
+     "min": 1,
+     "p10": 1,
+     "median": 1,
+     "p90": 1,
+     "max": 1
+    },
+    "comboBreaks": {
+     "mean": 38.89,
+     "sd": 0.73,
+     "min": 28,
+     "p10": 39,
+     "median": 39,
+     "p90": 39,
+     "max": 39
+    },
+    "stuckPct": 4.84,
+    "stuckAtMean": 113.1,
+    "sizeSharePct": {
+     "2": 90.77,
+     "3": 9.13,
+     "4": 0.1,
+     "5": 0.01
+    }
+   },
+   {
+    "strat": "big",
+    "stratLabel": "biggest-box-first",
+    "time": "slow",
+    "timeLabel": "every move 3 s",
+    "games": 5000,
+    "score": {
+     "mean": 95.42,
+     "sd": 8.25,
+     "min": 58,
+     "p10": 84,
+     "median": 97,
+     "p90": 105,
+     "max": 117
+    },
+    "cleared": {
+     "mean": 95.42,
+     "sd": 8.25,
+     "min": 58,
+     "p10": 84,
+     "median": 97,
+     "p90": 105,
+     "max": 117
+    },
+    "moves": {
+     "mean": 37.42,
+     "sd": 3.13,
+     "min": 23,
+     "p10": 33,
+     "median": 39,
+     "p90": 40,
+     "max": 40
+    },
+    "maxCombo": {
+     "mean": 1,
+     "sd": 0,
+     "min": 1,
+     "p10": 1,
+     "median": 1,
+     "p90": 1,
+     "max": 1
+    },
+    "comboBreaks": {
+     "mean": 36.42,
+     "sd": 3.13,
+     "min": 22,
+     "p10": 32,
+     "median": 38,
+     "p90": 39,
+     "max": 39
+    },
+    "stuckPct": 65.58,
+    "stuckAtMean": 108.2,
+    "sizeSharePct": {
+     "2": 58.58,
+     "3": 29.66,
+     "4": 10.27,
+     "5": 1.21,
+     "6": 0.27,
+     "7": 0.01
+    }
+   },
+   {
+    "strat": "random",
+    "stratLabel": "random-legal-move",
+    "time": "slow",
+    "timeLabel": "every move 3 s",
+    "games": 5000,
+    "score": {
+     "mean": 93.91,
+     "sd": 5.75,
+     "min": 50,
+     "p10": 87,
+     "median": 95,
+     "p90": 100,
+     "max": 111
+    },
+    "cleared": {
+     "mean": 93.91,
+     "sd": 5.75,
+     "min": 50,
+     "p10": 87,
+     "median": 95,
+     "p90": 100,
+     "max": 111
+    },
+    "moves": {
+     "mean": 39.21,
+     "sd": 1.88,
+     "min": 21,
+     "p10": 37,
+     "median": 40,
+     "p90": 40,
+     "max": 40
+    },
+    "maxCombo": {
+     "mean": 1,
+     "sd": 0,
+     "min": 1,
+     "p10": 1,
+     "median": 1,
+     "p90": 1,
+     "max": 1
+    },
+    "comboBreaks": {
+     "mean": 38.21,
+     "sd": 1.88,
+     "min": 20,
+     "p10": 36,
+     "median": 39,
+     "p90": 39,
+     "max": 39
+    },
+    "stuckPct": 28.24,
+    "stuckAtMean": 111.6,
+    "sizeSharePct": {
+     "2": 67.88,
+     "3": 25.49,
+     "4": 5.95,
+     "5": 0.61,
+     "6": 0.07
+    }
+   },
+   {
+    "strat": "high",
+    "stratLabel": "highest-number-first",
+    "time": "slow",
+    "timeLabel": "every move 3 s",
+    "games": 5000,
+    "score": {
+     "mean": 85.66,
+     "sd": 2.95,
+     "min": 63,
+     "p10": 82,
+     "median": 86,
+     "p90": 89,
+     "max": 97
+    },
+    "cleared": {
+     "mean": 85.66,
+     "sd": 2.95,
+     "min": 63,
+     "p10": 82,
+     "median": 86,
+     "p90": 89,
+     "max": 97
+    },
+    "moves": {
+     "mean": 39.87,
+     "sd": 0.77,
+     "min": 29,
+     "p10": 40,
+     "median": 40,
+     "p90": 40,
+     "max": 40
+    },
+    "maxCombo": {
+     "mean": 1,
+     "sd": 0,
+     "min": 1,
+     "p10": 1,
+     "median": 1,
+     "p90": 1,
+     "max": 1
+    },
+    "comboBreaks": {
+     "mean": 38.87,
+     "sd": 0.77,
+     "min": 28,
+     "p10": 39,
+     "median": 39,
+     "p90": 39,
+     "max": 39
+    },
+    "stuckPct": 6.24,
+    "stuckAtMean": 113.7,
+    "sizeSharePct": {
+     "2": 85.83,
+     "3": 13.5,
+     "4": 0.66,
+     "5": 0.01
+    }
+   }
+  ],
+  "mobile": [
+   {
+    "strat": "pairs",
+    "stratLabel": "pairs-first",
+    "time": "fast",
+    "timeLabel": "every move 1.5 s",
+    "games": 5000,
+    "score": {
+     "mean": 470.04,
+     "sd": 76.56,
+     "min": 191,
+     "p10": 371,
+     "median": 471,
+     "p90": 566,
+     "max": 716
+    },
+    "cleared": {
+     "mean": 113.81,
+     "sd": 15.31,
+     "min": 58,
+     "p10": 94,
+     "median": 114,
+     "p90": 133,
+     "max": 163
+    },
+    "moves": {
+     "mean": 51.55,
+     "sd": 6.81,
+     "min": 27,
+     "p10": 43,
+     "median": 52,
+     "p90": 60,
+     "max": 73
+    },
+    "maxCombo": {
+     "mean": 51.55,
+     "sd": 6.81,
+     "min": 27,
+     "p10": 43,
+     "median": 52,
+     "p90": 60,
+     "max": 73
+    },
+    "comboBreaks": {
+     "mean": 0,
+     "sd": 0,
+     "min": 0,
+     "p10": 0,
+     "median": 0,
+     "p90": 0,
+     "max": 0
+    },
+    "stuckPct": 100,
+    "stuckAtMean": 77.3,
+    "sizeSharePct": {
+     "2": 80.35,
+     "3": 18.59,
+     "4": 1.02,
+     "5": 0.04
+    }
+   },
+   {
+    "strat": "big",
+    "stratLabel": "biggest-box-first",
+    "time": "fast",
+    "timeLabel": "every move 1.5 s",
+    "games": 5000,
+    "score": {
+     "mean": 331.57,
+     "sd": 50.94,
+     "min": 149,
+     "p10": 267,
+     "median": 331,
+     "p90": 397,
+     "max": 513
+    },
+    "cleared": {
+     "mean": 97.3,
+     "sd": 10.9,
+     "min": 56,
+     "p10": 83,
+     "median": 97,
+     "p90": 111,
+     "max": 136
+    },
+    "moves": {
+     "mean": 38.4,
+     "sd": 4.57,
+     "min": 23,
+     "p10": 33,
+     "median": 38,
+     "p90": 44,
+     "max": 55
+    },
+    "maxCombo": {
+     "mean": 38.4,
+     "sd": 4.57,
+     "min": 23,
+     "p10": 33,
+     "median": 38,
+     "p90": 44,
+     "max": 55
+    },
+    "comboBreaks": {
+     "mean": 0,
+     "sd": 0,
+     "min": 0,
+     "p10": 0,
+     "median": 0,
+     "p90": 0,
+     "max": 0
+    },
+    "stuckPct": 100,
+    "stuckAtMean": 57.6,
+    "sizeSharePct": {
+     "2": 59.74,
+     "3": 28.85,
+     "4": 9.95,
+     "5": 1.21,
+     "6": 0.24,
+     "7": 0.01
+    }
+   },
+   {
+    "strat": "random",
+    "stratLabel": "random-legal-move",
+    "time": "fast",
+    "timeLabel": "every move 1.5 s",
+    "games": 5000,
+    "score": {
+     "mean": 391.1,
+     "sd": 60.63,
+     "min": 185,
+     "p10": 313,
+     "median": 392,
+     "p90": 469,
+     "max": 619
+    },
+    "cleared": {
+     "mean": 102.53,
+     "sd": 12.23,
+     "min": 61,
+     "p10": 87,
+     "median": 103,
+     "p90": 118,
+     "max": 148
+    },
+    "moves": {
+     "mean": 43.08,
+     "sd": 5.18,
+     "min": 26,
+     "p10": 36,
+     "median": 43,
+     "p90": 50,
+     "max": 64
+    },
+    "maxCombo": {
+     "mean": 43.08,
+     "sd": 5.18,
+     "min": 26,
+     "p10": 36,
+     "median": 43,
+     "p90": 50,
+     "max": 64
+    },
+    "comboBreaks": {
+     "mean": 0,
+     "sd": 0,
+     "min": 0,
+     "p10": 0,
+     "median": 0,
+     "p90": 0,
+     "max": 0
+    },
+    "stuckPct": 100,
+    "stuckAtMean": 64.6,
+    "sizeSharePct": {
+     "2": 68.92,
+     "3": 24.86,
+     "4": 5.59,
+     "5": 0.57,
+     "6": 0.06
+    }
+   },
+   {
+    "strat": "high",
+    "stratLabel": "highest-number-first",
+    "time": "fast",
+    "timeLabel": "every move 1.5 s",
+    "games": 5000,
+    "score": {
+     "mean": 460.71,
+     "sd": 72.91,
+     "min": 182,
+     "p10": 366,
+     "median": 461,
+     "p90": 556,
+     "max": 681
+    },
+    "cleared": {
+     "mean": 112.36,
+     "sd": 14.56,
+     "min": 57,
+     "p10": 94,
+     "median": 112,
+     "p90": 131,
+     "max": 156
+    },
+    "moves": {
+     "mean": 50.63,
+     "sd": 6.43,
+     "min": 26,
+     "p10": 42,
+     "median": 51,
+     "p90": 59,
+     "max": 71
+    },
+    "maxCombo": {
+     "mean": 50.63,
+     "sd": 6.43,
+     "min": 26,
+     "p10": 42,
+     "median": 51,
+     "p90": 59,
+     "max": 71
+    },
+    "comboBreaks": {
+     "mean": 0,
+     "sd": 0,
+     "min": 0,
+     "p10": 0,
+     "median": 0,
+     "p90": 0,
+     "max": 0
+    },
+    "stuckPct": 100,
+    "stuckAtMean": 75.9,
+    "sizeSharePct": {
+     "2": 79.58,
+     "3": 18.99,
+     "4": 1.38,
+     "5": 0.05
+    }
+   },
+   {
+    "strat": "pairs",
+    "stratLabel": "pairs-first",
+    "time": "size",
+    "timeLabel": "0.9 s + 0.5 s per tangerine",
+    "games": 5000,
+    "score": {
+     "mean": 302.11,
+     "sd": 54.85,
+     "min": 124,
+     "p10": 231,
+     "median": 302,
+     "p90": 372,
+     "max": 500
+    },
+    "cleared": {
+     "mean": 112.82,
+     "sd": 13.74,
+     "min": 58,
+     "p10": 94,
+     "median": 114,
+     "p90": 130,
+     "max": 136
+    },
+    "moves": {
+     "mean": 51.19,
+     "sd": 6.2,
+     "min": 27,
+     "p10": 43,
+     "median": 52,
+     "p90": 59,
+     "max": 62
+    },
+    "maxCombo": {
+     "mean": 35.19,
+     "sd": 6.01,
+     "min": 15,
+     "p10": 28,
+     "median": 35,
+     "p90": 43,
+     "max": 59
+    },
+    "comboBreaks": {
+     "mean": 9.93,
+     "sd": 3.28,
+     "min": 1,
+     "p10": 6,
+     "median": 10,
+     "p90": 14,
+     "max": 22
+    },
+    "stuckPct": 88.94,
+    "stuckAtMean": 100.5,
+    "sizeSharePct": {
+     "2": 80.6,
+     "3": 18.42,
+     "4": 0.94,
+     "5": 0.04
+    }
+   },
+   {
+    "strat": "big",
+    "stratLabel": "biggest-box-first",
+    "time": "size",
+    "timeLabel": "0.9 s + 0.5 s per tangerine",
+    "games": 5000,
+    "score": {
+     "mean": 151.92,
+     "sd": 30.28,
+     "min": 75,
+     "p10": 120,
+     "median": 148,
+     "p90": 191,
+     "max": 365
+    },
+    "cleared": {
+     "mean": 97.3,
+     "sd": 10.9,
+     "min": 56,
+     "p10": 83,
+     "median": 97,
+     "p90": 111,
+     "max": 136
+    },
+    "moves": {
+     "mean": 38.4,
+     "sd": 4.57,
+     "min": 23,
+     "p10": 33,
+     "median": 38,
+     "p90": 44,
+     "max": 55
+    },
+    "maxCombo": {
+     "mean": 15.19,
+     "sd": 5.33,
+     "min": 5,
+     "p10": 9,
+     "median": 14,
+     "p90": 23,
+     "max": 42
+    },
+    "comboBreaks": {
+     "mean": 14.46,
+     "sd": 3.05,
+     "min": 5,
+     "p10": 11,
+     "median": 14,
+     "p90": 18,
+     "max": 27
+    },
+    "stuckPct": 100,
+    "stuckAtMean": 83.2,
+    "sizeSharePct": {
+     "2": 59.74,
+     "3": 28.85,
+     "4": 9.95,
+     "5": 1.21,
+     "6": 0.24,
+     "7": 0.01
+    }
+   },
+   {
+    "strat": "random",
+    "stratLabel": "random-legal-move",
+    "time": "size",
+    "timeLabel": "0.9 s + 0.5 s per tangerine",
+    "games": 5000,
+    "score": {
+     "mean": 143,
+     "sd": 19.98,
+     "min": 82,
+     "p10": 118,
+     "median": 142,
+     "p90": 169,
+     "max": 256
+    },
+    "cleared": {
+     "mean": 102.54,
+     "sd": 12.15,
+     "min": 61,
+     "p10": 87,
+     "median": 103,
+     "p90": 118,
+     "max": 136
+    },
+    "moves": {
+     "mean": 43.08,
+     "sd": 5.16,
+     "min": 26,
+     "p10": 36,
+     "median": 43,
+     "p90": 50,
+     "max": 58
+    },
+    "maxCombo": {
+     "mean": 9.06,
+     "sd": 2.96,
+     "min": 4,
+     "p10": 6,
+     "median": 9,
+     "p90": 13,
+     "max": 29
+    },
+    "comboBreaks": {
+     "mean": 13.04,
+     "sd": 3.12,
+     "min": 3,
+     "p10": 9,
+     "median": 13,
+     "p90": 17,
+     "max": 26
+    },
+    "stuckPct": 99.86,
+    "stuckAtMean": 90,
+    "sizeSharePct": {
+     "2": 68.9,
+     "3": 24.87,
+     "4": 5.62,
+     "5": 0.55,
+     "6": 0.06
+    }
+   },
+   {
+    "strat": "high",
+    "stratLabel": "highest-number-first",
+    "time": "size",
+    "timeLabel": "0.9 s + 0.5 s per tangerine",
+    "games": 5000,
+    "score": {
+     "mean": 208.86,
+     "sd": 42.09,
+     "min": 88,
+     "p10": 161,
+     "median": 203,
+     "p90": 265,
+     "max": 470
+    },
+    "cleared": {
+     "mean": 111.7,
+     "sd": 13.43,
+     "min": 57,
+     "p10": 94,
+     "median": 112,
+     "p90": 129,
+     "max": 137
+    },
+    "moves": {
+     "mean": 50.38,
+     "sd": 5.99,
+     "min": 26,
+     "p10": 42,
+     "median": 51,
+     "p90": 58,
+     "max": 62
+    },
+    "maxCombo": {
+     "mean": 18.78,
+     "sd": 6.22,
+     "min": 7,
+     "p10": 12,
+     "median": 18,
+     "p90": 27,
+     "max": 55
+    },
+    "comboBreaks": {
+     "mean": 10.2,
+     "sd": 3.16,
+     "min": 1,
+     "p10": 6,
+     "median": 10,
+     "p90": 14,
+     "max": 22
+    },
+    "stuckPct": 91.6,
+    "stuckAtMean": 99.6,
+    "sizeSharePct": {
+     "2": 79.75,
+     "3": 18.85,
+     "4": 1.34,
+     "5": 0.05
+    }
+   },
+   {
+    "strat": "pairs",
+    "stratLabel": "pairs-first",
+    "time": "slow",
+    "timeLabel": "every move 3 s",
+    "games": 5000,
+    "score": {
+     "mean": 83.49,
+     "sd": 3.36,
+     "min": 58,
+     "p10": 80,
+     "median": 83,
+     "p90": 88,
+     "max": 97
+    },
+    "cleared": {
+     "mean": 83.49,
+     "sd": 3.36,
+     "min": 58,
+     "p10": 80,
+     "median": 83,
+     "p90": 88,
+     "max": 97
+    },
+    "moves": {
+     "mean": 39.87,
+     "sd": 0.79,
+     "min": 27,
+     "p10": 40,
+     "median": 40,
+     "p90": 40,
+     "max": 40
+    },
+    "maxCombo": {
+     "mean": 1,
+     "sd": 0,
+     "min": 1,
+     "p10": 1,
+     "median": 1,
+     "p90": 1,
+     "max": 1
+    },
+    "comboBreaks": {
+     "mean": 38.87,
+     "sd": 0.79,
+     "min": 26,
+     "p10": 39,
+     "median": 39,
+     "p90": 39,
+     "max": 39
+    },
+    "stuckPct": 5.42,
+    "stuckAtMean": 112.6,
+    "sizeSharePct": {
+     "2": 90.67,
+     "3": 9.23,
+     "4": 0.1
+    }
+   },
+   {
+    "strat": "big",
+    "stratLabel": "biggest-box-first",
+    "time": "slow",
+    "timeLabel": "every move 3 s",
+    "games": 5000,
+    "score": {
+     "mean": 94.92,
+     "sd": 8.37,
+     "min": 56,
+     "p10": 83,
+     "median": 96,
+     "p90": 105,
+     "max": 116
+    },
+    "cleared": {
+     "mean": 94.92,
+     "sd": 8.37,
+     "min": 56,
+     "p10": 83,
+     "median": 96,
+     "p90": 105,
+     "max": 116
+    },
+    "moves": {
+     "mean": 37.26,
+     "sd": 3.17,
+     "min": 23,
+     "p10": 33,
+     "median": 38,
+     "p90": 40,
+     "max": 40
+    },
+    "maxCombo": {
+     "mean": 1,
+     "sd": 0,
+     "min": 1,
+     "p10": 1,
+     "median": 1,
+     "p90": 1,
+     "max": 1
+    },
+    "comboBreaks": {
+     "mean": 36.26,
+     "sd": 3.17,
+     "min": 22,
+     "p10": 32,
+     "median": 37,
+     "p90": 39,
+     "max": 39
+    },
+    "stuckPct": 67.8,
+    "stuckAtMean": 107.9,
+    "sizeSharePct": {
+     "2": 58.76,
+     "3": 29.51,
+     "4": 10.23,
+     "5": 1.25,
+     "6": 0.25,
+     "7": 0.01
+    }
+   },
+   {
+    "strat": "random",
+    "stratLabel": "random-legal-move",
+    "time": "slow",
+    "timeLabel": "every move 3 s",
+    "games": 5000,
+    "score": {
+     "mean": 93.68,
+     "sd": 5.89,
+     "min": 56,
+     "p10": 87,
+     "median": 94,
+     "p90": 100,
+     "max": 111
+    },
+    "cleared": {
+     "mean": 93.68,
+     "sd": 5.89,
+     "min": 56,
+     "p10": 87,
+     "median": 94,
+     "p90": 100,
+     "max": 111
+    },
+    "moves": {
+     "mean": 39.14,
+     "sd": 1.96,
+     "min": 25,
+     "p10": 37,
+     "median": 40,
+     "p90": 40,
+     "max": 40
+    },
+    "maxCombo": {
+     "mean": 1,
+     "sd": 0,
+     "min": 1,
+     "p10": 1,
+     "median": 1,
+     "p90": 1,
+     "max": 1
+    },
+    "comboBreaks": {
+     "mean": 38.14,
+     "sd": 1.96,
+     "min": 24,
+     "p10": 36,
+     "median": 39,
+     "p90": 39,
+     "max": 39
+    },
+    "stuckPct": 30.84,
+    "stuckAtMean": 111.6,
+    "sizeSharePct": {
+     "2": 67.96,
+     "3": 25.46,
+     "4": 5.91,
+     "5": 0.59,
+     "6": 0.07
+    }
+   },
+   {
+    "strat": "high",
+    "stratLabel": "highest-number-first",
+    "time": "slow",
+    "timeLabel": "every move 3 s",
+    "games": 5000,
+    "score": {
+     "mean": 85.63,
+     "sd": 3.01,
+     "min": 57,
+     "p10": 82,
+     "median": 86,
+     "p90": 89,
+     "max": 101
+    },
+    "cleared": {
+     "mean": 85.63,
+     "sd": 3.01,
+     "min": 57,
+     "p10": 82,
+     "median": 86,
+     "p90": 89,
+     "max": 101
+    },
+    "moves": {
+     "mean": 39.86,
+     "sd": 0.79,
+     "min": 26,
+     "p10": 40,
+     "median": 40,
+     "p90": 40,
+     "max": 40
+    },
+    "maxCombo": {
+     "mean": 1,
+     "sd": 0,
+     "min": 1,
+     "p10": 1,
+     "median": 1,
+     "p90": 1,
+     "max": 1
+    },
+    "comboBreaks": {
+     "mean": 38.86,
+     "sd": 0.79,
+     "min": 25,
+     "p10": 39,
+     "median": 39,
+     "p90": 39,
+     "max": 39
+    },
+    "stuckPct": 5.9,
+    "stuckAtMean": 113.1,
+    "sizeSharePct": {
+     "2": 85.85,
+     "3": 13.52,
+     "4": 0.62,
+     "5": 0.01
+    }
+   }
+  ]
+ }
+}

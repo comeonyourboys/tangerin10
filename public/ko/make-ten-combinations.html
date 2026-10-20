@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#f97316">
+<title>합이 10인 숫자 조합 전부 — 귤게임 출현 빈도</title>
+<meta name="description" content="1~9 숫자 2~5개로 10을 만드는 조합 29가지, 각 조합이 나올 정확한 확률, 귤게임 새 판에 터뜨릴 수 있는 네모로 실제 나타나는 빈도.">
+<link rel="canonical" href="https://tangerin10.web.app/ko/make-ten-combinations">
+<link rel="alternate" hreflang="ko" href="https://tangerin10.web.app/ko/make-ten-combinations"><link rel="alternate" hreflang="en" href="https://tangerin10.web.app/make-ten-combinations"><link rel="alternate" hreflang="x-default" href="https://tangerin10.web.app/make-ten-combinations">
+<meta name="robots" content="index, follow">
+<meta name="google-site-verification" content="8nUCFYxTph7TOTN0ZC0zWvamYgyQMd026qCLSBL9YgE">
+<meta name="google-site-verification" content="WjzFs7iu4kDSzcJKM5QyAqGDAqx9J1P0uj-Ry4z1_NU">
+<meta name="google-adsense-account" content="ca-pub-5479403345572412">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Tangerine 10">
+<meta property="og:title" content="합이 10인 숫자 조합 전부 — 귤게임 출현 빈도">
+<meta property="og:description" content="1~9 숫자 2~5개로 10을 만드는 조합 29가지, 각 조합이 나올 정확한 확률, 귤게임 새 판에 터뜨릴 수 있는 네모로 실제 나타나는 빈도.">
+<meta property="og:url" content="https://tangerin10.web.app/ko/make-ten-combinations">
+<meta property="og:image" content="https://tangerin10.web.app/og-tangerin10.png?v=7">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="귤게임 Tangerine 10 숫자 퍼즐">
+<meta property="og:locale" content="ko_KR">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="합이 10인 숫자 조합 전부 — 귤게임 출현 빈도">
+<meta name="twitter:description" content="1~9 숫자 2~5개로 10을 만드는 조합 29가지, 각 조합이 나올 정확한 확률, 귤게임 새 판에 터뜨릴 수 있는 네모로 실제 나타나는 빈도.">
+<meta name="twitter:image" content="https://tangerin10.web.app/og-tangerin10.png?v=7">
+<link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/png" href="/favicon.png" sizes="512x512"><link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Outfit',-apple-system,BlinkMacSystemFont,sans-serif;color:#1a1a1a;background:#fff;line-height:1.7;-webkit-text-size-adjust:100%;}
+a{color:#f97316;}
+.wrap{max-width:780px;margin:0 auto;padding:0 20px;}
+.topbar{border-bottom:1px solid #f0f0f0;position:sticky;top:0;background:rgba(255,255,255,.95);backdrop-filter:blur(8px);z-index:20;}
+.topbar .wrap{display:flex;align-items:center;justify-content:space-between;height:56px;gap:14px;}
+.logo{display:flex;align-items:baseline;gap:5px;text-decoration:none;white-space:nowrap;}
+.logo-t{font-size:16px;font-weight:600;color:#999;}
+.logo-10{font-size:22px;font-weight:900;color:#f97316;letter-spacing:-1px;}
+.nav{display:flex;gap:2px;flex-wrap:wrap;justify-content:flex-end;}
+.nav a{font-size:13px;font-weight:600;color:#777;text-decoration:none;padding:6px 9px;border-radius:8px;white-space:nowrap;}
+.nav a:hover,.nav a.on{background:#fff4ea;color:#ea580c;}
+.crumb{font-size:12px;color:#aaa;margin:16px 0 4px;}
+.crumb a{color:#f97316;text-decoration:none;}
+h1{font-size:clamp(25px,5vw,32px);font-weight:900;letter-spacing:-.6px;margin:14px 0 8px;line-height:1.25;}
+.lead{font-size:16px;color:#666;margin-bottom:26px;line-height:1.75;}
+h2{font-size:20px;font-weight:800;margin:34px 0 12px;letter-spacing:-.3px;}
+h3{font-size:16px;font-weight:700;margin:22px 0 8px;}
+p{font-size:16px;color:#333;margin-bottom:14px;}
+ul,ol{margin:0 0 16px 20px;}
+li{font-size:15.5px;color:#333;margin-bottom:8px;line-height:1.7;}
+.box{background:#fff8f2;border:1px solid #ffe4cc;border-radius:14px;padding:18px 20px;margin:18px 0;}
+.box p:last-child,.box ul:last-child,.box li:last-child{margin-bottom:0;}
+.box strong{color:#ea580c;}
+table{width:100%;border-collapse:collapse;margin:16px 0;font-size:15px;background:#fff;border-radius:12px;overflow:hidden;border:1px solid #f0f0f0;}
+th,td{padding:11px 14px;text-align:left;border-bottom:1px solid #f5f5f5;}
+th{background:#fafafa;font-weight:700;font-size:13.5px;color:#777;}
+tr:last-child th,tr:last-child td{border-bottom:none;}
+td b{color:#ea580c;}
+.tbl-wrap{overflow-x:auto;}
+.cta{display:inline-block;background:#f97316;color:#fff;font-weight:800;font-size:16px;padding:13px 26px;border-radius:999px;text-decoration:none;margin:10px 0 6px;}
+.cta:hover{background:#ea580c;}
+.faq-q{font-weight:800;font-size:16.5px;margin:24px 0 6px;}
+.ad-wrap{margin:34px 0 0;}
+.disclose{font-size:11px;color:#c4c4c4;text-align:center;margin-top:6px;}
+footer{border-top:1px solid #f0f0f0;margin-top:36px;padding:24px 0 46px;}
+.ftr-nav{display:flex;flex-wrap:wrap;justify-content:center;gap:2px 0;}
+.ftr-nav a{font-size:12.5px;color:#888;text-decoration:none;padding:4px 9px;}
+.ftr-note{font-size:11.5px;color:#bbb;text-align:center;margin-top:10px;line-height:1.8;}
+@media(max-width:600px){.nav a{font-size:12px;padding:5px 7px;}p,li{font-size:15px;}}
+.fig{margin:20px 0;padding:14px 14px 10px;border:1px solid #f0f0f0;border-radius:14px;background:#fffdfb;}
+.fig figcaption{font-size:13px;color:#888;margin-top:8px;text-align:center;}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.88em;background:#f6f6f6;padding:1px 5px;border-radius:5px;}
+.updated{font-size:13px;color:#aaa;margin:-2px 0 18px;}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin:18px 0;}
+.card{display:block;border:1px solid #ffe4cc;background:#fff8f2;border-radius:14px;padding:16px 18px;text-decoration:none;color:#444;}
+.card b{display:block;color:#ea580c;font-size:16px;margin-bottom:6px;}
+.card span{display:block;font-size:14.5px;line-height:1.65;}
+.r-sum{background:#fff8f2;border:1px solid #ffe4cc;border-radius:12px;padding:12px 16px;font-size:14.5px;color:#7a4a1f;}
+.r-empty{color:#999;}
+</style>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"합이 10이 되는 조합 전부와 실제로 나오는 빈도","description":"1~9 숫자 2~5개로 10을 만드는 조합 29가지, 각 조합이 나올 정확한 확률, 귤게임 새 판에 터뜨릴 수 있는 네모로 실제 나타나는 빈도.","inLanguage":"ko","datePublished":"2026-10-20","mainEntityOfPage":"https://tangerin10.web.app/ko/make-ten-combinations","author":{"@type":"Organization","name":"Tangerine 10","url":"https://tangerin10.web.app"},"publisher":{"@type":"Organization","name":"Tangerine 10","url":"https://tangerin10.web.app"}}</script>
+</head>
+<body>
+<header class="topbar"><div class="wrap">
+  <a class="logo" href="/ko/"><span class="logo-t">🍊 Tangerine</span><span class="logo-10">10</span></a>
+  <nav class="nav"><a href="/ko/">게임</a><a href="/ko/how-to-play">게임 방법</a><a href="/ko/strategy">공략</a><a href="/ko/analysis">분석</a><a href="/ko/faq">FAQ</a><a href="/ko/about">소개</a><a href="/ko/contact">문의</a><a href="/make-ten-combinations" hreflang="en">English</a></nav>
+</div></header>
+<main class="wrap">
+
+<nav class="crumb"><a href="/ko/">홈</a> › <a href="/ko/analysis">분석</a> › 합이 10인 조합</nav>
+<h1>합이 10이 되는 조합 전부와 실제로 나오는 빈도</h1>
+<p class="lead">1부터 9까지의 숫자로 10을 만드는 방법은 많지 않습니다. 이 페이지는 2~5개짜리 조합을 하나도 빠짐없이 나열하고, 각각이 나올 정확한 확률을 계산한 뒤, 시뮬레이션한 귤게임 판 100,000개에서 실제로 터뜨릴 수 있는 네모로 얼마나 자주 나타나는지 확인합니다.</p>
+
+<h2>조합은 몇 가지인가</h2>
+<p>순서는 무시하고 숫자의 묶음으로 셉니다. 네모는 숫자가 어느 구석에 있는지 따지지 않으니 3+7과 7+3은 판 위에서 같은 것입니다. 1~9 숫자로, 같은 숫자를 여러 번 써도 된다고 하면 10을 만드는 방법은 두 개로 정확히 <b>5가지</b>, 세 개로 <b>8가지</b>, 네 개로 <b>9가지</b>, 다섯 개로 <b>7가지</b>입니다. 실제로 쓸 만한 범위에서 모두 29가지입니다. 여섯 개 이상도 1 열 개까지 12가지가 더 있지만, 판 통계에서 보듯 그렇게 큰 네모는 실제 판에 거의 없습니다.</p>
+<div class="tbl-wrap"><table><thead><tr><th>개수</th><th>가짓수</th><th>조합</th></tr></thead><tbody><tr><td>2</td><td>5</td><td>1+9, 2+8, 3+7, 4+6, 5+5</td></tr><tr><td>3</td><td>8</td><td>1+1+8, 1+2+7, 1+3+6, 1+4+5, 2+2+6, 2+3+5, 2+4+4, 3+3+4</td></tr><tr><td>4</td><td>9</td><td>1+1+1+7, 1+1+2+6, 1+1+3+5, 1+1+4+4, 1+2+2+5, 1+2+3+4, 1+3+3+3, 2+2+2+4, 2+2+3+3</td></tr><tr><td>5</td><td>7</td><td>1+1+1+1+6, 1+1+1+2+5, 1+1+1+3+4, 1+1+2+2+4, 1+1+2+3+3, 1+2+2+2+3, 2+2+2+2+2</td></tr><tr><td>6–10</td><td>12</td><td>1+1+1+1+1+5, 1+1+1+1+2+4, 1+1+1+1+3+3, 1+1+1+2+2+3, 1+1+2+2+2+2, 1+1+1+1+1+1+4, 1+1+1+1+1+2+3, 1+1+1+1+2+2+2, 1+1+1+1+1+1+1+3, 1+1+1+1+1+1+2+2, 1+1+1+1+1+1+1+1+2, 1+1+1+1+1+1+1+1+1+1</td></tr></tbody></table></div>
+
+<h2>확률과 빈도를 붙인 전체 표</h2>
+<p>아래 표에는 조합마다 숫자 세 개가 붙어 있습니다. <b>순서</b>는 그 조합이 나오는 칸 순서의 가짓수입니다. 1+9는 1 다음 9, 9 다음 1로 두 가지지만 5+5는 한 가지뿐입니다. <b>확률</b>은 그만큼의 무작위 귤이 바로 이 조합일 정확한 확률로, 순서 가짓수를 9의 (개수)제곱으로 나눈 값입니다. <b>판당</b>은 시뮬레이션에서 새 PC 판 하나에 그 조합이 터뜨릴 수 있는 네모로 평균 몇 번 나왔는지입니다.</p>
+<div class="tbl-wrap"><table><thead><tr><th>개수</th><th>조합</th><th>순서</th><th>무작위 귤일 때 확률</th><th>새 PC 판당</th></tr></thead><tbody><tr><td>2</td><td><b>1+9</b></td><td>2</td><td>2.4691%</td><td>7.728</td></tr><tr><td>2</td><td><b>2+8</b></td><td>2</td><td>2.4691%</td><td>7.7128</td></tr><tr><td>2</td><td><b>3+7</b></td><td>2</td><td>2.4691%</td><td>7.7313</td></tr><tr><td>2</td><td><b>4+6</b></td><td>2</td><td>2.4691%</td><td>7.7337</td></tr><tr><td>2</td><td><b>5+5</b></td><td>1</td><td>1.2346%</td><td>3.8685</td></tr><tr><td>3</td><td><b>1+1+8</b></td><td>3</td><td>0.4115%</td><td>1.1778</td></tr><tr><td>3</td><td><b>1+2+7</b></td><td>6</td><td>0.823%</td><td>2.3462</td></tr><tr><td>3</td><td><b>1+3+6</b></td><td>6</td><td>0.823%</td><td>2.3558</td></tr><tr><td>3</td><td><b>1+4+5</b></td><td>6</td><td>0.823%</td><td>2.3633</td></tr><tr><td>3</td><td><b>2+2+6</b></td><td>3</td><td>0.4115%</td><td>1.1689</td></tr><tr><td>3</td><td><b>2+3+5</b></td><td>6</td><td>0.823%</td><td>2.3481</td></tr><tr><td>3</td><td><b>2+4+4</b></td><td>3</td><td>0.4115%</td><td>1.1798</td></tr><tr><td>3</td><td><b>3+3+4</b></td><td>3</td><td>0.4115%</td><td>1.1728</td></tr><tr><td>4</td><td><b>1+1+1+7</b></td><td>4</td><td>0.061%</td><td>0.2469</td></tr><tr><td>4</td><td><b>1+1+2+6</b></td><td>12</td><td>0.1829%</td><td>0.7332</td></tr><tr><td>4</td><td><b>1+1+3+5</b></td><td>12</td><td>0.1829%</td><td>0.7414</td></tr><tr><td>4</td><td><b>1+1+4+4</b></td><td>6</td><td>0.0914%</td><td>0.3673</td></tr><tr><td>4</td><td><b>1+2+2+5</b></td><td>12</td><td>0.1829%</td><td>0.7361</td></tr><tr><td>4</td><td><b>1+2+3+4</b></td><td>24</td><td>0.3658%</td><td>1.4679</td></tr><tr><td>4</td><td><b>1+3+3+3</b></td><td>4</td><td>0.061%</td><td>0.2446</td></tr><tr><td>4</td><td><b>2+2+2+4</b></td><td>4</td><td>0.061%</td><td>0.2455</td></tr><tr><td>4</td><td><b>2+2+3+3</b></td><td>6</td><td>0.0914%</td><td>0.3705</td></tr><tr><td>5</td><td><b>1+1+1+1+6</b></td><td>5</td><td>0.0085%</td><td>0.0197</td></tr><tr><td>5</td><td><b>1+1+1+2+5</b></td><td>20</td><td>0.0339%</td><td>0.0785</td></tr><tr><td>5</td><td><b>1+1+1+3+4</b></td><td>20</td><td>0.0339%</td><td>0.0793</td></tr><tr><td>5</td><td><b>1+1+2+2+4</b></td><td>30</td><td>0.0508%</td><td>0.1173</td></tr><tr><td>5</td><td><b>1+1+2+3+3</b></td><td>30</td><td>0.0508%</td><td>0.1178</td></tr><tr><td>5</td><td><b>1+2+2+2+3</b></td><td>20</td><td>0.0339%</td><td>0.0793</td></tr><tr><td>5</td><td><b>2+2+2+2+2</b></td><td>1</td><td>0.0017%</td><td>0.0037</td></tr></tbody></table></div>
+
+<h2>5+5만 다른 짝의 절반인 이유</h2>
+<p>다섯 짝은 똑같이 쉬워 보이지만 똑같이 자주 나오지는 않습니다. 1+9, 2+8, 3+7, 4+6은 판마다 7.734번쯤 나왔는데 5+5는 3.8685번으로 거의 정확히 절반이었습니다. 이유는 순서 칸에 있습니다. 나란한 두 칸이 1+9가 되려면 앞이 1이고 뒤가 9이거나 그 반대면 되니 81분의 2입니다. 5+5는 둘 다 5여야 하니 81분의 1입니다. 시뮬레이션은 이 2 대 1 비율을 거의 그대로 보여 줍니다.</p>
+<p>더 큰 조합에서도 똑같습니다. 세 개짜리 중 숫자가 모두 다른 네 가지(1+2+7, 1+3+6, 1+4+5, 2+3+5)는 순서가 여섯 가지씩이고, 판마다 각각 2.3462번쯤 나왔습니다. 1+1+8이나 2+4+4처럼 같은 숫자가 겹치는 조합은 순서가 세 가지뿐이라 그 절반쯤 나왔습니다. 네 개짜리에서 숫자가 모두 다른 조합은 1+2+3+4 하나뿐입니다. 순서가 24가지라 판당 1.4679번으로 네 개짜리 중 단연 가장 흔합니다.</p>
+
+<h2>크기가 커질수록 확률은 빠르게 준다</h2>
+<p>크기별로 확률을 더하면, 그만큼의 무작위 귤이 합 10이 될 확률이 나옵니다.</p>
+<div class="tbl-wrap"><table><thead><tr><th>귤 개수</th><th>경우의 수 (순서 있음)</th><th>합이 10일 확률</th></tr></thead><tbody><tr><td>2</td><td>9</td><td><b>11.111%</b></td></tr><tr><td>3</td><td>36</td><td><b>4.938%</b></td></tr><tr><td>4</td><td>84</td><td><b>1.280%</b></td></tr><tr><td>5</td><td>126</td><td><b>0.213%</b></td></tr></tbody></table></div>
+<figure class="fig"><svg viewBox="0 0 640 120" role="img" aria-label="무작위 귤 묶음의 합이 정확히 10일 확률" style="width:100%;height:auto;display:block"><text x="142" y="22" text-anchor="end" font-size="13" fill="#555">2개</text><rect x="150" y="9" width="420.0" height="17" rx="4" fill="#f97316"/><text x="576.0" y="22" font-size="13" fill="#333" font-weight="700">11.111%</text><text x="142" y="50" text-anchor="end" font-size="13" fill="#555">3개</text><rect x="150" y="37" width="186.7" height="17" rx="4" fill="#f97316"/><text x="342.7" y="50" font-size="13" fill="#333" font-weight="700">4.938%</text><text x="142" y="78" text-anchor="end" font-size="13" fill="#555">4개</text><rect x="150" y="65" width="48.4" height="17" rx="4" fill="#f97316"/><text x="204.4" y="78" font-size="13" fill="#333" font-weight="700">1.280%</text><text x="142" y="106" text-anchor="end" font-size="13" fill="#555">5개</text><rect x="150" y="93" width="8.1" height="17" rx="4" fill="#f97316"/><text x="164.1" y="106" font-size="13" fill="#333" font-weight="700">0.213%</text></svg><figcaption>무작위 귤 묶음의 합이 정확히 10일 확률</figcaption></figure>
+<p>무작위 귤 두 개는 아홉 번에 한 번 10이 됩니다. 세 개는 스무 번에 한 번쯤입니다. 다섯 개가 되면 오백 번에 한 번 정도로 떨어집니다. 게다가 큰 묶음은 모양도 맞아야 합니다. 새 판에서 귤 다섯 개가 든 네모는 5가 소수라 1×5 한 줄밖에 없습니다. 이 이중 조건 때문에 새 판에는 짝이 수십 개 있어도 다섯 개짜리 네모는 대개 하나도 없습니다.</p>
+
+<h2>판에 실제로 나오는 조합</h2>
+<p>두 효과를 합치면 새 PC 판에서 가장 흔한 네모 목록이 나옵니다. 이 열두 가지가 첫 묶음의 대부분을 차지합니다.</p>
+<figure class="fig"><svg viewBox="0 0 640 344" role="img" aria-label="새 PC 판에서 가장 흔한 합 10 네모 (판당)" style="width:100%;height:auto;display:block"><text x="142" y="22" text-anchor="end" font-size="13" fill="#555">4+6</text><rect x="150" y="9" width="420.0" height="17" rx="4" fill="#f97316"/><text x="576.0" y="22" font-size="13" fill="#333" font-weight="700">7.734</text><text x="142" y="50" text-anchor="end" font-size="13" fill="#555">3+7</text><rect x="150" y="37" width="419.8" height="17" rx="4" fill="#f97316"/><text x="575.8" y="50" font-size="13" fill="#333" font-weight="700">7.731</text><text x="142" y="78" text-anchor="end" font-size="13" fill="#555">1+9</text><rect x="150" y="65" width="419.7" height="17" rx="4" fill="#f97316"/><text x="575.7" y="78" font-size="13" fill="#333" font-weight="700">7.728</text><text x="142" y="106" text-anchor="end" font-size="13" fill="#555">2+8</text><rect x="150" y="93" width="418.9" height="17" rx="4" fill="#f97316"/><text x="574.9" y="106" font-size="13" fill="#333" font-weight="700">7.713</text><text x="142" y="134" text-anchor="end" font-size="13" fill="#555">5+5</text><rect x="150" y="121" width="210.1" height="17" rx="4" fill="#f97316"/><text x="366.1" y="134" font-size="13" fill="#333" font-weight="700">3.868</text><text x="142" y="162" text-anchor="end" font-size="13" fill="#555">1+4+5</text><rect x="150" y="149" width="128.3" height="17" rx="4" fill="#f97316"/><text x="284.3" y="162" font-size="13" fill="#333" font-weight="700">2.363</text><text x="142" y="190" text-anchor="end" font-size="13" fill="#555">1+3+6</text><rect x="150" y="177" width="127.9" height="17" rx="4" fill="#f97316"/><text x="283.9" y="190" font-size="13" fill="#333" font-weight="700">2.356</text><text x="142" y="218" text-anchor="end" font-size="13" fill="#555">2+3+5</text><rect x="150" y="205" width="127.5" height="17" rx="4" fill="#f97316"/><text x="283.5" y="218" font-size="13" fill="#333" font-weight="700">2.348</text><text x="142" y="246" text-anchor="end" font-size="13" fill="#555">1+2+7</text><rect x="150" y="233" width="127.4" height="17" rx="4" fill="#f97316"/><text x="283.4" y="246" font-size="13" fill="#333" font-weight="700">2.346</text><text x="142" y="274" text-anchor="end" font-size="13" fill="#555">1+2+3+4</text><rect x="150" y="261" width="79.7" height="17" rx="4" fill="#f97316"/><text x="235.7" y="274" font-size="13" fill="#333" font-weight="700">1.468</text><text x="142" y="302" text-anchor="end" font-size="13" fill="#555">2+4+4</text><rect x="150" y="289" width="64.1" height="17" rx="4" fill="#f97316"/><text x="220.1" y="302" font-size="13" fill="#333" font-weight="700">1.18</text><text x="142" y="330" text-anchor="end" font-size="13" fill="#555">1+1+8</text><rect x="150" y="317" width="64.0" height="17" rx="4" fill="#f97316"/><text x="220.0" y="330" font-size="13" fill="#333" font-weight="700">1.178</text></svg><figcaption>새 PC 판에서 가장 흔한 합 10 네모 (판당)</figcaption></figure>
+<p>짝 네 가지가 맨 위를 나눠 갖고, 그다음 5+5, 숫자가 모두 다른 세 개짜리 네 가지, 그리고 1+2+3+4 순입니다. 같은 숫자가 겹치는 조합은 모두 숫자가 다른 이웃 조합보다 아래에 있습니다. 5+5가 다른 짝보다 뒤처지는 것과 같은 이유입니다.</p>
+
+<h2>짧은 목록으로 판의 얼마를 덮을 수 있나</h2>
+<p>몇몇 조합이 나머지보다 훨씬 흔하기 때문에, 짧은 목록만으로 새 판의 대부분을 덮을 수 있습니다. 아래 표는 위의 판당 빈도를 더해 새 PC 판의 평균 전체 묶음 수(54.65개)로 나눈 것입니다.</p>
+<div class="tbl-wrap"><table><thead><tr><th>알고 있는 조합</th><th>가짓수</th><th>첫 판 전체 묶음 중 차지하는 비율</th></tr></thead><tbody><tr><td>짝 다섯 가지</td><td>5</td><td><b>63.6%</b></td></tr><tr><td>+ 숫자가 모두 다른 세 개짜리 네 가지</td><td>9</td><td><b>80.9%</b></td></tr><tr><td>+ 나머지 세 개짜리 네 가지</td><td>13</td><td><b>89.5%</b></td></tr><tr><td>+ 1+2+3+4</td><td>14</td><td><b>92.1%</b></td></tr></tbody></table></div>
+<p>짝 다섯 가지만으로 첫 판 묶음의 64%쯤을 차지합니다. 세 개짜리 네 가지만 더하면 81%가 되고, 모두 열네 가지면 새 판에 있는 것의 92%를 본 셈입니다. 나머지 네 개·다섯 개짜리 15가지와 그보다 긴 12가지가 남은 몫을 나눠 갖습니다. 많이 대충 아는 것보다 적게 확실히 아는 게 낫다는 가장 강한 근거가 이 숫자입니다. 그 15가지를 더 외워도 몇 %포인트밖에 늘지 않는데, 드래그할 때마다 찾는 시간은 늘어납니다.</p>
+<p>처음 몇 판에서 흔히 느끼는 것도 이것으로 설명됩니다. 처음 하는 사람은 판이 "10이 될 뻔한 것투성이"라고 느끼곤 합니다. 5 옆의 4, 8 옆의 3 같은 것들입니다. 운이 나빠서가 아닙니다. 이웃한 두 칸이 정확히 10이 될 확률은 9분의 1이니 아홉 중 여덟은 10이 아니고, 1~9 두 숫자의 합은 대부분 6에서 14 사이라 그 여덟도 10 근처에 몰립니다.</p>
+
+<h2>시작할 때만이 아니라 게임 내내</h2>
+<p>새 판에는 빈칸이 없습니다. 귤이 터지면서 네모가 빈칸을 가로질러 늘어나고, 처음엔 불가능했던 조합이 가능해집니다. 봇 실험은 봇이 둔 모든 수의 크기를 기록했습니다. 늘 가장 큰 네모를 고르는 봇조차 짝이 59.63%, 세 개짜리 28.96%, 네 개짜리 9.97%, 다섯 개 이상 1.45%였습니다. 일부러 큰 네모를 찾아다녔는데도 그렇습니다. 짝을 먼저 고르는 봇은 80.28%를 짝으로 터뜨렸습니다. 큰 조합은 처음에만 드문 게 아니라 게임 내내 드뭅니다.</p>
+
+<h2>이 목록을 쓰는 법</h2>
+<p>41가지를 전부 외울 필요는 없습니다. 데이터로 보면 짝 다섯 가지와 숫자가 모두 다른 세 개짜리 네 가지가 판에 나오는 거의 전부입니다. 이것들을 눈에 익히는 방법은 <a href="/ko/strategy">공략</a>에, 숫자별로 얼마나 자주 고립되는지까지 담은 새 판 통계는 <a href="/ko/board-statistics">판 통계</a>에 있습니다.</p>
+<h2>이 숫자를 다시 만들어 보려면</h2>
+<p>이 페이지의 수치는 모두 Node.js로 돌리는 스크립트 하나, <code>scripts/simulate.mjs</code>에서 나왔습니다. 게임의 <code>makeBoard</code> 한 줄(칸마다 <code>Math.floor(난수 × 9) + 1</code>)을 그대로 옮기고, 브라우저 난수 대신 시드(20261020)를 고정한 난수를 써서 몇 번을 돌려도 같은 결과가 나오게 했습니다. 스크립트가 결과를 JSON 파일로 남기고 이 페이지는 그 파일로 만들어지기 때문에, 여기 있는 숫자 중 손으로 적은 것은 없습니다. 시드를 바꾸면 소수점 아래는 조금 달라지지만 결론은 그대로입니다.</p>
+<p><a class="cta" href="/ko/">조합 찾으러 가기</a></p>
+</main>
+<div class="wrap ad-wrap" style="display:flex;justify-content:center"><ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-vwzzWFnt83j2lDmM" data-ad-width="320" data-ad-height="50"></ins><script async src="https://t1.kakaocdn.net/kas/static/ba.min.js"></script></div>
+<footer><div class="wrap">
+  <div class="ftr-nav"><a href="/ko/">게임</a><a href="/ko/how-to-play">게임 방법</a><a href="/ko/strategy">공략</a><a href="/ko/analysis">분석</a><a href="/ko/faq">FAQ</a><a href="/ko/about">소개</a><a href="/ko/contact">문의</a><a href="/ko/privacy">개인정보처리방침</a><a href="/make-ten-combinations" hreflang="en">English</a></div>
+  <p class="ftr-note">Tangerine 10은 무료 브라우저 퍼즐 게임입니다. 회원가입·설치 없이 바로 할 수 있습니다. © 2026 Tangerine 10</p>
+</div></footer>
+</body>
+</html>

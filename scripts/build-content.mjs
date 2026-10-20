@@ -8,11 +8,13 @@ import { writeFileSync, mkdirSync, readFileSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { howKo, stratKo, faqsKo, aboutKo, contactKo, privacyKo } from './content-ko.mjs';
+import { ARTICLES, articleBody, teaser, SIM } from './articles.mjs';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const OUT = join(root, 'public');
 const SITE = { url: 'https://tangerin10.web.app', name: 'Tangerine 10', gsv: ['8nUCFYxTph7TOTN0ZC0zWvamYgyQMd026qCLSBL9YgE', 'WjzFs7iu4kDSzcJKM5QyAqGDAqx9J1P0uj-Ry4z1_NU'], adfit: 'DAN-vwzzWFnt83j2lDmM' }; // adfit: 카카오 애드핏 하단 320x50
 // 카카오 애드핏 320x50 한 칸을 본문 맨 아래에 둔다. 단위 ID 가 비어 있으면 아무것도 출력하지 않는다.
+// 개인정보처리방침·소개·문의·404·기록 페이지에는 광고를 넣지 않는다(layout 의 ads:false).
 const adfit = (unit) => unit ? `<div class="wrap ad-wrap" style="display:flex;justify-content:center"><ins class="kakao_ad_area" style="display:none;" data-ad-unit="${unit}" data-ad-width="320" data-ad-height="50"></ins><script async src="https://t1.kakaocdn.net/kas/static/ba.min.js"></script></div>` : '';
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const jsonld = (o) => `<script type="application/ld+json">${JSON.stringify(o).replace(/</g, '\\u003c')}</script>`;
@@ -58,13 +60,21 @@ footer{border-top:1px solid #f0f0f0;margin-top:36px;padding:24px 0 46px;}
 .ftr-nav a{font-size:12.5px;color:#888;text-decoration:none;padding:4px 9px;}
 .ftr-note{font-size:11.5px;color:#bbb;text-align:center;margin-top:10px;line-height:1.8;}
 @media(max-width:600px){.nav a{font-size:12px;padding:5px 7px;}p,li{font-size:15px;}}
+.fig{margin:20px 0;padding:14px 14px 10px;border:1px solid #f0f0f0;border-radius:14px;background:#fffdfb;}
+.fig figcaption{font-size:13px;color:#888;margin-top:8px;text-align:center;}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.88em;background:#f6f6f6;padding:1px 5px;border-radius:5px;}
+.updated{font-size:13px;color:#aaa;margin:-2px 0 18px;}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin:18px 0;}
+.card{display:block;border:1px solid #ffe4cc;background:#fff8f2;border-radius:14px;padding:16px 18px;text-decoration:none;color:#444;}
+.card b{display:block;color:#ea580c;font-size:16px;margin-bottom:6px;}
+.card span{display:block;font-size:14.5px;line-height:1.65;}
 .r-sum{background:#fff8f2;border:1px solid #ffe4cc;border-radius:12px;padding:12px 16px;font-size:14.5px;color:#7a4a1f;}
 .r-empty{color:#999;}
 `;
 
 const NAV = {
-  en: [['/', 'Play'], ['/how-to-play', 'How to Play'], ['/strategy', 'Strategy'], ['/faq', 'FAQ'], ['/records', 'Records'], ['/about', 'About'], ['/contact', 'Contact']],
-  ko: [['/ko/', '게임'], ['/ko/how-to-play', '게임 방법'], ['/ko/strategy', '공략'], ['/ko/faq', 'FAQ'], ['/ko/records', '기록'], ['/ko/about', '소개'], ['/ko/contact', '문의']],
+  en: [['/', 'Play'], ['/how-to-play', 'How to Play'], ['/strategy', 'Strategy'], ['/analysis', 'Analysis'], ['/faq', 'FAQ'], ['/about', 'About'], ['/contact', 'Contact']],
+  ko: [['/ko/', '게임'], ['/ko/how-to-play', '게임 방법'], ['/ko/strategy', '공략'], ['/ko/analysis', '분석'], ['/ko/faq', 'FAQ'], ['/ko/about', '소개'], ['/ko/contact', '문의']],
 };
 const T = {
   en: { privacy: 'Privacy Policy', privacyPath: '/privacy', note: 'Tangerine 10 is a free browser puzzle game. No sign-up, no download.', locale: 'en_US', other: '한국어', alt: 'Tangerine 10 number puzzle' },
@@ -72,7 +82,7 @@ const T = {
 };
 
 // alt: 다른 언어 판의 경로. 있으면 hreflang 과 언어 전환 링크를 붙인다.
-function layout({ title, desc, path, body, ld = [], lang = 'en', alt = '', noindex = false }) {
+function layout({ title, desc, path, body, ld = [], lang = 'en', alt = '', noindex = false, ads = true }) {
   const t = T[lang], nav = NAV[lang], abs = (p) => SITE.url + p, other = lang === 'en' ? 'ko' : 'en';
   const hreflang = alt ? `<link rel="alternate" hreflang="${lang}" href="${abs(path)}"><link rel="alternate" hreflang="${other}" href="${abs(alt)}"><link rel="alternate" hreflang="x-default" href="${abs(lang === 'en' ? path : alt)}">` : '';
   return `<!DOCTYPE html>
@@ -116,7 +126,7 @@ ${ld.map(jsonld).join('\n')}
 <main class="wrap">
 ${body}
 </main>
-${adfit(SITE.adfit)}
+${ads ? adfit(SITE.adfit) : ''}
 <footer><div class="wrap">
   <div class="ftr-nav">${nav.map(([h, n]) => `<a href="${h}">${n}</a>`).join('')}<a href="${t.privacyPath}">${t.privacy}</a>${alt ? `<a href="${alt}" hreflang="${other}">${t.other}</a>` : ''}</div>
   <p class="ftr-note">${t.note} © ${new Date().getFullYear()} Tangerine 10</p>
@@ -132,13 +142,16 @@ const howBody = `
 <p class="lead">Tangerine 10 is a two-minute number puzzle. You drag a box around tangerines whose numbers add up to exactly ten, and they pop. Here is every rule, including the ones the game never spells out.</p>
 
 <h2>The board</h2>
-<p>Every game starts with a fresh grid of tangerines. Each one carries a number from 1 to 9, drawn at random, so no two games are ever the same. The grid size depends on your screen.</p>
+<p>Every game starts with a fresh grid of tangerines. Each one carries a number from 1 to 9, drawn at random, so no two games are ever the same. The grid size depends on how wide your browser window is.</p>
 <div class="tbl-wrap"><table><tbody>
-<tr><th>Desktop</th><td>10 rows × 17 columns — <b>170 tangerines</b></td></tr>
-<tr><th>Mobile</th><td>12 rows × 14 columns — <b>168 tangerines</b></td></tr>
+<tr><th>Computers and most tablets</th><td>10 rows × 17 columns — <b>170 tangerines</b></td></tr>
+<tr><th>Phones (window 600 px wide or less)</th><td>12 rows × 14 columns — <b>168 tangerines</b></td></tr>
 <tr><th>Numbers</th><td>1 to 9, randomly distributed</td></tr>
 <tr><th>Time limit</th><td><b>120 seconds</b></td></tr>
 </tbody></table></div>
+
+<h3>Which board does a tablet get?</h3>
+<p>The game picks the board once, when the page loads, from the width of the browser window in CSS pixels. A window 600 pixels wide or narrower gets the 12 × 14 phone board; anything wider gets the 10 × 17 board. Tablets report widths well above 600 even in portrait — an iPad in portrait is 768 pixels wide or more — so tablets get the 17-column board, scaled down to fit the screen. Rotating the device or resizing the window does not change the board until you reload the page. A small tablet held in portrait shows fairly small tangerines; turning it to landscape before the page loads gives each tangerine more room.</p>
 
 <h2>The one rule that matters</h2>
 <p>Press and drag to draw a rectangle across the board. Every tangerine whose center falls inside that rectangle gets selected. When you release, the game adds up the selected numbers. If the total is <b>exactly 10</b>, those tangerines pop and you score. If it is 9, or 11, or anything else, nothing happens and you try again.</p>
@@ -175,12 +188,17 @@ const howBody = `
 <h2>Controls</h2>
 <ul>
   <li><b>Mouse:</b> hold the left button, drag a box, release to submit the selection.</li>
-  <li><b>Touch:</b> press and drag with one finger. The board does not scroll while you drag, so you can start a box anywhere.</li>
-  <li><b>Restart:</b> the circular arrow button in the top bar starts a new board immediately.</li>
+  <li><b>Touch:</b> press and drag with one finger. While a game is running, a touch that starts on the board draws a box instead of scrolling the page. Touches anywhere else scroll as usual.</li>
+  <li><b>Restart:</b> the circular arrow button in the top bar ends the current game straight away and shows the result card. Press Play Again for a new board.</li>
 </ul>
 
 <h2>When the game ends</h2>
-<p>At 120 seconds the board locks and your score is final. The game shows how many tangerines you cleared, saves the run to your local history, and submits the score to the global leaderboard. Your history lives in your own browser, so clearing site data will erase it.</p>
+<p>At 120 seconds the board locks, your score is final, and a result card appears over the board.</p>
+<ul>
+  <li><b>My History</b> adds the run to a list of your last five games. The list exists only while the page is open; it is not stored on your device, so reloading the page clears it.</li>
+  <li><b>The leaderboard is not automatic.</b> If your score beats the current third place, a name box appears on the result card. Type a name and press <b>Save &amp; Play Again</b> — only then is the score uploaded. An empty box is saved as "Player". If you close the page or press nothing, the score is not sent anywhere.</li>
+  <li>Scores that do not reach the top three show the current best score instead, and the button simply starts a new board.</li>
+</ul>
 <p><a class="cta" href="/">Play Tangerine 10</a></p>
 <p>New to the game? Read the <a href="/strategy">strategy guide</a> next — it explains why chasing big rectangles is usually the wrong instinct.</p>
 `;
@@ -200,6 +218,7 @@ const stratBody = `
 <tr><td>Ten fast clears of 2 tiles, combo held at ×3</td><td>20 tiles</td><td><b>60 points</b></td></tr>
 </tbody></table></div>
 <p>Same number of tangerines removed, three times the score. The lesson is blunt: take the match you can see right now, not the better one you might find in four seconds.</p>
+<p>This was tested with automatic players under the real rules in the <a href="/bot-strategies">bot strategy experiment</a>, which also shows the one situation where it stops being true: a player too slow to keep any combo scores more with bigger boxes.</p>
 
 <h2>Learn the five pairs</h2>
 <p>There are exactly five ways two numbers make ten. Burn them into memory so you stop calculating.</p>
@@ -207,7 +226,7 @@ const stratBody = `
   <p><strong>1 + 9 · 2 + 8 · 3 + 7 · 4 + 6 · 5 + 5</strong></p>
   <p>Pairs are the fastest clears in the game. They need the smallest rectangle, they are the easiest to spot, and at a ×5 multiplier a pair is worth ten points — more than a four-tile clear at base rate.</p>
 </div>
-<p>Once pairs are automatic, add the common triples: 1+2+7, 1+3+6, 1+4+5, 2+3+5, and the all-purpose 8+1+1. Anything longer than four tiles is rarely worth the search time.</p>
+<p>Once pairs are automatic, add the common triples: 1+2+7, 1+3+6, 1+4+5, 2+3+5, and the all-purpose 8+1+1. Anything longer than four tiles is rarely worth the search time. The <a href="/make-ten-combinations">full list of make-ten combinations</a> shows how often each one actually appears on a board.</p>
 
 <h2>Scan in strips, not in circles</h2>
 <p>Your eyes waste time wandering the whole grid. Work one horizontal band at a time, two or three rows deep, and sweep left to right. Within a band the rectangles you need are short and wide, which is the shape your hand draws most naturally. When a band dries up, move down a band rather than jumping back to the top.</p>
@@ -225,14 +244,113 @@ const stratBody = `
 
 <h2>Give up on nines early</h2>
 <p>A 9 can only ever pair with a 1. If no 1 sits in a workable rectangle, that 9 is dead weight for the rest of the run. The same applies in weaker form to 8s and 7s. Clear the low and middle numbers that combine flexibly — 3s, 4s, 5s, 6s — and let the stranded high numbers sit. Spending ten seconds rescuing one 9 costs you a combo worth far more.</p>
+<p>The <a href="/board-statistics">board statistics</a> put a number on this: in ${SIM.board.desktop.boards.toLocaleString('en-US')} simulated boards, ${SIM.board.desktop.digits[8].noMoveAtStartPct}% of nines started with no 1 next to them.</p>
 
 <h2>Play on the bigger board when you can</h2>
-<p>Desktop gives you 170 tangerines across 17 columns; mobile gives 168 across 14. The wider desktop grid puts more candidates inside any given horizontal sweep, which means less scrolling of the eyes and more matches per second. If you are chasing a leaderboard place, play on a laptop.</p>
+<p>Computers and tablets get 170 tangerines across 17 columns; phones get 168 across 14. The wider desktop grid puts more candidates inside any given horizontal sweep, which means less scrolling of the eyes and more matches per second. If you are chasing a leaderboard place, play on a laptop.</p>
 
 <h2>A realistic progression</h2>
 <p>Do not compare your first run to the leaderboard. Most players follow roughly this curve: the first few games are spent learning the drag, then pairs become automatic, then the combo clicks and the score roughly doubles. The jump from decent to good is almost entirely about holding the streak, not about spotting cleverer combinations.</p>
 <p><a class="cta" href="/">Try it now</a></p>
 <p>If any rule here is unfamiliar, the <a href="/how-to-play">rules page</a> covers the mechanics in full.</p>
+`;
+
+// ---------- About ----------
+const aboutEn = `
+<h1>About Tangerine 10</h1>
+<p class="updated">Last updated: October 20, 2026</p>
+
+<h2>What this is</h2>
+<p>Tangerine 10 is a free browser puzzle. A grid fills with numbered tangerines, and you drag a rectangle around any group whose numbers add up to exactly ten. Clear as many as you can before the 120-second timer runs out. There is no sign-up, no download, and no app store.</p>
+<p>The make-ten rule is not new: puzzles where you drag a box over numbers that add up to ten are often called the apple game or fruit box. This version keeps the format short — two minutes, one board, a score you can compare — and adds a combo multiplier that rewards clearing without pauses.</p>
+
+<h2>Who runs it</h2>
+<p>Tangerine 10 is made and run by one person, a software engineer in Seoul, as a personal side project outside of work. It is not a company product and has no team or investors behind it. The operator can be reached at <a href="mailto:comeonyourboyz@gmail.com">comeonyourboyz@gmail.com</a> or through the <a href="/contact">contact page</a>.</p>
+<p>Because it is a one-person project, bug fixes and new features arrive when there is time.</p>
+
+<h2>How it is made</h2>
+<p>The game and this website were built with substantial help from an AI coding assistant (Anthropic's Claude). The assistant wrote much of the code and the first drafts of these pages. The operator decides what gets built, checks the rules against the game's actual code, plays and tests every change, and is responsible for everything published here.</p>
+<p>The figures on the <a href="/analysis">analysis pages</a> are not AI estimates. They are the output of a simulation script that runs the game's own board code — 100,000 boards and thousands of automatic games — and those pages are generated directly from the script's output file.</p>
+
+<h2>Why it works this way</h2>
+<p><b>Two minutes, not twenty.</b> The timer is short on purpose, so a game fits into a short break.</p>
+<p><b>No account.</b> You can play without giving any personal information. Saving a leaderboard score only needs a name you make up.</p>
+<p><b>It works on a phone.</b> On narrow screens the board switches to a 12 × 14 layout so each tangerine stays large enough to drag with a thumb.</p>
+
+<h2>How scores are stored</h2>
+<p>When your score reaches the top three and you choose to save it, the name you typed, the score and the date are stored in Firebase Realtime Database and shown on the leaderboard. The My History panel exists only in the open page and is not stored anywhere. No email address, phone number or account identity is collected at any point. The <a href="/privacy">privacy policy</a> covers this in full.</p>
+
+<h2>Advertising</h2>
+<p>The game is free and there is nothing to buy inside it — no hints, no extra time, no cosmetic items. Hosting is paid for out of pocket, and advertising helps offset that. Ads appear below the page content, never over the board or between rounds. This page, the contact page, the privacy policy and the error page carry no ads.</p>
+
+<h2>Corrections</h2>
+<p>If a rule on <a href="/how-to-play">How to Play</a> or an answer in the <a href="/faq">FAQ</a> is wrong or unclear, please say so through the <a href="/contact">contact page</a>.</p>
+`;
+
+// ---------- Privacy ----------
+const privacyEn = `
+<h1>Privacy Policy</h1>
+<p class="updated">Last updated: October 20, 2026</p>
+
+<h2>Overview</h2>
+<p>This policy explains what Tangerine 10 (tangerin10.web.app, "the site") stores, which third-party services it uses, and how advertising cookies work on it. The site is run by one individual; see the <a href="/about">about page</a>.</p>
+
+<h2>Who the site is for</h2>
+<p>Tangerine 10 is a general-audience website for people who enjoy number puzzles. It is not designed for or directed at children, and it does not ask for anyone's age.</p>
+
+<h2>Information we collect</h2>
+<p><b>Leaderboard entries.</b> Only if your score reaches the top three and you press Save &amp; Play Again, the name you typed (up to 12 characters), your score and the date are stored in Google Firebase Realtime Database and shown publicly on the leaderboard. Use a nickname if you do not want your real name shown.</p>
+<p><b>Nothing else is collected by the game.</b> There is no account, and the game never asks for an email address or phone number. The My History panel exists only in the open page and disappears when you reload it; the game does not write cookies or local storage on your device.</p>
+
+<h2>Advertising and cookies</h2>
+<p><b>Google AdSense.</b> This site uses, or may use, Google AdSense to show ads. Third-party vendors, including Google, use cookies to serve ads based on a user's prior visits to this website or other websites. Google's use of advertising cookies enables it and its partners to serve ads to you based on your visit to this site and/or other sites on the Internet.</p>
+<p>You can opt out of personalised advertising by visiting Google's Ads Settings at <a href="https://adssettings.google.com" target="_blank" rel="noopener">https://adssettings.google.com</a>. You can also opt out of a third-party vendor's use of cookies for personalised advertising by visiting <a href="https://www.aboutads.info/choices" target="_blank" rel="noopener">https://www.aboutads.info/choices</a>. How Google uses information from sites that use its services is explained at <a href="https://policies.google.com/technologies/partner-sites" target="_blank" rel="noopener">policies.google.com/technologies/partner-sites</a>.</p>
+<p><b>Kakao AdFit.</b> Some pages show ads from Kakao AdFit. Kakao may use cookies to serve ads based on your prior visits. You can opt out of Kakao's personalised advertising on <a href="https://info.ad.daum.net/optoutko.do" target="_blank" rel="noopener">Kakao's targeted advertising page</a> (in Korean); ads will still appear but may be less relevant.</p>
+<p>The site itself does not set cookies. You can block or delete cookies in your browser settings, and the game works without them.</p>
+
+<h2>Other third-party services</h2>
+<p><b>Firebase (Google).</b> The site is hosted on Firebase Hosting and the leaderboard uses Firebase Realtime Database. Like any web server, Firebase receives your IP address and browser information when you load a page; see the <a href="https://firebase.google.com/support/privacy" target="_blank" rel="noopener">Firebase privacy information</a>.</p>
+<p><b>Google Fonts.</b> The font is loaded from Google's servers, which receive your IP address when they deliver it.</p>
+<p><b>Kakao Share SDK.</b> The game page loads Kakao's share library. When you use the Kakao share button, Kakao's privacy policy applies.</p>
+
+<h2>Children</h2>
+<p>Because the site is intended for a general audience, we do not knowingly collect personal information from children under 13 (under 14 in Korea). If you believe a child has saved a leaderboard name that identifies them, email us and it will be removed.</p>
+
+<h2>Removing your data</h2>
+<p>To remove a leaderboard entry, email the name, score and date shown on the leaderboard. Entries are deleted, not edited.</p>
+
+<h2>Changes to this policy</h2>
+<p>This policy may be updated from time to time. Changes are posted on this page with a new date.</p>
+
+<h2>Contact</h2>
+<p>Questions about this policy: <a href="mailto:comeonyourboyz@gmail.com">comeonyourboyz@gmail.com</a>, or see the <a href="/contact">contact page</a>.</p>
+`;
+
+// ---------- 404 ----------
+const notFoundEn = `
+<h1>Page not found</h1>
+<p class="lead">The page you were looking for does not exist or has moved.</p>
+<p>Try one of these instead:</p>
+<ul>
+  <li><a href="/">Play Tangerine 10</a></li>
+  <li><a href="/how-to-play">How to play</a> and the <a href="/strategy">strategy guide</a></li>
+  <li><a href="/analysis">Analysis</a> — board statistics, bot strategies and make-ten combinations</li>
+  <li><a href="/faq">FAQ</a></li>
+</ul>
+<p>한국어: <a href="/ko/">귤게임 홈으로 가기</a></p>
+`;
+
+// ---------- Analysis 목록 ----------
+const analysisEn = `
+<nav class="crumb"><a href="/">Home</a> › Analysis</nav>
+<h1>Tangerine 10 by the numbers</h1>
+<p class="lead">Three studies built from the game's own code: what a random board contains, which play style scores most, and every way to make ten. Each one comes from a simulation script, not from guesswork.</p>
+<div class="cards">
+${['board', 'bots', 'combos'].map((id) => `<a class="card" href="${ARTICLES[id].en.path}"><b>${ARTICLES[id].en.h1}</b><span>${teaser(id, 'en')}</span></a>`).join('\n')}
+</div>
+<h2>How these were made</h2>
+<p>The script <code>scripts/simulate.mjs</code> copies the line of game code that fills a board — a random whole number from 1 to 9 in every cell — and uses a fixed random seed so the results can be reproduced exactly. It generated ${SIM.boardsPerSize.toLocaleString('en-US')} boards for each board size, and ran four automatic players for ${SIM.gamesPerSetting.toLocaleString('en-US')} games under each of three speed assumptions, using the real 120-second timer, two-second combo window and multiplier table. The pages read their numbers straight from the script's output file.</p>
+<p>For the rules themselves, see <a href="/how-to-play">How to Play</a>; for practical habits, the <a href="/strategy">strategy guide</a>.</p>
 `;
 
 // ---------- FAQ ----------
@@ -243,10 +361,11 @@ const faqs = [
   ['Does the sum have to be exactly ten?', 'Yes, exactly ten. A selection adding to 9 or 11 does nothing at all. The game does not clear partial matches.'],
   ['Why did my selection not clear?', 'Three usual reasons. The total was not exactly ten, the rectangle caught an extra tangerine you did not notice, or a tangerine you expected to be inside had its center just outside the box. Selection is decided by the center of each tangerine, not by whether the box touches its edge.'],
   ['How is the score calculated?', 'Score equals the number of tangerines you clear, multiplied by your combo bonus and rounded down. The values on the tangerines do not affect the score, only how many you remove.'],
-  ['How does the combo work?', 'Each successful clear adds one to your combo and restarts a two-second timer. Combo 2 to 4 gives ×1.5, 5 to 9 gives ×2, 10 to 19 gives ×3, and 20 or more gives ×5. Go two seconds without clearing and the combo resets to zero.'],
+  ['How does the combo work?', 'Each successful clear adds one to your combo and restarts a two-second timer. The multiplier rises in steps from ×1 up to ×5 once the combo reaches 20; the full table is on the How to Play page. Go two seconds without clearing and the combo resets to zero.'],
+  ['What board will I get on a tablet?', 'The board is chosen when the page loads, from the browser window width. 600 pixels or narrower gets the 12 × 14 phone board; anything wider, which includes tablets in portrait and landscape, gets the 10 × 17 board. Rotating the device does not change the board until you reload.'],
   ['Is the board the same every game?', 'No. Every tangerine is assigned a random number from 1 to 9 at the start of each game, so every board is different.'],
   ['Is it possible to clear the whole board?', 'In practice, no. Numbers run out in awkward combinations long before the grid empties, and 120 seconds is short. Clearing the board is not the goal; clearing as many tangerines as possible is.'],
-  ['Where are my scores saved?', 'Your personal history is stored in your own browser. The leaderboard keeps the top global scores on a server. Clearing your browser data removes your local history but not your leaderboard entry.'],
+  ['Where are my scores saved?', 'The My History panel keeps your last five games only while the page is open. It is not saved on your device, so reloading clears it. The leaderboard keeps scores on a server, but only the ones players choose to save: when your score makes the top three, a name box appears, and the score is uploaded when you press Save & Play Again.'],
   ['Can I play offline?', 'The game itself is simple enough to run without a connection once loaded, but the leaderboard needs the internet to submit and show scores.'],
   ['What is this game called elsewhere?', 'Puzzles built on the same idea — drag a rectangle over numbers that add to ten — are often called the apple game or fruit box. Tangerine 10 uses tangerines, a two-minute limit, and a combo multiplier that rewards continuous play.'],
 ];
@@ -264,41 +383,14 @@ mkdirSync(OUT, { recursive: true });
 const pages = [
   ['how-to-play.html', layout({ title: 'How to Play Tangerine 10 — Rules, Scoring and Combos', desc: 'Complete rules for Tangerine 10: the 120-second timer, the exactly-ten selection rule, how score is calculated from tiles cleared, and how the combo multiplier works.', path: '/how-to-play', alt: '/ko/how-to-play', body: howBody, ld: [{ '@context': 'https://schema.org', '@type': 'HowTo', name: 'How to play Tangerine 10', description: 'Drag a rectangle over tangerines whose numbers add up to exactly ten to clear them before the 120-second timer ends.', step: [{ '@type': 'HowToStep', name: 'Start the game', text: 'Press Start. A grid of tangerines numbered 1 to 9 appears and a 120-second timer begins.' }, { '@type': 'HowToStep', name: 'Drag a selection box', text: 'Press and drag to draw a rectangle. Every tangerine whose center falls inside is selected.' }, { '@type': 'HowToStep', name: 'Make exactly ten', text: 'Release when the selected numbers total exactly ten. The tangerines pop and you score.' }, { '@type': 'HowToStep', name: 'Keep the combo alive', text: 'Clear again within two seconds to build the combo multiplier, which reaches five times at combo twenty.' }] }] })],
   ['strategy.html', layout({ title: 'Tangerine 10 Strategy — How to Score Higher', desc: 'Why fast pairs beat big rectangles in Tangerine 10, the five number pairs to memorize, how to scan the board, and how to protect a combo streak.', path: '/strategy', alt: '/ko/strategy', body: stratBody, ld: [{ '@context': 'https://schema.org', '@type': 'Article', headline: 'Tangerine 10 Strategy Guide', description: 'Scoring math and practical tactics for the Tangerine 10 number puzzle.', inLanguage: 'en', mainEntityOfPage: SITE.url + '/strategy', author: { '@type': 'Organization', name: SITE.name, url: SITE.url }, publisher: { '@type': 'Organization', name: SITE.name, url: SITE.url } }] })],
-  ['about.html', layout({ title: 'About Tangerine 10 — Who Makes This Game', desc: 'Who builds Tangerine 10, why a 120-second make-ten puzzle, how scores are stored, what the game costs, and how to get in touch.', path: '/about', alt: '/ko/about', body: `
-<h1>About Tangerine 10</h1>
-<p class="updated">Last updated: September 30, 2026</p>
-
-<h2>What this is</h2>
-<p>Tangerine 10 is a free browser puzzle. A grid fills with numbered tangerines, and you drag a rectangle around any group whose numbers add up to exactly ten. Clear as many as you can before the 120-second timer runs out. There is no sign-up, no download, and no app store.</p>
-<p>The rule is old — the same make-ten mechanic has appeared in arcade and mobile games for years. What this version adds is a short, honest format: two minutes, one board, a score you can compare. No lives to wait for, no currency to buy, no tutorial to sit through.</p>
-
-<h2>Who makes it</h2>
-<p>Tangerine 10 is built and run by one person, a software engineer based in Seoul who builds small web projects outside of work. It is not a studio, a startup, or a company. There is no team behind the game and no investor to answer to.</p>
-<p>That matters for what you can expect. Bugs get fixed when there is time. Features arrive slowly, if at all. Nothing gets shut down abruptly to chase a business model.</p>
-
-<h2>Why it was made this way</h2>
-<p><b>Two minutes, not twenty.</b> The timer is short on purpose. A puzzle you can finish during a coffee break gets played; one that demands a session gets closed.</p>
-<p><b>No account.</b> Asking for an email before someone has played a single round is a bad trade. Scores are saved without one.</p>
-<p><b>It works on a phone.</b> The board is sized to be tapped with a thumb. Most people who open the game are on a phone, so that is the case it is built for first.</p>
-
-<h2>How scores work</h2>
-<p>Your score comes from the number of tiles you clear, multiplied by a combo bonus that grows while you keep clearing without pausing. Speed beats size — several quick pairs usually outscore one large rectangle.</p>
-<p>High scores are stored in Firebase Realtime Database with whatever ranking name you type. Your own recent sessions are kept in your browser's local storage and never leave your device. No email address, phone number, or account identity is collected at any point. The <a href="/privacy">privacy policy</a> covers this in full.</p>
-
-<h2>What it costs</h2>
-<p>The game is free and always will be. There is nothing to buy inside it — no hints, no extra time, no cosmetic items. Hosting is paid for out of pocket, and advertising is meant to offset that. Ads are placed at the edges of the page, never inside the board or between rounds, because an ad that interrupts a 120-second game ruins the game.</p>
-
-<h2>Getting in touch</h2>
-<p>Found a bug, hit a score that looks wrong, or want to suggest something? Corrections are welcome — if a rule on <a href="/how-to-play">How to Play</a> or an answer in the <a href="/faq">FAQ</a> is wrong or unclear, saying so is genuinely useful.</p>
-<p>See the <a href="/contact">contact page</a> for how to reach the person who runs this.</p>
-` })],
-  ['contact.html', layout({ title: 'Contact — Tangerine 10', desc: 'How to reach the person who builds Tangerine 10: bug reports, scoring questions, rule corrections and suggestions.', path: '/contact', alt: '/ko/contact', body: `
+  ['about.html', layout({ title: 'About Tangerine 10 — Who Runs It and How It Is Made', desc: 'Who runs Tangerine 10, how the game and this site are made (including the use of an AI coding assistant), how scores are stored, and where ads appear.', path: '/about', alt: '/ko/about', ads: false, body: aboutEn })],
+  ['contact.html', layout({ title: 'Contact — Tangerine 10', desc: 'How to reach the person who builds Tangerine 10: bug reports, scoring questions, rule corrections and suggestions.', path: '/contact', alt: '/ko/contact', ads: false, body: `
 <h1>Contact</h1>
-<p class="updated">Last updated: September 30, 2026</p>
+<p class="updated">Last updated: October 20, 2026</p>
 
 <h2>Email</h2>
 <p><a href="mailto:comeonyourboyz@gmail.com">comeonyourboyz@gmail.com</a></p>
-<p>Tangerine 10 is built and run by one person, so replies can take a few days. Every message is read.</p>
+<p>Tangerine 10 is built and run by one person, so replies can take a few days.</p>
 
 <h2>What is most useful to send</h2>
 <p><b>Bug reports.</b> If the board stops responding, a selection that adds to ten does not clear, or the timer behaves oddly, please include your device and browser. "iPhone 15, Safari" is enough to narrow it down.</p>
@@ -307,17 +399,32 @@ const pages = [
 <p><b>Leaderboard issues.</b> If a name on the board is offensive or a score is obviously fabricated, let us know and it will be removed.</p>
 
 <h2>What we cannot do</h2>
-<p>Scores cannot be restored. They are tied to the browser you played in, so clearing site data or switching devices loses your local history.</p>
+<p>Lost history cannot be restored. The My History panel only lasts while the page is open and is never stored, so there is nothing to recover. Leaderboard entries can be removed on request, but not edited.</p>
 <p>Advertising and partnership offers are read but usually go unanswered.</p>
 
 <h2>About the game</h2>
 <p>Who makes this and why it works the way it does is covered on the <a href="/about">about page</a>. What data the game stores is in the <a href="/privacy">privacy policy</a>.</p>
 ` })],
   ['faq.html', layout({ title: 'Tangerine 10 FAQ — Rules, Scoring and Common Questions', desc: 'Answers to common Tangerine 10 questions: game length, why a selection did not clear, how scoring and combos work, and where scores are saved.', path: '/faq', alt: '/ko/faq', body: faqBody, ld: [{ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faqs.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) }] })],
+  ['privacy.html', layout({ title: 'Privacy Policy — Tangerine 10', desc: 'What Tangerine 10 stores, how Google AdSense and other advertising cookies are used, how to opt out of personalised ads, and how to remove a leaderboard entry.', path: '/privacy', alt: '/ko/privacy', ads: false, noindex: true, body: privacyEn })],
+  ['404.html', layout({ title: 'Page not found — Tangerine 10', desc: 'This page does not exist. Go back to the Tangerine 10 game, rules or analysis.', path: '/404', ads: false, noindex: true, body: notFoundEn })],
+  ['analysis.html', layout({ title: 'Tangerine 10 Analysis — Board Statistics, Bot Strategies and Combinations', desc: 'Simulation studies of Tangerine 10 built from the game code: 100,000 random boards, four automatic players under the real scoring rules, and every combination that makes ten.', path: '/analysis', alt: '/ko/analysis', body: analysisEn })],
+  ...Object.keys(ARTICLES).map((id) => { const a = ARTICLES[id].en; return [`${a.path.slice(1)}.html`, layout({ title: a.title, desc: a.desc, path: a.path, alt: ARTICLES[id].ko.path, body: articleBody[id].en(), ld: [{ '@context': 'https://schema.org', '@type': 'Article', headline: a.h1, description: a.desc, inLanguage: 'en', datePublished: '2026-10-20', mainEntityOfPage: SITE.url + a.path, author: { '@type': 'Organization', name: SITE.name, url: SITE.url }, publisher: { '@type': 'Organization', name: SITE.name, url: SITE.url } }] })]; }),
 ];
 for (const [name, html] of pages) writeFileSync(join(OUT, name), html);
 
 // ---------- 한국어 페이지 ----------
+const analysisKo = `
+<nav class="crumb"><a href="/ko/">홈</a> › 분석</nav>
+<h1>숫자로 보는 귤게임</h1>
+<p class="lead">게임 코드로 직접 돌린 연구 세 편입니다. 무작위 판에 무엇이 들어 있는지, 어떤 방식이 점수가 가장 높은지, 10을 만드는 방법이 몇 가지인지. 모두 짐작이 아니라 시뮬레이션 스크립트에서 나온 결과입니다.</p>
+<div class="cards">
+${['board', 'bots', 'combos'].map((id) => `<a class="card" href="${ARTICLES[id].ko.path}"><b>${ARTICLES[id].ko.h1}</b><span>${teaser(id, 'ko')}</span></a>`).join('\n')}
+</div>
+<h2>어떻게 만들었나</h2>
+<p><code>scripts/simulate.mjs</code> 스크립트는 판을 채우는 게임 코드 한 줄(칸마다 1~9 무작위 정수)을 그대로 옮기고, 결과를 똑같이 다시 만들 수 있게 난수 시드를 고정합니다. 판 크기마다 ${SIM.boardsPerSize.toLocaleString('en-US')}개의 판을 만들었고, 자동 플레이 봇 네 개를 속도 가정 세 가지로 각각 ${SIM.gamesPerSetting.toLocaleString('en-US')}판씩 실제 120초 타이머·2초 콤보·배율 표대로 돌렸습니다. 각 페이지는 스크립트의 결과 파일에서 숫자를 바로 읽어 만듭니다.</p>
+<p>규칙은 <a href="/ko/how-to-play">게임 방법</a>에, 실전 습관은 <a href="/ko/strategy">공략</a>에 있습니다.</p>
+`;
 const faqBodyKo = `
 <nav class="crumb"><a href="/ko/">홈</a> › 자주 묻는 질문</nav>
 <h1>자주 묻는 질문</h1>
@@ -332,9 +439,11 @@ const pagesKo = [
   ['ko/how-to-play.html', layout({ lang: 'ko', title: '귤게임 하는 법 — 규칙·점수·콤보 총정리', desc: '귤게임 Tangerine 10의 모든 규칙. 120초 제한, 합이 정확히 10이어야 터지는 규칙, 터뜨린 개수로 매기는 점수, 콤보 배율까지 정리했습니다.', path: '/ko/how-to-play', alt: '/how-to-play', body: howKo, ld: [{ '@context': 'https://schema.org', '@type': 'HowTo', name: '귤게임 Tangerine 10 하는 법', inLanguage: 'ko', step: [{ '@type': 'HowToStep', name: '게임 시작', text: '시작을 누르면 1~9 숫자가 적힌 귤 판이 깔리고 120초 타이머가 돕니다.' }, { '@type': 'HowToStep', name: '네모 그리기', text: '누른 채 끌어서 네모를 그리면 가운데가 안에 들어온 귤이 선택됩니다.' }, { '@type': 'HowToStep', name: '정확히 10 만들기', text: '선택한 숫자의 합이 정확히 10이면 귤이 터지고 점수가 오릅니다.' }, { '@type': 'HowToStep', name: '콤보 이어가기', text: '2초 안에 다시 터뜨리면 콤보 배율이 쌓여 콤보 20에서 5배가 됩니다.' }] }] })],
   ['ko/strategy.html', layout({ lang: 'ko', title: '귤게임 공략 — 점수 올리는 법', desc: '귤게임 Tangerine 10에서 큰 네모보다 빠른 짝이 이기는 이유, 외워야 할 다섯 쌍, 판을 훑는 법, 콤보를 지키는 법.', path: '/ko/strategy', alt: '/strategy', body: stratKo, ld: [{ '@context': 'https://schema.org', '@type': 'Article', headline: '귤게임 Tangerine 10 공략', inLanguage: 'ko', mainEntityOfPage: SITE.url + '/ko/strategy', author: { '@type': 'Organization', name: SITE.name, url: SITE.url }, publisher: { '@type': 'Organization', name: SITE.name, url: SITE.url } }] })],
   ['ko/faq.html', layout({ lang: 'ko', title: '귤게임 자주 묻는 질문 — 규칙·점수·저장', desc: '귤게임 Tangerine 10 자주 묻는 질문. 한 판 시간, 선택이 안 터지는 이유, 점수와 콤보 계산, 기록이 저장되는 곳.', path: '/ko/faq', alt: '/faq', body: faqBodyKo, ld: [{ '@context': 'https://schema.org', '@type': 'FAQPage', inLanguage: 'ko', mainEntity: faqsKo.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) }] })],
-  ['ko/about.html', layout({ lang: 'ko', title: '귤게임 Tangerine 10 소개 — 누가, 왜 만들었나', desc: '귤게임 Tangerine 10을 누가 만드는지, 왜 2분짜리인지, 점수는 어떻게 저장되는지, 비용과 연락 방법.', path: '/ko/about', alt: '/about', body: aboutKo })],
-  ['ko/contact.html', layout({ lang: 'ko', title: '문의하기 — 귤게임 Tangerine 10', desc: '귤게임 Tangerine 10 운영자에게 버그 신고, 점수 문의, 규칙 정정, 제안을 보내는 방법.', path: '/ko/contact', alt: '/contact', body: contactKo })],
-  ['ko/privacy.html', layout({ lang: 'ko', title: '개인정보처리방침 — 귤게임 Tangerine 10', desc: '귤게임 Tangerine 10이 저장하는 정보와 쿠키·광고 처리 방침.', path: '/ko/privacy', alt: '/privacy', body: privacyKo, noindex: true })],
+  ['ko/about.html', layout({ lang: 'ko', title: '귤게임 Tangerine 10 소개 — 누가, 어떻게 만들었나', desc: '귤게임 Tangerine 10을 누가 운영하는지, 어떻게 만들었는지(AI 도구 사용 포함), 점수는 어떻게 저장되는지, 광고는 어디에 나오는지.', path: '/ko/about', alt: '/about', ads: false, body: aboutKo })],
+  ['ko/contact.html', layout({ lang: 'ko', title: '문의하기 — 귤게임 Tangerine 10', desc: '귤게임 Tangerine 10 운영자에게 버그 신고, 점수 문의, 규칙 정정, 제안을 보내는 방법.', path: '/ko/contact', alt: '/contact', ads: false, body: contactKo })],
+  ['ko/privacy.html', layout({ lang: 'ko', title: '개인정보처리방침 — 귤게임 Tangerine 10', desc: '귤게임 Tangerine 10이 저장하는 정보, Google 애드센스 등 광고 쿠키 사용과 맞춤 광고 거부 방법, 랭킹 기록 삭제 방법.', path: '/ko/privacy', alt: '/privacy', body: privacyKo, noindex: true, ads: false })],
+  ['ko/analysis.html', layout({ lang: 'ko', title: '귤게임 분석 — 판 통계·봇 전략·합 10 조합', desc: '게임 코드로 돌린 귤게임 Tangerine 10 시뮬레이션 연구. 무작위 판 10만 개, 실제 점수 규칙으로 움직이는 자동 플레이 봇 네 개, 합이 10이 되는 모든 조합.', path: '/ko/analysis', alt: '/analysis', body: analysisKo })],
+  ...Object.keys(ARTICLES).map((id) => { const a = ARTICLES[id].ko; return [`${a.path.slice(1)}.html`, layout({ lang: 'ko', title: a.title, desc: a.desc, path: a.path, alt: ARTICLES[id].en.path, body: articleBody[id].ko(), ld: [{ '@context': 'https://schema.org', '@type': 'Article', headline: a.h1, description: a.desc, inLanguage: 'ko', datePublished: '2026-10-20', mainEntityOfPage: SITE.url + a.path, author: { '@type': 'Organization', name: SITE.name, url: SITE.url }, publisher: { '@type': 'Organization', name: SITE.name, url: SITE.url } }] })]; }),
 ];
 for (const [name, html] of pagesKo) writeFileSync(join(OUT, name), html);
 
@@ -406,14 +515,27 @@ ${live}`;
 ${live}`;
 };
 const recordPages = [
-  ['records.html', layout({ title: 'Tangerine 10 Records — Weekly Best and All-Time Top 10', desc: 'Saved Tangerine 10 scores: this week\'s best, the all-time top ten and saved games by month, updated from the live leaderboard.', path: '/records', alt: '/ko/records', body: recordsBody('en') })],
-  ['ko/records.html', layout({ lang: 'ko', title: '귤게임 기록 — 이번 주 최고 점수와 역대 순위', desc: '귤게임 Tangerine 10에 저장된 점수 모음. 이번 주 최고 점수, 역대 상위 10위, 달마다 저장된 판 수를 랭킹에서 바로 가져와 보여 줍니다.', path: '/ko/records', alt: '/records', body: recordsBody('ko') })],
+  ['records.html', layout({ title: 'Tangerine 10 Records — Weekly Best and All-Time Top 10', desc: 'Saved Tangerine 10 scores: this week\'s best, the all-time top ten and saved games by month, updated from the live leaderboard.', path: '/records', alt: '/ko/records', noindex: true, ads: false, body: recordsBody('en') })],
+  ['ko/records.html', layout({ lang: 'ko', title: '귤게임 기록 — 이번 주 최고 점수와 역대 순위', desc: '귤게임 Tangerine 10에 저장된 점수 모음. 이번 주 최고 점수, 역대 상위 10위, 달마다 저장된 판 수를 랭킹에서 바로 가져와 보여 줍니다.', path: '/ko/records', alt: '/records', noindex: true, ads: false, body: recordsBody('ko') })],
 ];
 for (const [name, html] of recordPages) writeFileSync(join(OUT, name), html);
 
 // ---------- 한국어 게임 화면 (/ko/) ----------
 // 영문 게임 화면(public/index.html)을 읽어 보이는 문구만 바꾼다. 게임 코드는 한 벌만 유지.
 // 바꿀 문구를 못 찾으면 빌드를 멈춘다 — 영문 화면이 바뀌었는데 한국어 판이 조용히 영어로 남는 것을 막기 위해서다.
+// 홈(영문·한국어) 본문의 분석 요약 블록. 수치는 시뮬레이션 결과 파일에서 가져온다.
+const homeAnalysis = (lang) => `<!-- analysis:start -->
+  <h2>${lang === 'ko' ? '숫자로 본 귤게임' : 'What the numbers say'}</h2>
+  <p>${lang === 'ko' ? '게임의 판 만드는 코드를 그대로 돌려 판 10만 개와 자동 플레이 수천 판을 시뮬레이션했습니다. 결과는 세 편의 글로 정리했습니다.' : 'We ran the game\'s own board code through 100,000 simulated boards and thousands of automatic games. The results are written up in three studies.'}</p>
+  <div class="sc-cards">
+${['board', 'bots', 'combos'].map((id) => `    <a class="sc-card" href="${ARTICLES[id][lang].path}"><b>${ARTICLES[id][lang].h1}</b><span>${teaser(id, lang)}</span></a>`).join('\n')}
+  </div>
+  <!-- analysis:end -->`;
+{
+  const p = join(OUT, 'index.html'), src = readFileSync(p, 'utf8'), re = /<!-- analysis:start -->[\s\S]*?<!-- analysis:end -->/;
+  if (!re.test(src)) throw new Error('영문 게임 화면: analysis 표시를 찾지 못함');
+  writeFileSync(p, src.replace(re, () => homeAnalysis('en')));
+}
 {
   let g = readFileSync(join(OUT, 'index.html'), 'utf8');
   const sub = (from, to, times = 1) => {
@@ -437,16 +559,22 @@ for (const [name, html] of recordPages) writeFileSync(join(OUT, name), html);
   sub('<link rel="canonical" href="https://tangerin10.web.app/">', '<link rel="canonical" href="https://tangerin10.web.app/ko/">');
   sub('"inLanguage":"en"}', '"inLanguage":"ko"}');
   sub('"description":"Free number puzzle game! Drag and match numbers that add up to 10. 2-minute challenge with global ranking."', '"description":"합이 10이 되게 귤을 묶어 터뜨리는 무료 숫자 퍼즐. 2분 도전과 전체 랭킹."');
+  sub('<nav aria-label="Site menu"><a href="/how-to-play">How to Play</a><a href="/strategy">Strategy</a><a href="/analysis">Analysis</a><a href="/faq">FAQ</a><a href="/about">About</a><a class="lang" href="/ko/" hreflang="ko">한국어</a></nav>',
+    '<nav aria-label="사이트 메뉴"><a href="/ko/how-to-play">게임 방법</a><a href="/ko/strategy">공략</a><a href="/ko/analysis">분석</a><a href="/ko/faq">FAQ</a><a href="/ko/about">소개</a><a class="lang" href="/" hreflang="en">English</a></nav>');
+  block(/<div class="intro">[\s\S]*?<\/div>/, `<div class="intro">
+    <h1>귤게임 Tangerine 10 — 2분 동안 숫자 합 10 만들기</h1>
+    <p>합이 정확히 10이 되는 귤들을 네모로 묶으면 터집니다. <a href="/ko/how-to-play">전체 규칙</a></p>
+  </div>`);
   sub('<div class="score-label">SCORE</div>', '<div class="score-label">점수</div>');
   block(/<div class="hint">[\s\S]*?<\/div>/, '<div class="hint">합이 10이 되게 드래그해서 묶으세요 · <a href="/" hreflang="en" style="color:#f97316;text-decoration:none;font-weight:700;">English</a> · <a href="/ko/privacy" style="color:#ccc;text-decoration:none;">개인정보처리방침</a></div>');
   sub('🏆 TOP SCORES', '🏆 최고 점수');
   sub('📋 MY HISTORY', '📋 내 기록');
   sub('No scores yet', '아직 기록이 없어요', 2);
   sub('No games yet', '아직 플레이 기록이 없어요', 2);
-  block(/<section class="site-content">[\s\S]*?<\/section>/, `<section class="site-content">
+  block(/<section class="site-content">[\s\S]*?<\/section>/, () => `<section class="site-content">
   <h2>귤게임 Tangerine 10은요</h2>
   <p>Tangerine 10은 규칙 하나로 하는 무료 브라우저 퍼즐입니다. 숫자의 합이 <b>정확히 10</b>이 되는 귤들에 네모를 그리면 터집니다. 시간은 120초. 회원가입도, 설치도, 앱스토어도 없습니다.</p>
-  <p>판을 시작할 때마다 1부터 9까지 숫자가 적힌 귤이 새로 깔립니다. PC는 170개, 휴대폰은 168개라 같은 판을 다시 할 일은 없습니다. 내 기록은 브라우저에 저장되고, 이름을 입력하면 위쪽 전체 랭킹에 최고 점수가 올라갑니다.</p>
+  <p>판을 시작할 때마다 1부터 9까지 숫자가 적힌 귤이 새로 깔립니다. PC와 태블릿은 170개, 휴대폰은 168개라 같은 판을 다시 할 일은 없습니다. 내 기록 칸은 페이지가 열려 있는 동안 최근 다섯 판을 보여 줍니다. 점수가 3위 안에 들면 이름 칸이 나오고, 저장하고 다시 하기를 누르면 랭킹에 올라갑니다.</p>
   <h2>30초 규칙 요약</h2>
   <ul>
     <li>누른 채 끌어서 네모를 그립니다. 귤의 가운데가 네모 안에 들어오면 선택됩니다.</li>
@@ -454,36 +582,19 @@ for (const [name, html] of recordPages) writeFileSync(join(OUT, name), html);
     <li>터진 자리는 빈칸이 되고, 빈칸은 다음 선택에서 빠집니다. 판이 빌수록 쉬워집니다.</li>
     <li>120초가 되면 시계가 멈추고 점수가 확정됩니다.</li>
   </ul>
-  <h2>점수는 이렇게 매겨집니다</h2>
-  <p>처음 하는 사람 대부분이 여기서 헷갈립니다. 점수는 터뜨린 숫자의 합이 <b>아닙니다</b>. 터뜨린 귤의 개수에 콤보 배율을 곱한 값입니다.</p>
-  <table class="sc-table">
-    <thead><tr><th>연속 콤보</th><th>배율</th><th>귤 4개를 터뜨리면</th></tr></thead>
-    <tbody>
-      <tr><td>1</td><td>&times;1</td><td>4점</td></tr>
-      <tr><td>2 &ndash; 4</td><td><b>&times;1.5</b></td><td>6점</td></tr>
-      <tr><td>5 &ndash; 9</td><td><b>&times;2</b></td><td>8점</td></tr>
-      <tr><td>10 &ndash; 19</td><td><b>&times;3</b></td><td>12점</td></tr>
-      <tr><td>20+</td><td><b>&times;5</b></td><td>20점</td></tr>
-    </tbody>
-  </table>
-  <div class="sc-note">
-    <p><strong>마지막으로 터뜨린 뒤 2초가 지나면 콤보가 끊깁니다.</strong> 대부분의 판이 이 하나로 갈립니다. 더 큰 묶음을 찾다가 콤보를 놓치는 것보다, 작은 짝이라도 바로 터뜨리는 게 낫습니다.</p>
-  </div>
-  <h3>바로 써먹는 팁 세 가지</h3>
-  <ul>
-    <li><b>다섯 쌍을 외우세요.</b> 1+9, 2+8, 3+7, 4+6, 5+5. 짝은 네모가 가장 작고, 콤보를 이어 가는 가장 빠른 방법입니다.</li>
-    <li><b>가로 띠로 훑으세요.</b> 판 전체를 보지 말고 두세 줄씩 처리하세요. 필요한 네모는 납작하고 넓습니다.</li>
-    <li><b>고립된 9는 포기하세요.</b> 9는 1하고만 짝이 됩니다. 닿는 곳에 1이 없으면 두고 다른 데 시간을 쓰세요.</li>
-  </ul>
+  <p>점수는 터뜨린 귤의 개수에, 마지막으로 터뜨린 뒤 2초 안에 이어서 터뜨리는 동안 커지는 콤보 배율을 곱한 값입니다. 배율 전체 표는 <a href="/ko/how-to-play">게임 방법</a>에, 콤보를 이어 가는 습관은 <a href="/ko/strategy">공략</a>에 있습니다.</p>
+
+  ${homeAnalysis('ko')}
+
   <div class="sc-links">
     <a href="/ko/how-to-play">전체 규칙 &rarr;</a>
     <a href="/ko/strategy">공략 &rarr;</a>
+    <a href="/ko/analysis">분석 &rarr;</a>
     <a href="/ko/faq">자주 묻는 질문 &rarr;</a>
-    <a href="/ko/records">기록 &rarr;</a>
   </div>
 </section>`);
   block(/<footer class="site-ftr">[\s\S]*?<\/footer>/, `<footer class="site-ftr">
-  <div class="fnav"><a href="/ko/">게임</a><a href="/ko/how-to-play">게임 방법</a><a href="/ko/strategy">공략</a><a href="/ko/faq">FAQ</a><a href="/ko/records">기록</a><a href="/ko/about">소개</a><a href="/ko/contact">문의</a><a href="/ko/privacy">개인정보처리방침</a><a href="/" hreflang="en">English</a></div>
+  <div class="fnav"><a href="/ko/">게임</a><a href="/ko/how-to-play">게임 방법</a><a href="/ko/strategy">공략</a><a href="/ko/analysis">분석</a><a href="/ko/faq">FAQ</a><a href="/ko/about">소개</a><a href="/ko/contact">문의</a><a href="/ko/privacy">개인정보처리방침</a><a href="/" hreflang="en">English</a></div>
   <p class="fnote">Tangerine 10은 무료 브라우저 퍼즐 게임입니다. 회원가입·설치 없이 바로 할 수 있습니다.</p>
 </footer>`);
   sub('<div class="st-sub">Drag numbers that add up to 10!<br>2 minutes. How many can you clear?</div>', '<div class="st-sub">합이 10이 되게 묶어 터뜨리세요!<br>2분 동안 몇 개나 지울 수 있을까요?</div>');
@@ -503,8 +614,9 @@ for (const [name, html] of recordPages) writeFileSync(join(OUT, name), html);
 
 const today = new Date().toISOString().slice(0, 10);
 const urls = [
-  ['/', '1.0', 'weekly'], ['/how-to-play', '0.8', 'monthly'], ['/strategy', '0.8', 'monthly'], ['/faq', '0.7', 'monthly'], ['/records', '0.6', 'daily'], ['/about', '0.6', 'yearly'], ['/contact', '0.5', 'yearly'],
-  ['/ko/', '1.0', 'weekly'], ['/ko/how-to-play', '0.8', 'monthly'], ['/ko/strategy', '0.8', 'monthly'], ['/ko/faq', '0.7', 'monthly'], ['/ko/records', '0.6', 'daily'], ['/ko/about', '0.6', 'yearly'], ['/ko/contact', '0.5', 'yearly'],
+  // 기록(/records) 페이지는 noindex 라 넣지 않는다.
+  ['/', '1.0', 'weekly'], ['/how-to-play', '0.8', 'monthly'], ['/strategy', '0.8', 'monthly'], ['/analysis', '0.7', 'monthly'], ...Object.values(ARTICLES).map((a) => [a.en.path, '0.7', 'monthly']), ['/faq', '0.7', 'monthly'], ['/about', '0.6', 'yearly'], ['/contact', '0.5', 'yearly'],
+  ['/ko/', '1.0', 'weekly'], ['/ko/how-to-play', '0.8', 'monthly'], ['/ko/strategy', '0.8', 'monthly'], ['/ko/analysis', '0.7', 'monthly'], ...Object.values(ARTICLES).map((a) => [a.ko.path, '0.7', 'monthly']), ['/ko/faq', '0.7', 'monthly'], ['/ko/about', '0.6', 'yearly'], ['/ko/contact', '0.5', 'yearly'],
 ];
 writeFileSync(join(OUT, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.map(([l, p, f]) => `  <url><loc>${SITE.url}${l}</loc><lastmod>${today}</lastmod><changefreq>${f}</changefreq><priority>${p}</priority></url>`).join('\n')}\n</urlset>\n`);
 

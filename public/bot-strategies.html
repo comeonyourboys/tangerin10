@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#f97316">
+<title>Tangerine 10 Bot Strategies — Pairs vs Big Boxes in 120 Seconds</title>
+<meta name="description" content="Four automatic Tangerine 10 players, three play speeds, 5,000 games each under the real combo and multiplier rules. Which strategy scores most, and when does it stop being true?">
+<link rel="canonical" href="https://tangerin10.web.app/bot-strategies">
+<link rel="alternate" hreflang="en" href="https://tangerin10.web.app/bot-strategies"><link rel="alternate" hreflang="ko" href="https://tangerin10.web.app/ko/bot-strategies"><link rel="alternate" hreflang="x-default" href="https://tangerin10.web.app/bot-strategies">
+<meta name="robots" content="index, follow">
+<meta name="google-site-verification" content="8nUCFYxTph7TOTN0ZC0zWvamYgyQMd026qCLSBL9YgE">
+<meta name="google-site-verification" content="WjzFs7iu4kDSzcJKM5QyAqGDAqx9J1P0uj-Ry4z1_NU">
+<meta name="google-adsense-account" content="ca-pub-5479403345572412">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Tangerine 10">
+<meta property="og:title" content="Tangerine 10 Bot Strategies — Pairs vs Big Boxes in 120 Seconds">
+<meta property="og:description" content="Four automatic Tangerine 10 players, three play speeds, 5,000 games each under the real combo and multiplier rules. Which strategy scores most, and when does it stop being true?">
+<meta property="og:url" content="https://tangerin10.web.app/bot-strategies">
+<meta property="og:image" content="https://tangerin10.web.app/og-tangerin10.png?v=7">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Tangerine 10 number puzzle">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Tangerine 10 Bot Strategies — Pairs vs Big Boxes in 120 Seconds">
+<meta name="twitter:description" content="Four automatic Tangerine 10 players, three play speeds, 5,000 games each under the real combo and multiplier rules. Which strategy scores most, and when does it stop being true?">
+<meta name="twitter:image" content="https://tangerin10.web.app/og-tangerin10.png?v=7">
+<link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/png" href="/favicon.png" sizes="512x512"><link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Outfit',-apple-system,BlinkMacSystemFont,sans-serif;color:#1a1a1a;background:#fff;line-height:1.7;-webkit-text-size-adjust:100%;}
+a{color:#f97316;}
+.wrap{max-width:780px;margin:0 auto;padding:0 20px;}
+.topbar{border-bottom:1px solid #f0f0f0;position:sticky;top:0;background:rgba(255,255,255,.95);backdrop-filter:blur(8px);z-index:20;}
+.topbar .wrap{display:flex;align-items:center;justify-content:space-between;height:56px;gap:14px;}
+.logo{display:flex;align-items:baseline;gap:5px;text-decoration:none;white-space:nowrap;}
+.logo-t{font-size:16px;font-weight:600;color:#999;}
+.logo-10{font-size:22px;font-weight:900;color:#f97316;letter-spacing:-1px;}
+.nav{display:flex;gap:2px;flex-wrap:wrap;justify-content:flex-end;}
+.nav a{font-size:13px;font-weight:600;color:#777;text-decoration:none;padding:6px 9px;border-radius:8px;white-space:nowrap;}
+.nav a:hover,.nav a.on{background:#fff4ea;color:#ea580c;}
+.crumb{font-size:12px;color:#aaa;margin:16px 0 4px;}
+.crumb a{color:#f97316;text-decoration:none;}
+h1{font-size:clamp(25px,5vw,32px);font-weight:900;letter-spacing:-.6px;margin:14px 0 8px;line-height:1.25;}
+.lead{font-size:16px;color:#666;margin-bottom:26px;line-height:1.75;}
+h2{font-size:20px;font-weight:800;margin:34px 0 12px;letter-spacing:-.3px;}
+h3{font-size:16px;font-weight:700;margin:22px 0 8px;}
+p{font-size:16px;color:#333;margin-bottom:14px;}
+ul,ol{margin:0 0 16px 20px;}
+li{font-size:15.5px;color:#333;margin-bottom:8px;line-height:1.7;}
+.box{background:#fff8f2;border:1px solid #ffe4cc;border-radius:14px;padding:18px 20px;margin:18px 0;}
+.box p:last-child,.box ul:last-child,.box li:last-child{margin-bottom:0;}
+.box strong{color:#ea580c;}
+table{width:100%;border-collapse:collapse;margin:16px 0;font-size:15px;background:#fff;border-radius:12px;overflow:hidden;border:1px solid #f0f0f0;}
+th,td{padding:11px 14px;text-align:left;border-bottom:1px solid #f5f5f5;}
+th{background:#fafafa;font-weight:700;font-size:13.5px;color:#777;}
+tr:last-child th,tr:last-child td{border-bottom:none;}
+td b{color:#ea580c;}
+.tbl-wrap{overflow-x:auto;}
+.cta{display:inline-block;background:#f97316;color:#fff;font-weight:800;font-size:16px;padding:13px 26px;border-radius:999px;text-decoration:none;margin:10px 0 6px;}
+.cta:hover{background:#ea580c;}
+.faq-q{font-weight:800;font-size:16.5px;margin:24px 0 6px;}
+.ad-wrap{margin:34px 0 0;}
+.disclose{font-size:11px;color:#c4c4c4;text-align:center;margin-top:6px;}
+footer{border-top:1px solid #f0f0f0;margin-top:36px;padding:24px 0 46px;}
+.ftr-nav{display:flex;flex-wrap:wrap;justify-content:center;gap:2px 0;}
+.ftr-nav a{font-size:12.5px;color:#888;text-decoration:none;padding:4px 9px;}
+.ftr-note{font-size:11.5px;color:#bbb;text-align:center;margin-top:10px;line-height:1.8;}
+@media(max-width:600px){.nav a{font-size:12px;padding:5px 7px;}p,li{font-size:15px;}}
+.fig{margin:20px 0;padding:14px 14px 10px;border:1px solid #f0f0f0;border-radius:14px;background:#fffdfb;}
+.fig figcaption{font-size:13px;color:#888;margin-top:8px;text-align:center;}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.88em;background:#f6f6f6;padding:1px 5px;border-radius:5px;}
+.updated{font-size:13px;color:#aaa;margin:-2px 0 18px;}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin:18px 0;}
+.card{display:block;border:1px solid #ffe4cc;background:#fff8f2;border-radius:14px;padding:16px 18px;text-decoration:none;color:#444;}
+.card b{display:block;color:#ea580c;font-size:16px;margin-bottom:6px;}
+.card span{display:block;font-size:14.5px;line-height:1.65;}
+.r-sum{background:#fff8f2;border:1px solid #ffe4cc;border-radius:12px;padding:12px 16px;font-size:14.5px;color:#7a4a1f;}
+.r-empty{color:#999;}
+</style>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Pairs or big boxes? Four bots, 120 seconds, real scoring rules","description":"Four automatic Tangerine 10 players, three play speeds, 5,000 games each under the real combo and multiplier rules. Which strategy scores most, and when does it stop being true?","inLanguage":"en","datePublished":"2026-10-20","mainEntityOfPage":"https://tangerin10.web.app/bot-strategies","author":{"@type":"Organization","name":"Tangerine 10","url":"https://tangerin10.web.app"},"publisher":{"@type":"Organization","name":"Tangerine 10","url":"https://tangerin10.web.app"}}</script>
+</head>
+<body>
+<header class="topbar"><div class="wrap">
+  <a class="logo" href="/"><span class="logo-t">🍊 Tangerine</span><span class="logo-10">10</span></a>
+  <nav class="nav"><a href="/">Play</a><a href="/how-to-play">How to Play</a><a href="/strategy">Strategy</a><a href="/analysis">Analysis</a><a href="/faq">FAQ</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/ko/bot-strategies" hreflang="ko">한국어</a></nav>
+</div></header>
+<main class="wrap">
+
+<nav class="crumb"><a href="/">Home</a> › <a href="/analysis">Analysis</a> › Bot strategies</nav>
+<h1>Pairs or big boxes? Four bots, 120 seconds, real scoring rules</h1>
+<p class="lead">Strategy advice for make-ten puzzles usually comes from feel. This page tests it instead: four automatic players with different rules for choosing a move, each playing 5,000 games per setting under Tangerine 10's real scoring, combo and timer rules.</p>
+
+<h2>The rules the bots play by</h2>
+<p>The bots do not play a simplified version of the game. The simulation implements the same rules as the code in the browser:</p>
+<ul>
+  <li>A new 10×17 board (or 12×14 for the mobile runs) of random numbers 1–9, built by the game's own <code>makeBoard</code> formula.</li>
+  <li>A move is a rectangle whose remaining tangerines add up to exactly ten. Cleared cells are empty and ignored, so later moves can stretch across holes.</li>
+  <li>Each move adds <code>floor(tangerines × multiplier)</code> points. The multiplier is ×1 at combo 1, ×1.5 at 2–4, ×2 at 5–9, ×3 at 10–19 and ×5 from 20.</li>
+  <li>If more than two seconds pass between clears, the combo falls back to zero, exactly like the two-second timer in the game.</li>
+  <li>The game ends at 120 seconds, or earlier if the board has no rectangle left that adds up to ten.</li>
+</ul>
+
+<h2>The four strategies</h2>
+<p>Every bot sees the whole board perfectly and never mis-drags. They differ only in which legal move they pick when there are several.</p>
+<div class="tbl-wrap"><table><thead><tr><th>Bot</th><th>How it picks a move</th></tr></thead><tbody><tr><td>Pairs first</td><td>The legal move with the fewest tangerines. Ties go to the one nearest the top-left.</td></tr><tr><td>Biggest box first</td><td>The legal move with the most tangerines.</td></tr><tr><td>Random legal move</td><td>Any legal move, chosen at random.</td></tr><tr><td>Highest number first</td><td>The move containing the largest number (clearing 9s and 8s whenever possible), fewest tangerines on ties.</td></tr></tbody></table></div>
+
+<h2>The part that is an assumption: speed</h2>
+<p>A bot does not need time to think, so the simulation has to decide how long each move takes. Nobody has measured real players doing this, so instead of pretending to know, the experiment runs three different speed models and reports all of them.</p>
+<div class="tbl-wrap"><table><thead><tr><th>Speed model</th><th>Time per move</th><th>What it represents</th></tr></thead><tbody><tr><td>Fast: 1.5 s per move</td><td>1.5 s for every move</td><td>A quick player who never breaks the combo.</td></tr><tr><td>Size-dependent: 0.9 s + 0.5 s per tangerine</td><td>0.9 s + 0.5 s × tangerines</td><td>Bigger boxes take longer. A pair takes 1.9 s and keeps the combo; three tangerines take 2.4 s and break it.</td></tr><tr><td>Slow: 3 s per move</td><td>3 s for every move</td><td>A careful player who never manages to keep a combo.</td></tr></tbody></table></div>
+
+<h2>Results on the desktop board</h2>
+<h3>Fast: 1.5 s per move</h3>
+<div class="tbl-wrap"><table><thead><tr><th>Strategy</th><th>Mean score</th><th>10th–90th pct</th><th>Tangerines cleared</th><th>Clears</th><th>Longest combo</th><th>Ran out of moves</th></tr></thead><tbody><tr><td>Pairs first</td><td><b>473.31</b></td><td>376–571</td><td>114.46</td><td>51.82</td><td>51.82</td><td>100%</td></tr><tr><td>Highest number first</td><td><b>463.93</b></td><td>366–559</td><td>113.01</td><td>50.89</td><td>50.89</td><td>100%</td></tr><tr><td>Random legal move</td><td><b>395.74</b></td><td>321–470</td><td>103.52</td><td>43.48</td><td>43.48</td><td>100%</td></tr><tr><td>Biggest box first</td><td><b>334.54</b></td><td>269–399</td><td>97.97</td><td>38.65</td><td>38.65</td><td>100%</td></tr></tbody></table></div>
+<h3>Size-dependent: 0.9 s + 0.5 s per tangerine</h3>
+<div class="tbl-wrap"><table><thead><tr><th>Strategy</th><th>Mean score</th><th>10th–90th pct</th><th>Tangerines cleared</th><th>Clears</th><th>Longest combo</th><th>Ran out of moves</th></tr></thead><tbody><tr><td>Pairs first</td><td><b>304.27</b></td><td>234–376</td><td>113.32</td><td>51.41</td><td>35.41</td><td>87.78%</td></tr><tr><td>Highest number first</td><td><b>210.08</b></td><td>160–267</td><td>112.27</td><td>50.61</td><td>18.83</td><td>90.78%</td></tr><tr><td>Random legal move</td><td><b>144.44</b></td><td>120–169</td><td>103.53</td><td>43.49</td><td>9.09</td><td>99.76%</td></tr><tr><td>Biggest box first</td><td><b>152.55</b></td><td>120–191</td><td>97.97</td><td>38.64</td><td>15.14</td><td>99.98%</td></tr></tbody></table></div>
+<h3>Slow: 3 s per move</h3>
+<div class="tbl-wrap"><table><thead><tr><th>Strategy</th><th>Mean score</th><th>10th–90th pct</th><th>Tangerines cleared</th><th>Clears</th><th>Longest combo</th><th>Ran out of moves</th></tr></thead><tbody><tr><td>Pairs first</td><td><b>83.5</b></td><td>80–88</td><td>83.5</td><td>39.89</td><td>1</td><td>4.84%</td></tr><tr><td>Highest number first</td><td><b>85.66</b></td><td>82–89</td><td>85.66</td><td>39.87</td><td>1</td><td>6.24%</td></tr><tr><td>Random legal move</td><td><b>93.91</b></td><td>87–100</td><td>93.91</td><td>39.21</td><td>1</td><td>28.24%</td></tr><tr><td>Biggest box first</td><td><b>95.42</b></td><td>84–105</td><td>95.42</td><td>37.42</td><td>1</td><td>65.58%</td></tr></tbody></table></div>
+<figure class="fig"><svg viewBox="0 0 640 344" role="img" aria-label="Mean 120-second score by strategy and speed (desktop board)" style="width:100%;height:auto;display:block"><text x="142" y="22" text-anchor="end" font-size="13" fill="#555">Fast · Pairs first</text><rect x="150" y="9" width="420.0" height="17" rx="4" fill="#f97316"/><text x="576.0" y="22" font-size="13" fill="#333" font-weight="700">473.31</text><text x="142" y="50" text-anchor="end" font-size="13" fill="#555">Fast · Highest number first</text><rect x="150" y="37" width="411.7" height="17" rx="4" fill="#f97316"/><text x="567.7" y="50" font-size="13" fill="#333" font-weight="700">463.93</text><text x="142" y="78" text-anchor="end" font-size="13" fill="#555">Fast · Random legal move</text><rect x="150" y="65" width="351.2" height="17" rx="4" fill="#f97316"/><text x="507.2" y="78" font-size="13" fill="#333" font-weight="700">395.74</text><text x="142" y="106" text-anchor="end" font-size="13" fill="#555">Fast · Biggest box first</text><rect x="150" y="93" width="296.9" height="17" rx="4" fill="#f97316"/><text x="452.9" y="106" font-size="13" fill="#333" font-weight="700">334.54</text><text x="142" y="134" text-anchor="end" font-size="13" fill="#555">Size · Pairs first</text><rect x="150" y="121" width="270.0" height="17" rx="4" fill="#f97316"/><text x="426.0" y="134" font-size="13" fill="#333" font-weight="700">304.27</text><text x="142" y="162" text-anchor="end" font-size="13" fill="#555">Size · Highest number first</text><rect x="150" y="149" width="186.4" height="17" rx="4" fill="#f97316"/><text x="342.4" y="162" font-size="13" fill="#333" font-weight="700">210.08</text><text x="142" y="190" text-anchor="end" font-size="13" fill="#555">Size · Random legal move</text><rect x="150" y="177" width="128.2" height="17" rx="4" fill="#f97316"/><text x="284.2" y="190" font-size="13" fill="#333" font-weight="700">144.44</text><text x="142" y="218" text-anchor="end" font-size="13" fill="#555">Size · Biggest box first</text><rect x="150" y="205" width="135.4" height="17" rx="4" fill="#f97316"/><text x="291.4" y="218" font-size="13" fill="#333" font-weight="700">152.55</text><text x="142" y="246" text-anchor="end" font-size="13" fill="#555">Slow · Pairs first</text><rect x="150" y="233" width="74.1" height="17" rx="4" fill="#f97316"/><text x="230.1" y="246" font-size="13" fill="#333" font-weight="700">83.5</text><text x="142" y="274" text-anchor="end" font-size="13" fill="#555">Slow · Highest number first</text><rect x="150" y="261" width="76.0" height="17" rx="4" fill="#f97316"/><text x="232.0" y="274" font-size="13" fill="#333" font-weight="700">85.66</text><text x="142" y="302" text-anchor="end" font-size="13" fill="#555">Slow · Random legal move</text><rect x="150" y="289" width="83.3" height="17" rx="4" fill="#f97316"/><text x="239.3" y="302" font-size="13" fill="#333" font-weight="700">93.91</text><text x="142" y="330" text-anchor="end" font-size="13" fill="#555">Slow · Biggest box first</text><rect x="150" y="317" width="84.7" height="17" rx="4" fill="#f97316"/><text x="240.7" y="330" font-size="13" fill="#333" font-weight="700">95.42</text></svg><figcaption>Mean 120-second score by strategy and speed (desktop board)</figcaption></figure>
+
+<h2>Finding 1: with a fast hand, pairs win by a wide margin</h2>
+<p>At 1.5 seconds a move, the pairs-first bot averaged <b>473.31</b> points. The biggest-box bot averaged 334.54. That is a gap of 138.8 points, and it is not caused by the combo, because at this speed no bot ever breaks its combo. The difference is in how many tangerines each bot manages to clear before the board runs dry: 114.46 for pairs-first against 97.97 for biggest-first.</p>
+<p>The likely reason is that big boxes eat small numbers. A five-tangerine box that adds to ten is made of ones, twos and threes, and those small numbers are exactly the ones that could have finished pairs with eights, nines and sevens later. Spend them early and the high numbers are left with nothing. Picking pairs keeps the flexible small numbers on the board for longer.</p>
+
+<h2>Finding 2: a fast player runs out of board, not time</h2>
+<p>The most surprising number in the fast table is the last column. Every single bot, in every one of the 5,000 games, ran out of legal moves before the clock did. The pairs-first bot hit a dead board after 77.7 seconds on average; biggest-first after 58. After that point no rectangle on the board adds to exactly ten, however you draw it. No game ended with an empty board: the best pairs-first run cleared 164 of 170 tangerines, and a typical run left about 56 behind.</p>
+<p>This puts a ceiling on scores. A player who is fast enough will not be limited by 120 seconds but by how many tangerines can still be matched, and that depends on what was cleared earlier.</p>
+
+<h2>Finding 3: when bigger boxes cost time, the gap widens</h2>
+<p>In the size-dependent model a pair still keeps the combo, but anything larger breaks it. The pairs-first bot dropped to 304.27 points with about 9.97 broken combos per game; it only takes a larger box when no pair is left anywhere on the board. The biggest-box bot broke its combo 14.6 times per game and fell to 152.55. The random bot finished lowest at 144.44. Here pairs-first scored 2.0 times as much as biggest-first.</p>
+
+<h2>Finding 4: if you cannot keep a combo, the advice flips</h2>
+<p>At three seconds a move, the combo never survives, so the multiplier is always ×1 and score is simply the number of tangerines cleared. Under those conditions the ranking reverses. Biggest-first scored 95.42, random 93.91, and pairs-first only 83.5. With roughly 40 moves available in 120 seconds, a bot that takes three tangerines when it can clears more per move.</p>
+<p>That is the honest conclusion of the experiment: "take pairs" is not a universal rule. It is the right rule for anyone fast enough to chain clears inside two seconds, which is the whole point of the combo system. A player who is still learning the board and cannot yet keep a streak loses little by taking bigger boxes.</p>
+
+<h2>What about clearing high numbers first?</h2>
+<p>The highest-number-first bot tests the idea of rescuing nines and eights while you can. It scored 463.93 at the fast speed, slightly below pairs-first, and cleared 113.01 tangerines against 114.46. Prioritising high numbers gives back a little, because it sometimes reaches for a three-tangerine box to free an 8 when a pair was available. The gap is small, so it is not a bad habit, but it does not help either.</p>
+
+<h2>How much the board itself decides</h2>
+<p>Because the bots never hesitate and never misread a number, any difference between two of their games comes from the board alone. That makes them a clean way to measure luck. Playing pairs-first at the fast speed, the bot's worst tenth of games scored 376 or less and its best tenth 571 or more; the single worst game scored 201 and the best 721. The standard deviation was 76.6 points on a mean of 473.31.</p>
+<p>In other words, an identical player can score half again as much on one board as on another, purely from how the numbers fell. For a person comparing two runs, a difference of 20 or 30 points between consecutive games says very little about whether they improved. Averages over several games are a much better measure than any single score, and the same is true of the leaderboard: a top score is partly a good player and partly a good board.</p>
+<p>The slow model shows the other side of this. At three seconds a move, the pairs-first bot's scores sat between 80 and 88 for most games, a far narrower band, because the clock rather than the board was the limit in most games and every move earned the same one point per tangerine.</p>
+
+<h2>Mobile board</h2>
+<p>The 12×14 phone board gives almost the same picture. Fast pairs-first averaged 470.04, fast biggest-first 331.57; in the slow model biggest-first again won with 94.92 against 83.49.</p>
+<div class="tbl-wrap"><table><thead><tr><th>Strategy</th><th>Mean score</th><th>10th–90th pct</th><th>Tangerines cleared</th><th>Clears</th><th>Longest combo</th><th>Ran out of moves</th></tr></thead><tbody><tr><td>Pairs first</td><td><b>302.11</b></td><td>231–372</td><td>112.82</td><td>51.19</td><td>35.19</td><td>88.94%</td></tr><tr><td>Highest number first</td><td><b>208.86</b></td><td>161–265</td><td>111.7</td><td>50.38</td><td>18.78</td><td>91.6%</td></tr><tr><td>Random legal move</td><td><b>143</b></td><td>118–169</td><td>102.54</td><td>43.08</td><td>9.06</td><td>99.86%</td></tr><tr><td>Biggest box first</td><td><b>151.92</b></td><td>120–191</td><td>97.3</td><td>38.4</td><td>15.19</td><td>100%</td></tr></tbody></table></div>
+
+<h2>What the bots cannot tell you</h2>
+<p>These bots see every legal move at once. People do not, and the time it takes a person to find the next pair depends on how cluttered the board is, how tired they are and whether they are using a mouse or a thumb. That is why the speed models are labelled as assumptions rather than measurements, and why the fast-model scores are probably well above what most people reach. What the experiment does show reliably is the direction of each effect: which strategy beats which under each speed, and why. For turning that into habits, see the <a href="/strategy">strategy guide</a>; for the rules the bots follow, the <a href="/how-to-play">rules page</a>.</p>
+<h2>Reproducing these numbers</h2>
+<p>Everything on this page comes from one script, <code>scripts/simulate.mjs</code>, run with Node.js. It copies the game's <code>makeBoard</code> line exactly — each cell gets <code>Math.floor(random × 9) + 1</code> — but swaps the browser's random number generator for a seeded one (seed 20261020) so the same run produces the same numbers every time. The script writes its results to a JSON file, and this page is built from that file, so no figure here was typed by hand. Change the seed and the decimals will move a little; the conclusions will not.</p>
+<p><a class="cta" href="/">Try the pairs-first rule yourself</a></p>
+</main>
+<div class="wrap ad-wrap" style="display:flex;justify-content:center"><ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-vwzzWFnt83j2lDmM" data-ad-width="320" data-ad-height="50"></ins><script async src="https://t1.kakaocdn.net/kas/static/ba.min.js"></script></div>
+<footer><div class="wrap">
+  <div class="ftr-nav"><a href="/">Play</a><a href="/how-to-play">How to Play</a><a href="/strategy">Strategy</a><a href="/analysis">Analysis</a><a href="/faq">FAQ</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/privacy">Privacy Policy</a><a href="/ko/bot-strategies" hreflang="ko">한국어</a></div>
+  <p class="ftr-note">Tangerine 10 is a free browser puzzle game. No sign-up, no download. © 2026 Tangerine 10</p>
+</div></footer>
+</body>
+</html>

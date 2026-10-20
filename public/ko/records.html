@@ -8,7 +8,7 @@
 <meta name="description" content="귤게임 Tangerine 10에 저장된 점수 모음. 이번 주 최고 점수, 역대 상위 10위, 달마다 저장된 판 수를 랭킹에서 바로 가져와 보여 줍니다.">
 <link rel="canonical" href="https://tangerin10.web.app/ko/records">
 <link rel="alternate" hreflang="ko" href="https://tangerin10.web.app/ko/records"><link rel="alternate" hreflang="en" href="https://tangerin10.web.app/records"><link rel="alternate" hreflang="x-default" href="https://tangerin10.web.app/records">
-<meta name="robots" content="index, follow">
+<meta name="robots" content="noindex, follow">
 <meta name="google-site-verification" content="8nUCFYxTph7TOTN0ZC0zWvamYgyQMd026qCLSBL9YgE">
 <meta name="google-site-verification" content="WjzFs7iu4kDSzcJKM5QyAqGDAqx9J1P0uj-Ry4z1_NU">
 <meta name="google-adsense-account" content="ca-pub-5479403345572412">
@@ -70,6 +70,14 @@ footer{border-top:1px solid #f0f0f0;margin-top:36px;padding:24px 0 46px;}
 .ftr-nav a{font-size:12.5px;color:#888;text-decoration:none;padding:4px 9px;}
 .ftr-note{font-size:11.5px;color:#bbb;text-align:center;margin-top:10px;line-height:1.8;}
 @media(max-width:600px){.nav a{font-size:12px;padding:5px 7px;}p,li{font-size:15px;}}
+.fig{margin:20px 0;padding:14px 14px 10px;border:1px solid #f0f0f0;border-radius:14px;background:#fffdfb;}
+.fig figcaption{font-size:13px;color:#888;margin-top:8px;text-align:center;}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.88em;background:#f6f6f6;padding:1px 5px;border-radius:5px;}
+.updated{font-size:13px;color:#aaa;margin:-2px 0 18px;}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin:18px 0;}
+.card{display:block;border:1px solid #ffe4cc;background:#fff8f2;border-radius:14px;padding:16px 18px;text-decoration:none;color:#444;}
+.card b{display:block;color:#ea580c;font-size:16px;margin-bottom:6px;}
+.card span{display:block;font-size:14.5px;line-height:1.65;}
 .r-sum{background:#fff8f2;border:1px solid #ffe4cc;border-radius:12px;padding:12px 16px;font-size:14.5px;color:#7a4a1f;}
 .r-empty{color:#999;}
 </style>
@@ -78,14 +86,14 @@ footer{border-top:1px solid #f0f0f0;margin-top:36px;padding:24px 0 46px;}
 <body>
 <header class="topbar"><div class="wrap">
   <a class="logo" href="/ko/"><span class="logo-t">🍊 Tangerine</span><span class="logo-10">10</span></a>
-  <nav class="nav"><a href="/ko/">게임</a><a href="/ko/how-to-play">게임 방법</a><a href="/ko/strategy">공략</a><a href="/ko/faq">FAQ</a><a href="/ko/records" class="on">기록</a><a href="/ko/about">소개</a><a href="/ko/contact">문의</a><a href="/records" hreflang="en">English</a></nav>
+  <nav class="nav"><a href="/ko/">게임</a><a href="/ko/how-to-play">게임 방법</a><a href="/ko/strategy">공략</a><a href="/ko/analysis">분석</a><a href="/ko/faq">FAQ</a><a href="/ko/about">소개</a><a href="/ko/contact">문의</a><a href="/records" hreflang="en">English</a></nav>
 </div></header>
 <main class="wrap">
 
 <nav class="crumb"><a href="/ko/">홈</a> › 기록</nav>
 <h1>귤게임 기록</h1>
 <p class="lead">게임이 끝나고 이름을 입력해 저장한 점수는 랭킹에 올라갑니다. 이 페이지는 그 기록을 모아 이번 주 최고 점수, 역대 상위 10위, 달마다 저장된 판 수를 보여 줍니다. 페이지를 열 때마다 최신 기록으로 바뀝니다.</p>
-<p id="r-summary" class="r-sum">지금까지 저장된 기록 10건 · 이번 주(2026-10-12부터, 한국 시간) 0건 · 마지막 기록 2026-09-19</p>
+<p id="r-summary" class="r-sum">지금까지 저장된 기록 10건 · 이번 주(2026-10-19부터, 한국 시간) 0건 · 마지막 기록 2026-09-19</p>
 <h2>이번 주</h2>
 <p>한 주는 한국 시간 월요일에 시작합니다.</p>
 <div id="r-week"><p class="r-empty">이번 주에 저장된 기록이 아직 없습니다. 첫 기록의 주인공이 되어 보세요.</p></div>
@@ -101,9 +109,9 @@ footer{border-top:1px solid #f0f0f0;margin-top:36px;padding:24px 0 46px;}
 <p><a class="cta" href="/ko/">지금 도전하기</a></p>
 <script>(function(){function rEsc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}function rToday(){return new Date(Date.now()+9*3600e3).toISOString().slice(0,10);}function rStats(list,today){var d=new Date(today+'T00:00:00Z');var ws=new Date(d.getTime()-((d.getUTCDay()+6)%7)*864e5).toISOString().slice(0,10);var v=list.filter(function(x){return x&&typeof x.score==='number'&&typeof x.date==='string';});var by=function(a,b){return b.score-a.score||(a.date<b.date?-1:1);};var wk=v.filter(function(x){return x.date>=ws&&x.date<=today;}).sort(by);var m={};v.forEach(function(x){var k=x.date.slice(0,7);m[k]=(m[k]||0)+1;});return{total:v.length,weekStart:ws,week:wk.slice(0,10),weekCount:wk.length,top:v.slice().sort(by).slice(0,10),months:Object.keys(m).sort().reverse().slice(0,12).map(function(k){return[k,m[k]];}),last:v.reduce(function(a,x){return x.date>a?x.date:a;},'')};}function rTable(rows,L){if(!rows.length)return'<p class="r-empty">'+L.empty+'</p>';return'<div class="tbl-wrap"><table><thead><tr><th>#</th><th>'+L.name+'</th><th>'+L.score+'</th><th>'+L.date+'</th></tr></thead><tbody>'+rows.map(function(x,i){return'<tr><td>'+(i+1)+'</td><td>'+rEsc(x.name||'—')+'</td><td><b>'+x.score+'</b></td><td>'+rEsc(x.date)+'</td></tr>';}).join('')+'</tbody></table></div>';}function rRender(s,L){return{summary:L.sum.replace('{total}',s.total).replace('{weekCount}',s.weekCount).replace('{weekStart}',s.weekStart).replace('{last}',s.last||'—'),week:rTable(s.week,L),top:rTable(s.top,L),months:s.months.length?'<div class="tbl-wrap"><table><thead><tr><th>'+L.month+'</th><th>'+L.games+'</th></tr></thead><tbody>'+s.months.map(function(r){return'<tr><td>'+r[0]+'</td><td>'+r[1]+'</td></tr>';}).join('')+'</tbody></table></div>':'<p class="r-empty">'+L.none+'</p>'};}var L={"name":"이름","score":"점수","date":"날짜","month":"월","games":"저장된 판","empty":"이번 주에 저장된 기록이 아직 없습니다. 첫 기록의 주인공이 되어 보세요.","none":"아직 기록이 없습니다.","sum":"지금까지 저장된 기록 {total}건 · 이번 주({weekStart}부터, 한국 시간) {weekCount}건 · 마지막 기록 {last}"};fetch('https://tangerin10-default-rtdb.firebaseio.com/rankings.json').then(function(r){return r.ok?r.json():null;}).then(function(d){if(!d)return;var h=rRender(rStats(Object.keys(d).map(function(k){return d[k];}),rToday()),L);['summary','week','top','months'].forEach(function(k){var el=document.getElementById('r-'+k);if(el)el.innerHTML=h[k];});}).catch(function(){});})();</script>
 </main>
-<div class="wrap ad-wrap" style="display:flex;justify-content:center"><ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-vwzzWFnt83j2lDmM" data-ad-width="320" data-ad-height="50"></ins><script async src="https://t1.kakaocdn.net/kas/static/ba.min.js"></script></div>
+
 <footer><div class="wrap">
-  <div class="ftr-nav"><a href="/ko/">게임</a><a href="/ko/how-to-play">게임 방법</a><a href="/ko/strategy">공략</a><a href="/ko/faq">FAQ</a><a href="/ko/records">기록</a><a href="/ko/about">소개</a><a href="/ko/contact">문의</a><a href="/ko/privacy">개인정보처리방침</a><a href="/records" hreflang="en">English</a></div>
+  <div class="ftr-nav"><a href="/ko/">게임</a><a href="/ko/how-to-play">게임 방법</a><a href="/ko/strategy">공략</a><a href="/ko/analysis">분석</a><a href="/ko/faq">FAQ</a><a href="/ko/about">소개</a><a href="/ko/contact">문의</a><a href="/ko/privacy">개인정보처리방침</a><a href="/records" hreflang="en">English</a></div>
   <p class="ftr-note">Tangerine 10은 무료 브라우저 퍼즐 게임입니다. 회원가입·설치 없이 바로 할 수 있습니다. © 2026 Tangerine 10</p>
 </div></footer>
 </body>

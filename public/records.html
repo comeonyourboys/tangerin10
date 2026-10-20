@@ -8,7 +8,7 @@
 <meta name="description" content="Saved Tangerine 10 scores: this week&#39;s best, the all-time top ten and saved games by month, updated from the live leaderboard.">
 <link rel="canonical" href="https://tangerin10.web.app/records">
 <link rel="alternate" hreflang="en" href="https://tangerin10.web.app/records"><link rel="alternate" hreflang="ko" href="https://tangerin10.web.app/ko/records"><link rel="alternate" hreflang="x-default" href="https://tangerin10.web.app/records">
-<meta name="robots" content="index, follow">
+<meta name="robots" content="noindex, follow">
 <meta name="google-site-verification" content="8nUCFYxTph7TOTN0ZC0zWvamYgyQMd026qCLSBL9YgE">
 <meta name="google-site-verification" content="WjzFs7iu4kDSzcJKM5QyAqGDAqx9J1P0uj-Ry4z1_NU">
 <meta name="google-adsense-account" content="ca-pub-5479403345572412">
@@ -70,6 +70,14 @@ footer{border-top:1px solid #f0f0f0;margin-top:36px;padding:24px 0 46px;}
 .ftr-nav a{font-size:12.5px;color:#888;text-decoration:none;padding:4px 9px;}
 .ftr-note{font-size:11.5px;color:#bbb;text-align:center;margin-top:10px;line-height:1.8;}
 @media(max-width:600px){.nav a{font-size:12px;padding:5px 7px;}p,li{font-size:15px;}}
+.fig{margin:20px 0;padding:14px 14px 10px;border:1px solid #f0f0f0;border-radius:14px;background:#fffdfb;}
+.fig figcaption{font-size:13px;color:#888;margin-top:8px;text-align:center;}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.88em;background:#f6f6f6;padding:1px 5px;border-radius:5px;}
+.updated{font-size:13px;color:#aaa;margin:-2px 0 18px;}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin:18px 0;}
+.card{display:block;border:1px solid #ffe4cc;background:#fff8f2;border-radius:14px;padding:16px 18px;text-decoration:none;color:#444;}
+.card b{display:block;color:#ea580c;font-size:16px;margin-bottom:6px;}
+.card span{display:block;font-size:14.5px;line-height:1.65;}
 .r-sum{background:#fff8f2;border:1px solid #ffe4cc;border-radius:12px;padding:12px 16px;font-size:14.5px;color:#7a4a1f;}
 .r-empty{color:#999;}
 </style>
@@ -78,14 +86,14 @@ footer{border-top:1px solid #f0f0f0;margin-top:36px;padding:24px 0 46px;}
 <body>
 <header class="topbar"><div class="wrap">
   <a class="logo" href="/"><span class="logo-t">🍊 Tangerine</span><span class="logo-10">10</span></a>
-  <nav class="nav"><a href="/">Play</a><a href="/how-to-play">How to Play</a><a href="/strategy">Strategy</a><a href="/faq">FAQ</a><a href="/records" class="on">Records</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/ko/records" hreflang="ko">한국어</a></nav>
+  <nav class="nav"><a href="/">Play</a><a href="/how-to-play">How to Play</a><a href="/strategy">Strategy</a><a href="/analysis">Analysis</a><a href="/faq">FAQ</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/ko/records" hreflang="ko">한국어</a></nav>
 </div></header>
 <main class="wrap">
 
 <nav class="crumb"><a href="/">Home</a> › Records</nav>
 <h1>Tangerine 10 Records</h1>
 <p class="lead">Every score a player saves with a name at the end of a game goes on the leaderboard. This page adds those saved scores up — this week's best, the all-time top ten, and how many games were saved each month. It refreshes with the latest records whenever you open it.</p>
-<p id="r-summary" class="r-sum">10 saved scores so far · 0 this week (since 2026-10-12, Korea time) · latest 2026-09-19</p>
+<p id="r-summary" class="r-sum">10 saved scores so far · 0 this week (since 2026-10-19, Korea time) · latest 2026-09-19</p>
 <h2>This week</h2>
 <p>Weeks start on Monday, Korea time.</p>
 <div id="r-week"><p class="r-empty">No scores saved this week yet. Be the first.</p></div>
@@ -101,9 +109,9 @@ footer{border-top:1px solid #f0f0f0;margin-top:36px;padding:24px 0 46px;}
 <p><a class="cta" href="/">Play now</a></p>
 <script>(function(){function rEsc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}function rToday(){return new Date(Date.now()+9*3600e3).toISOString().slice(0,10);}function rStats(list,today){var d=new Date(today+'T00:00:00Z');var ws=new Date(d.getTime()-((d.getUTCDay()+6)%7)*864e5).toISOString().slice(0,10);var v=list.filter(function(x){return x&&typeof x.score==='number'&&typeof x.date==='string';});var by=function(a,b){return b.score-a.score||(a.date<b.date?-1:1);};var wk=v.filter(function(x){return x.date>=ws&&x.date<=today;}).sort(by);var m={};v.forEach(function(x){var k=x.date.slice(0,7);m[k]=(m[k]||0)+1;});return{total:v.length,weekStart:ws,week:wk.slice(0,10),weekCount:wk.length,top:v.slice().sort(by).slice(0,10),months:Object.keys(m).sort().reverse().slice(0,12).map(function(k){return[k,m[k]];}),last:v.reduce(function(a,x){return x.date>a?x.date:a;},'')};}function rTable(rows,L){if(!rows.length)return'<p class="r-empty">'+L.empty+'</p>';return'<div class="tbl-wrap"><table><thead><tr><th>#</th><th>'+L.name+'</th><th>'+L.score+'</th><th>'+L.date+'</th></tr></thead><tbody>'+rows.map(function(x,i){return'<tr><td>'+(i+1)+'</td><td>'+rEsc(x.name||'—')+'</td><td><b>'+x.score+'</b></td><td>'+rEsc(x.date)+'</td></tr>';}).join('')+'</tbody></table></div>';}function rRender(s,L){return{summary:L.sum.replace('{total}',s.total).replace('{weekCount}',s.weekCount).replace('{weekStart}',s.weekStart).replace('{last}',s.last||'—'),week:rTable(s.week,L),top:rTable(s.top,L),months:s.months.length?'<div class="tbl-wrap"><table><thead><tr><th>'+L.month+'</th><th>'+L.games+'</th></tr></thead><tbody>'+s.months.map(function(r){return'<tr><td>'+r[0]+'</td><td>'+r[1]+'</td></tr>';}).join('')+'</tbody></table></div>':'<p class="r-empty">'+L.none+'</p>'};}var L={"name":"Name","score":"Score","date":"Date","month":"Month","games":"Saved games","empty":"No scores saved this week yet. Be the first.","none":"No records yet.","sum":"{total} saved scores so far · {weekCount} this week (since {weekStart}, Korea time) · latest {last}"};fetch('https://tangerin10-default-rtdb.firebaseio.com/rankings.json').then(function(r){return r.ok?r.json():null;}).then(function(d){if(!d)return;var h=rRender(rStats(Object.keys(d).map(function(k){return d[k];}),rToday()),L);['summary','week','top','months'].forEach(function(k){var el=document.getElementById('r-'+k);if(el)el.innerHTML=h[k];});}).catch(function(){});})();</script>
 </main>
-<div class="wrap ad-wrap" style="display:flex;justify-content:center"><ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-vwzzWFnt83j2lDmM" data-ad-width="320" data-ad-height="50"></ins><script async src="https://t1.kakaocdn.net/kas/static/ba.min.js"></script></div>
+
 <footer><div class="wrap">
-  <div class="ftr-nav"><a href="/">Play</a><a href="/how-to-play">How to Play</a><a href="/strategy">Strategy</a><a href="/faq">FAQ</a><a href="/records">Records</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/privacy">Privacy Policy</a><a href="/ko/records" hreflang="ko">한국어</a></div>
+  <div class="ftr-nav"><a href="/">Play</a><a href="/how-to-play">How to Play</a><a href="/strategy">Strategy</a><a href="/analysis">Analysis</a><a href="/faq">FAQ</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/privacy">Privacy Policy</a><a href="/ko/records" hreflang="ko">한국어</a></div>
   <p class="ftr-note">Tangerine 10 is a free browser puzzle game. No sign-up, no download. © 2026 Tangerine 10</p>
 </div></footer>
 </body>
