@@ -293,6 +293,10 @@ body.tense{background:linear-gradient(180deg,#fff 0%,#fff0f0 100%);}
 .site-ftr .fnote{font-size:11.5px;color:#bbb;margin-top:10px;line-height:1.8;}
 .ad-bottom{display:flex;justify-content:center;padding:12px 0;width:100%;max-width:850px;min-width:0;margin:0 auto;overflow-x:hidden;}
 .ad-bottom ins,.ad-bottom iframe{max-width:100%!important;}
+/* PC 양옆 160x600. 게임 판(최대 850px)과 겹치지 않는 1200px 이상에서만 화면 좌우에 고정 */
+.ad-side{position:fixed;top:50%;transform:translateY(-50%);width:160px;z-index:10;}
+#adLeft{left:0;}
+#adRight{right:0;}
 /* 휴대폰: 시작·결과 카드가 보드(약 340px 높이) 안에 들어가도록 줄인다. 위 규칙보다 뒤에 있어야 적용된다. */
 @media(max-width:600px){
   .ovc{padding:14px 14px 10px;border-radius:18px;}
@@ -316,6 +320,15 @@ body.tense{background:linear-gradient(180deg,#fff 0%,#fff0f0 100%);}
 <header class="site-nav"><nav aria-label="사이트 메뉴"><a href="/ko/how-to-play">게임 방법</a><a href="/ko/strategy">공략</a><a href="/ko/analysis">분석</a><a href="/ko/faq">FAQ</a><a href="/ko/about">소개</a><a class="lang" href="/" hreflang="en">English</a></nav></header>
 
 <div class="page-wrap">
+
+<!-- 카카오 애드핏 PC 양옆 160x600. 보이지 않는 광고 노출을 막으려고 1200px 이상일 때만 광고 칸을 만든다. -->
+<script>
+if(window.matchMedia('(min-width:1200px)').matches){
+  [['adLeft','DAN-xRz8uKiS9ed0NFsD'],['adRight','DAN-u7ebMhFWv4UdKAMT']].forEach(function(a){
+    document.write('<div class="ad-side" id="'+a[0]+'"><ins class="kakao_ad_area" style="display:none;" data-ad-unit="'+a[1]+'" data-ad-width="160" data-ad-height="600"></ins></div>');
+  });
+}
+</script>
 
 
 <div class="app" id="appEl">
@@ -422,7 +435,7 @@ body.tense{background:linear-gradient(180deg,#fff 0%,#fff0f0 100%);}
   </div>
 </section>
 
-<!-- 카카오 애드핏 하단 320x50 한 칸만. 게임 판에서 멀리, 본문 아래에 둔다(양옆 160x600 은 두지 않음). -->
+<!-- 카카오 애드핏 하단 320x50. 본문 아래에 둔다. 아래 ba.min.js 가 PC 양옆 광고 칸도 함께 채운다. -->
 <div class="ad-bottom"><ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-vwzzWFnt83j2lDmM" data-ad-width="320" data-ad-height="50"></ins></div>
 <script async src="https://t1.kakaocdn.net/kas/static/ba.min.js"></script>
 
@@ -616,7 +629,7 @@ function animateScore(from,to){
 }
 
 // === 드래그 (appEl에서 시작, document에서 이동/종료) ===
-document.addEventListener('mousedown',function(e){if(e.target.closest('a,.site-nav,.ad-bottom,button,input,.ov,.start-overlay'))return;dn(e.clientX,e.clientY);});
+document.addEventListener('mousedown',function(e){if(e.target.closest('a,.site-nav,.ad-bottom,.ad-side,button,input,.ov,.start-overlay'))return;dn(e.clientX,e.clientY);});
 document.addEventListener('mousemove',function(e){if(DRAG)mv(e.clientX,e.clientY);});
 document.addEventListener('mouseup',function(){up();});
 // 터치는 보드 영역(#bw)에서 시작할 때만 기본 동작(스크롤)을 막는다. 그 밖의 화면은 게임 중에도 평소처럼 스크롤된다.
