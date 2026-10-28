@@ -8,89 +8,223 @@ import { writeFileSync, mkdirSync, readFileSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { howKo, stratKo, faqsKo, aboutKo, contactKo, privacyKo } from './content-ko.mjs';
-import { ARTICLES, articleBody, teaser, SIM } from './articles.mjs';
+import { ARTICLES, articleBody, teaser, headline, SIM } from './articles.mjs';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const OUT = join(root, 'public');
 const SITE = { url: 'https://tangerin10.web.app', name: 'Tangerine 10', gsv: ['8nUCFYxTph7TOTN0ZC0zWvamYgyQMd026qCLSBL9YgE', 'WjzFs7iu4kDSzcJKM5QyAqGDAqx9J1P0uj-Ry4z1_NU'], adfit: 'DAN-vwzzWFnt83j2lDmM' }; // adfit: 카카오 애드핏 하단 320x50
 // 카카오 애드핏 320x50 한 칸을 본문 맨 아래에 둔다. 단위 ID 가 비어 있으면 아무것도 출력하지 않는다.
 // 개인정보처리방침·소개·문의·404·기록 페이지에는 광고를 넣지 않는다(layout 의 ads:false).
-const adfit = (unit) => unit ? `<div class="wrap ad-wrap" style="display:flex;justify-content:center"><ins class="kakao_ad_area" style="display:none;" data-ad-unit="${unit}" data-ad-width="320" data-ad-height="50"></ins><script async src="https://t1.kakaocdn.net/kas/static/ba.min.js"></script></div>` : '';
+const adfit = (unit) => unit ? `<div class="ad-wrap" style="display:flex;justify-content:center"><ins class="kakao_ad_area" style="display:none;" data-ad-unit="${unit}" data-ad-width="320" data-ad-height="50"></ins><script async src="https://t1.kakaocdn.net/kas/static/ba.min.js"></script></div>` : '';
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const jsonld = (o) => `<script type="application/ld+json">${JSON.stringify(o).replace(/</g, '\\u003c')}</script>`;
 
-const CSS = `
+// ---------- 디자인 시스템(게임 화면과 글 페이지 공용) ----------
+// 바탕은 연한 세이지, 판·강조 띠는 짙은 초록, 포인트는 귤색. 제목은 Bricolage Grotesque, 본문은 SUIT.
+// 게임 화면(public/index.html)에는 /* ds:start */ ~ /* ds:end */ 구간과 머리글·바닥글을 빌드 때 이 값으로 채운다.
+const FONTS = `<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/gh/sun-typeface/SUIT@2/fonts/static/woff2/SUIT.css" rel="stylesheet">`;
+const DS_CSS = `
+:root{--bg:#EDF0E6;--bg-2:#E2E7D9;--paper:#F6F8F1;--ink:#13261B;--ink-2:#4A5A4E;--line:rgba(19,38,27,.16);--board:#173828;--fruit:#F68B1F;--leaf:#4E9A57;--link:#A84400;
+--display:"Bricolage Grotesque","SUIT","Apple SD Gothic Neo",sans-serif;--body:"SUIT","Apple SD Gothic Neo","Malgun Gothic",sans-serif;}
 *{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:'Outfit',-apple-system,BlinkMacSystemFont,sans-serif;color:#1a1a1a;background:#fff;line-height:1.7;-webkit-text-size-adjust:100%;}
-a{color:#f97316;}
-.wrap{max-width:780px;margin:0 auto;padding:0 20px;}
-.topbar{border-bottom:1px solid #f0f0f0;position:sticky;top:0;background:rgba(255,255,255,.95);backdrop-filter:blur(8px);z-index:20;}
-.topbar .wrap{display:flex;align-items:center;justify-content:space-between;height:56px;gap:14px;}
-.logo{display:flex;align-items:baseline;gap:5px;text-decoration:none;white-space:nowrap;}
-.logo-t{font-size:16px;font-weight:600;color:#999;}
-.logo-10{font-size:22px;font-weight:900;color:#f97316;letter-spacing:-1px;}
-.nav{display:flex;gap:2px;flex-wrap:wrap;justify-content:flex-end;}
-.nav a{font-size:13px;font-weight:600;color:#777;text-decoration:none;padding:6px 9px;border-radius:8px;white-space:nowrap;}
-.nav a:hover,.nav a.on{background:#fff4ea;color:#ea580c;}
-.crumb{font-size:12px;color:#aaa;margin:16px 0 4px;}
-.crumb a{color:#f97316;text-decoration:none;}
-h1{font-size:clamp(25px,5vw,32px);font-weight:900;letter-spacing:-.6px;margin:14px 0 8px;line-height:1.25;}
-.lead{font-size:16px;color:#666;margin-bottom:26px;line-height:1.75;}
-h2{font-size:20px;font-weight:800;margin:34px 0 12px;letter-spacing:-.3px;}
-h3{font-size:16px;font-weight:700;margin:22px 0 8px;}
-p{font-size:16px;color:#333;margin-bottom:14px;}
-ul,ol{margin:0 0 16px 20px;}
-li{font-size:15.5px;color:#333;margin-bottom:8px;line-height:1.7;}
-.box{background:#fff8f2;border:1px solid #ffe4cc;border-radius:14px;padding:18px 20px;margin:18px 0;}
-.box p:last-child,.box ul:last-child,.box li:last-child{margin-bottom:0;}
-.box strong{color:#ea580c;}
-table{width:100%;border-collapse:collapse;margin:16px 0;font-size:15px;background:#fff;border-radius:12px;overflow:hidden;border:1px solid #f0f0f0;}
-th,td{padding:11px 14px;text-align:left;border-bottom:1px solid #f5f5f5;}
-th{background:#fafafa;font-weight:700;font-size:13.5px;color:#777;}
-tr:last-child th,tr:last-child td{border-bottom:none;}
-td b{color:#ea580c;}
-.tbl-wrap{overflow-x:auto;}
-.cta{display:inline-block;background:#f97316;color:#fff;font-weight:800;font-size:16px;padding:13px 26px;border-radius:999px;text-decoration:none;margin:10px 0 6px;}
-.cta:hover{background:#ea580c;}
-.faq-q{font-weight:800;font-size:16.5px;margin:24px 0 6px;}
-.ad-wrap{margin:34px 0 0;}
-.disclose{font-size:11px;color:#c4c4c4;text-align:center;margin-top:6px;}
-footer{border-top:1px solid #f0f0f0;margin-top:36px;padding:24px 0 46px;}
-.ftr-nav{display:flex;flex-wrap:wrap;justify-content:center;gap:2px 0;}
-.ftr-nav a{font-size:12.5px;color:#888;text-decoration:none;padding:4px 9px;}
-.ftr-note{font-size:11.5px;color:#bbb;text-align:center;margin-top:10px;line-height:1.8;}
-@media(max-width:600px){.nav a{font-size:12px;padding:5px 7px;}p,li{font-size:15px;}}
-.fig{margin:20px 0;padding:14px 14px 10px;border:1px solid #f0f0f0;border-radius:14px;background:#fffdfb;}
-.fig figcaption{font-size:13px;color:#888;margin-top:8px;text-align:center;}
-code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.88em;background:#f6f6f6;padding:1px 5px;border-radius:5px;}
-.updated{font-size:13px;color:#aaa;margin:-2px 0 18px;}
-.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin:18px 0;}
-.card{display:block;border:1px solid #ffe4cc;background:#fff8f2;border-radius:14px;padding:16px 18px;text-decoration:none;color:#444;}
-.card b{display:block;color:#ea580c;font-size:16px;margin-bottom:6px;}
-.card span{display:block;font-size:14.5px;line-height:1.65;}
-.r-sum{background:#fff8f2;border:1px solid #ffe4cc;border-radius:12px;padding:12px 16px;font-size:14.5px;color:#7a4a1f;}
-.r-empty{color:#999;}
+html{-webkit-text-size-adjust:100%;}
+body{background:var(--bg);color:var(--ink);font:500 16px/1.65 var(--body);word-break:keep-all;overflow-wrap:break-word;}
+a{color:inherit;}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(--fruit);outline-offset:3px;border-radius:6px;}
+.wrap{max-width:1440px;margin:0 auto;padding:0 48px;}
+.top{display:flex;align-items:center;gap:40px;height:68px;border-bottom:1px solid var(--line);}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font:800 21px/1 var(--display);letter-spacing:-.02em;white-space:nowrap;color:var(--ink);}
+.brand i{width:22px;height:22px;border-radius:50%;background:var(--fruit);position:relative;display:block;flex:none;}
+.brand i::after{content:"";position:absolute;width:9px;height:5px;border-radius:50%;background:var(--leaf);top:-2px;right:-1px;transform:rotate(-30deg);}
+.brand b{color:var(--fruit);font-weight:800;}
+.nav{display:flex;gap:28px;font-size:16px;font-weight:600;}
+.nav a{text-decoration:none;color:var(--ink-2);white-space:nowrap;}
+.nav a:hover,.nav a[aria-current]{color:var(--ink);}
+.nav a[aria-current]{box-shadow:inset 0 -2px 0 var(--fruit);}
+.lang{margin-left:auto;font-weight:700;font-size:15px;text-decoration:none;border:1.5px solid var(--ink);padding:6px 14px;border-radius:999px;white-space:nowrap;color:var(--ink);}
+.lang:hover{background:var(--ink);color:var(--bg);}
+.foot{border-top:1px solid var(--line);margin-top:56px;padding:32px 0 48px;}
+.sib{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 0;}
+.sib h2{font:800 16px/1.4 var(--body);margin:0 24px 0 0;letter-spacing:0;border:0;padding:0;}
+.sib a{text-decoration:none;font-weight:600;padding:2px 0;margin-right:22px;border-bottom:1.5px solid transparent;color:var(--ink);}
+.sib a:hover{border-color:var(--ink);}
+.sib a.me{color:var(--link);font-weight:800;}
+.fnav{display:flex;flex-wrap:wrap;gap:6px 22px;margin-top:22px;color:var(--ink-2);font-size:15px;}
+.fnav a{text-decoration:none;}
+.fnav a:hover{color:var(--ink);text-decoration:underline;}
+.fine{color:var(--ink-2);font-size:15px;margin:14px 0 0;}
+.studies{display:grid;}
+.study{display:block;text-decoration:none;}
+.big{font:800 76px/1 var(--display);color:var(--fruit);letter-spacing:-.03em;font-variant-numeric:tabular-nums;}
+.big small{font-size:22px;letter-spacing:0;margin-left:6px;font-weight:700;}
+.vs{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;}
+.vs span{font:700 18px/1 var(--display);}
+.vs .big.dim{font-size:54px;}
+.study h3{font:800 20px/1.4 var(--body);margin:18px 0 8px;max-width:22em;}
+.study p{margin:0;font-size:16px;max-width:32em;}
+.study:hover h3{text-decoration:underline;text-underline-offset:4px;}
+@media (max-width:600px){
+  .wrap{padding:0 16px;}
+  .top{height:auto;flex-wrap:wrap;gap:10px 16px;padding:14px 0;}
+  .nav{order:3;width:100%;gap:18px;overflow-x:auto;font-size:15px;padding-bottom:2px;}
+  .big{font-size:60px;}
+  .vs .big.dim{font-size:42px;}
+}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important;}}
 `;
-
 const NAV = {
   en: [['/', 'Play'], ['/how-to-play', 'How to Play'], ['/strategy', 'Strategy'], ['/analysis', 'Analysis'], ['/faq', 'FAQ'], ['/about', 'About'], ['/contact', 'Contact']],
   ko: [['/ko/', '게임'], ['/ko/how-to-play', '게임 방법'], ['/ko/strategy', '공략'], ['/ko/analysis', '분석'], ['/ko/faq', 'FAQ'], ['/ko/about', '소개'], ['/ko/contact', '문의']],
 };
 const T = {
-  en: { privacy: 'Privacy Policy', privacyPath: '/privacy', note: 'Tangerine 10 is a free browser puzzle game. No sign-up, no download.', locale: 'en_US', other: '한국어', alt: 'Tangerine 10 number puzzle' },
-  ko: { privacy: '개인정보처리방침', privacyPath: '/ko/privacy', note: 'Tangerine 10은 무료 브라우저 퍼즐 게임입니다. 회원가입·설치 없이 바로 할 수 있습니다.', locale: 'ko_KR', other: 'English', alt: '귤게임 Tangerine 10 숫자 퍼즐' },
+  en: { privacy: 'Privacy Policy', privacyPath: '/privacy', note: 'Tangerine 10 is a free browser puzzle game. No sign-up, no download.', locale: 'en_US', other: '한국어', alt: 'Tangerine 10 number puzzle', menu: 'Site menu', sibs: 'Other tools by comeonyourboyz', fmenu: 'Footer' },
+  ko: { privacy: '개인정보처리방침', privacyPath: '/ko/privacy', note: 'Tangerine 10은 무료 브라우저 퍼즐 게임입니다. 회원가입·설치 없이 바로 할 수 있습니다.', locale: 'ko_KR', other: 'English', alt: '귤게임 Tangerine 10 숫자 퍼즐', menu: '사이트 메뉴', sibs: 'comeonyourboyz가 만든 다른 도구', fmenu: '바닥글' },
 };
+// comeonyourboyz 가 만든 도구 8개. 자기 사이트(Tangerine 10)는 이 사이트 홈으로 걸고 강조한다.
+const SIBLINGS = [
+  ['https://todays-fortune-app.vercel.app', '오늘의 운세', "Today's Fortune"],
+  ['https://dreamdict.web.app', '꿈해몽 사전', 'Dream Dictionary'],
+  ['https://idiomdict.web.app', '사자성어·속담 사전', 'Korean Idiom Dictionary'],
+  ['https://plantdict.web.app', '실내식물 사전', 'Houseplant Dictionary'],
+  ['https://salaryrank.web.app', '내 연봉 순위', 'Salary Rank'],
+  ['https://giftwheel.web.app', '선물 룰렛', 'Gift Wheel'],
+  ['https://mykoreanname.web.app', 'My Korean Name', 'My Korean Name'],
+  [null, 'Tangerine 10', 'Tangerine 10'],
+];
+// 머리글: 로고 · 메뉴 다섯 개(게임 방법~소개) · 언어 전환. path 와 같은 메뉴는 aria-current.
+function siteHeader(lang, path, alt) {
+  const t = T[lang], nav = NAV[lang], other = lang === 'en' ? 'ko' : 'en';
+  return `<header class="top site-nav">
+  <a class="brand" href="${nav[0][0]}"><i aria-hidden="true"></i><span>Tangerine <b>10</b></span></a>
+  <nav class="nav" aria-label="${t.menu}">${nav.slice(1, 6).map(([h, n]) => `<a href="${h}"${h === path ? ' aria-current="page"' : ''}>${n}</a>`).join('')}</nav>
+  ${alt ? `<a class="lang" href="${alt}" hreflang="${other}">${t.other}</a>` : ''}
+</header>`;
+}
+function siteFooter(lang, alt) {
+  const t = T[lang], nav = NAV[lang], other = lang === 'en' ? 'ko' : 'en';
+  return `<footer class="foot site-ftr">
+  <nav class="sib" aria-label="${t.sibs}">
+    <h2>${t.sibs}</h2>
+    ${SIBLINGS.map(([u, ko, en]) => u ? `<a href="${u}">${lang === 'ko' ? ko : en}</a>` : `<a class="me" href="${nav[0][0]}">${lang === 'ko' ? ko : en}</a>`).join('')}
+  </nav>
+  <nav class="fnav" aria-label="${t.fmenu}">${nav.map(([h, n]) => `<a href="${h}">${n}</a>`).join('')}<a href="${t.privacyPath}">${t.privacy}</a>${alt ? `<a href="${alt}" hreflang="${other}">${t.other}</a>` : ''}</nav>
+  <p class="fine">${t.note} © ${new Date().getFullYear()} Tangerine 10</p>
+</footer>`;
+}
+// 분석 글 세 편을 큰 숫자와 함께 나열(홈의 초록 띠, 분석 목록 페이지 공용)
+function studyList(lang) {
+  return `<div class="studies">
+${['board', 'bots', 'combos'].map((id) => {
+    const a = ARTICLES[id][lang], h = headline(id, lang);
+    const num = h.vs != null ? `<div class="vs"><div class="big">${h.big}</div><span>${h.mid}</span><div class="big dim">${h.vs}</div></div>` : `<div class="big">${h.big}<small>${h.unit}</small></div>`;
+    return `    <a class="study" href="${a.path}">${num}<h3>${a.h1}</h3><p>${teaser(id, lang)}</p></a>`;
+  }).join('\n')}
+  </div>`;
+}
+
+// ---------- 글 페이지 전용 스타일 ----------
+const CSS = DS_CSS + `
+.doc{display:grid;grid-template-columns:minmax(0,1fr) 352px;gap:44px;padding-top:36px;align-items:start;}
+.doc-main{max-width:760px;min-width:0;}
+.crumb{font-size:14px;color:var(--ink-2);margin:0 0 10px;font-weight:600;}
+.crumb a{color:var(--link);text-decoration:none;}
+.crumb a:hover{text-decoration:underline;}
+.doc-main h1{font:800 clamp(30px,4vw,44px)/1.15 var(--display);letter-spacing:-.025em;margin:4px 0 14px;}
+.lead{font-size:19px;line-height:1.65;color:var(--ink-2);margin-bottom:30px;font-weight:600;}
+.doc-main h2{font:800 24px/1.3 var(--display);letter-spacing:-.015em;margin:44px 0 14px;padding-top:16px;border-top:2px solid var(--ink);}
+.doc-main h3{font:800 18px/1.4 var(--body);margin:26px 0 8px;}
+.doc-main p{font-size:17px;line-height:1.75;margin-bottom:16px;}
+.doc-main a{color:var(--link);text-underline-offset:3px;}
+.doc-main ul,.doc-main ol{margin:0 0 18px 22px;}
+.doc-main li{font-size:17px;line-height:1.7;margin-bottom:8px;}
+.doc-main li::marker{color:var(--fruit);}
+.box{background:var(--paper);border-left:4px solid var(--fruit);border-radius:0 12px 12px 0;padding:18px 22px;margin:20px 0;}
+.box p:last-child,.box ul:last-child,.box li:last-child{margin-bottom:0;}
+.box strong{color:var(--link);}
+table{width:100%;border-collapse:collapse;margin:18px 0;font-size:16px;border-top:2px solid var(--ink);font-variant-numeric:tabular-nums;}
+th,td{padding:11px 14px 11px 0;text-align:left;border-bottom:1px solid var(--line);vertical-align:top;}
+th{font-weight:700;font-size:14px;color:var(--ink-2);}
+tbody th{color:var(--ink);font-size:15px;}
+td b{color:var(--link);}
+.tbl-wrap{overflow-x:auto;}
+.cta{display:inline-block;background:var(--fruit);color:var(--ink)!important;font-weight:800;font-size:17px;padding:13px 28px;border-radius:999px;text-decoration:none;margin:10px 0 6px;}
+.cta:hover{background:#FFA348;}
+.faq-q{font:800 19px/1.45 var(--body)!important;margin:30px 0 6px!important;}
+.ad-wrap{margin:40px 0 0;padding:0;}
+.fig{margin:22px 0;padding:16px 16px 12px;border:1px solid var(--line);border-radius:14px;background:var(--paper);}
+.fig figcaption{font-size:14px;color:var(--ink-2);margin-top:8px;text-align:center;}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.88em;background:var(--bg-2);padding:1px 5px;border-radius:5px;}
+.updated{font-size:14px!important;color:var(--ink-2);margin:-4px 0 22px!important;}
+.doc-main .studies{border-top:2px solid var(--ink);margin:10px 0 8px;}
+.doc-main .study{display:grid;grid-template-columns:300px minmax(0,1fr);gap:4px 28px;padding:24px 0;border-bottom:1px solid var(--line);color:var(--ink);text-decoration:none;}
+.doc-main .study .big{font-size:52px;}
+.doc-main .study .vs .big{font-size:44px;}
+.doc-main .study .vs .big.dim{font-size:32px;color:var(--ink);}
+.doc-main .study .vs{flex-wrap:nowrap;}
+.doc-main .study .vs{gap:8px;}
+.doc-main .study .vs span{color:var(--ink-2);font-size:15px;}
+.doc-main .study .big small{color:var(--ink);font-size:18px;}
+.doc-main .study h3{grid-column:2;grid-row:1;margin:0 0 6px;}
+.doc-main .study p{grid-column:2;color:var(--ink-2);}
+.doc-main .study > :first-child{grid-row:1/3;color:var(--fruit);}
+.r-sum{background:var(--paper);border-left:4px solid var(--fruit);border-radius:0 12px 12px 0;padding:14px 18px;font-size:16px!important;font-weight:600;}
+.r-empty{color:var(--ink-2);}
+.doc-side{position:sticky;top:24px;display:grid;gap:22px;}
+.play-card{background:var(--board);color:#EAF1EA;border-radius:22px;padding:26px 26px 28px;}
+.play-card b{display:block;font:800 26px/1.2 var(--display);letter-spacing:-.02em;}
+.play-card p{color:#C3D3C6;margin:10px 0 18px;font-size:16px;}
+.play-card a{display:inline-block;background:var(--fruit);color:var(--ink);text-decoration:none;font-weight:800;padding:11px 22px;border-radius:999px;}
+.play-card a:hover{background:#FFA348;}
+.play-card a:focus-visible{outline-color:#FFD58F;}
+.toc{border-top:2px solid var(--ink);padding-top:14px;}
+.toc h2{font:800 18px/1.3 var(--body);margin:0 0 6px;}
+.toc a{display:block;padding:9px 0;border-bottom:1px solid var(--line);text-decoration:none;font-weight:600;color:var(--ink-2);}
+.toc a:last-child{border-bottom:0;}
+.toc a:hover{color:var(--ink);}
+.toc a[aria-current]{color:var(--link);font-weight:800;}
+@media (max-width:1100px){
+  .doc{grid-template-columns:minmax(0,1fr);gap:48px;}
+  .doc-main{max-width:none;}
+  .doc-side{position:static;grid-template-columns:1fr 1fr;align-items:start;}
+}
+@media (max-width:600px){
+  .doc{padding-top:22px;}
+  .lead{font-size:17px;}
+  .doc-main p,.doc-main li{font-size:16px;}
+  .doc-main h2{font-size:22px;margin-top:36px;}
+  th,td{padding:9px 10px 9px 0;font-size:15px;}
+  .tbl-wrap table:has(th:nth-child(5)){min-width:600px;}
+  .doc-main .study{grid-template-columns:1fr;}
+  .doc-main .study h3,.doc-main .study p{grid-column:1;grid-row:auto;}
+  .doc-main .study > :first-child{grid-row:auto;}
+  .doc-side{grid-template-columns:1fr;}
+}
+`;
+const SIDE = {
+  en: { pitch: 'Two minutes. Drag a box over tangerines that add up to exactly 10.', play: 'Play Tangerine 10', read: 'On this site', records: 'Records' },
+  ko: { pitch: '합이 정확히 10이 되는 귤들을 네모로 묶으면 터집니다. 시간은 2분.', play: '귤게임 하러 가기', read: '이 사이트의 글', records: '기록' },
+};
+function docSide(lang, path) {
+  const s = SIDE[lang], nav = NAV[lang], pre = lang === 'ko' ? '/ko' : '';
+  const items = [nav[1], nav[2], nav[3], ...['board', 'bots', 'combos'].map((id) => [ARTICLES[id][lang].path, ARTICLES[id][lang].h1]), nav[4], [`${pre}/records`, s.records]];
+  return `<aside class="doc-side">
+  <div class="play-card"><b>Tangerine 10</b><p>${s.pitch}</p><a href="${nav[0][0]}">${s.play}</a></div>
+  <nav class="toc" aria-label="${s.read}"><h2>${s.read}</h2>${items.map(([h, n]) => `<a href="${h}"${h === path ? ' aria-current="page"' : ''}>${n}</a>`).join('')}</nav>
+</aside>`;
+}
 
 // alt: 다른 언어 판의 경로. 있으면 hreflang 과 언어 전환 링크를 붙인다.
 function layout({ title, desc, path, body, ld = [], lang = 'en', alt = '', noindex = false, ads = true }) {
-  const t = T[lang], nav = NAV[lang], abs = (p) => SITE.url + p, other = lang === 'en' ? 'ko' : 'en';
+  const t = T[lang], abs = (p) => SITE.url + p, other = lang === 'en' ? 'ko' : 'en';
   const hreflang = alt ? `<link rel="alternate" hreflang="${lang}" href="${abs(path)}"><link rel="alternate" hreflang="${other}" href="${abs(alt)}"><link rel="alternate" hreflang="x-default" href="${abs(lang === 'en' ? path : alt)}">` : '';
   return `<!DOCTYPE html>
 <html lang="${lang}">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#f97316">
+<meta name="theme-color" content="#EDF0E6">
 <title>${esc(title)}</title>
 <meta name="description" content="${esc(desc)}">
 <link rel="canonical" href="${abs(path)}">
@@ -114,23 +248,22 @@ ${SITE.gsv.map((g) => `<meta name="google-site-verification" content="${g}">`).j
 <meta name="twitter:image" content="${SITE.url}/og-tangerin10.png?v=7">
 <link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/png" href="/favicon.png" sizes="512x512"><link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+${FONTS}
 <style>${CSS}</style>
 ${ld.map(jsonld).join('\n')}
 </head>
 <body>
-<header class="topbar"><div class="wrap">
-  <a class="logo" href="${nav[0][0]}"><span class="logo-t">🍊 Tangerine</span><span class="logo-10">10</span></a>
-  <nav class="nav">${nav.map(([h, n]) => `<a href="${h}"${h === path ? ' class="on"' : ''}>${n}</a>`).join('')}${alt ? `<a href="${alt}" hreflang="${other}">${t.other}</a>` : ''}</nav>
-</div></header>
-<main class="wrap">
+<div class="wrap">
+${siteHeader(lang, path, alt)}
+<div class="doc">
+<main class="doc-main">
 ${body}
-</main>
 ${ads ? adfit(SITE.adfit) : ''}
-<footer><div class="wrap">
-  <div class="ftr-nav">${nav.map(([h, n]) => `<a href="${h}">${n}</a>`).join('')}<a href="${t.privacyPath}">${t.privacy}</a>${alt ? `<a href="${alt}" hreflang="${other}">${t.other}</a>` : ''}</div>
-  <p class="ftr-note">${t.note} © ${new Date().getFullYear()} Tangerine 10</p>
-</div></footer>
+</main>
+${docSide(lang, path)}
+</div>
+${siteFooter(lang, alt)}
+</div>
 </body>
 </html>`;
 }
@@ -189,7 +322,7 @@ const howBody = `
 <ul>
   <li><b>Mouse:</b> hold the left button, drag a box, release to submit the selection.</li>
   <li><b>Touch:</b> press and drag with one finger. While a game is running, a touch that starts on the board draws a box instead of scrolling the page. Touches anywhere else scroll as usual.</li>
-  <li><b>Restart:</b> the circular arrow button in the top bar ends the current game straight away and shows the result card. Press Play Again for a new board.</li>
+  <li><b>Restart:</b> the Restart button under the timer ends the current game straight away and shows the result card. Press Play Again for a new board.</li>
 </ul>
 
 <h2>When the game ends</h2>
@@ -310,7 +443,7 @@ const privacyEn = `
 
 <h2>Other third-party services</h2>
 <p><b>Firebase (Google).</b> The site is hosted on Firebase Hosting and the leaderboard uses Firebase Realtime Database. Like any web server, Firebase receives your IP address and browser information when you load a page; see the <a href="https://firebase.google.com/support/privacy" target="_blank" rel="noopener">Firebase privacy information</a>.</p>
-<p><b>Google Fonts.</b> The font is loaded from Google's servers, which receive your IP address when they deliver it.</p>
+<p><b>Web fonts.</b> Fonts are loaded from Google Fonts and from jsDelivr (cdn.jsdelivr.net), which receive your IP address when they deliver them.</p>
 <p><b>Kakao Share SDK.</b> The game page loads Kakao's share library. When you use the Kakao share button, Kakao's privacy policy applies.</p>
 
 <h2>Children</h2>
@@ -345,9 +478,7 @@ const analysisEn = `
 <nav class="crumb"><a href="/">Home</a> › Analysis</nav>
 <h1>Tangerine 10 by the numbers</h1>
 <p class="lead">Three studies built from the game's own code: what a random board contains, which play style scores most, and every way to make ten. Each one comes from a simulation script, not from guesswork.</p>
-<div class="cards">
-${['board', 'bots', 'combos'].map((id) => `<a class="card" href="${ARTICLES[id].en.path}"><b>${ARTICLES[id].en.h1}</b><span>${teaser(id, 'en')}</span></a>`).join('\n')}
-</div>
+${studyList('en')}
 <h2>How these were made</h2>
 <p>The script <code>scripts/simulate.mjs</code> copies the line of game code that fills a board — a random whole number from 1 to 9 in every cell — and uses a fixed random seed so the results can be reproduced exactly. It generated ${SIM.boardsPerSize.toLocaleString('en-US')} boards for each board size, and ran four automatic players for ${SIM.gamesPerSetting.toLocaleString('en-US')} games under each of three speed assumptions, using the real 120-second timer, two-second combo window and multiplier table. The pages read their numbers straight from the script's output file.</p>
 <p>For the rules themselves, see <a href="/how-to-play">How to Play</a>; for practical habits, the <a href="/strategy">strategy guide</a>.</p>
@@ -418,9 +549,7 @@ const analysisKo = `
 <nav class="crumb"><a href="/ko/">홈</a> › 분석</nav>
 <h1>숫자로 보는 귤게임</h1>
 <p class="lead">게임 코드로 직접 돌린 연구 세 편입니다. 무작위 판에 무엇이 들어 있는지, 어떤 방식이 점수가 가장 높은지, 10을 만드는 방법이 몇 가지인지. 모두 짐작이 아니라 시뮬레이션 스크립트에서 나온 결과입니다.</p>
-<div class="cards">
-${['board', 'bots', 'combos'].map((id) => `<a class="card" href="${ARTICLES[id].ko.path}"><b>${ARTICLES[id].ko.h1}</b><span>${teaser(id, 'ko')}</span></a>`).join('\n')}
-</div>
+${studyList('ko')}
 <h2>어떻게 만들었나</h2>
 <p><code>scripts/simulate.mjs</code> 스크립트는 판을 채우는 게임 코드 한 줄(칸마다 1~9 무작위 정수)을 그대로 옮기고, 결과를 똑같이 다시 만들 수 있게 난수 시드를 고정합니다. 판 크기마다 ${SIM.boardsPerSize.toLocaleString('en-US')}개의 판을 만들었고, 자동 플레이 봇 네 개를 속도 가정 세 가지로 각각 ${SIM.gamesPerSetting.toLocaleString('en-US')}판씩 실제 120초 타이머·2초 콤보·배율 표대로 돌렸습니다. 각 페이지는 스크립트의 결과 파일에서 숫자를 바로 읽어 만듭니다.</p>
 <p>규칙은 <a href="/ko/how-to-play">게임 방법</a>에, 실전 습관은 <a href="/ko/strategy">공략</a>에 있습니다.</p>
@@ -525,16 +654,25 @@ for (const [name, html] of recordPages) writeFileSync(join(OUT, name), html);
 // 바꿀 문구를 못 찾으면 빌드를 멈춘다 — 영문 화면이 바뀌었는데 한국어 판이 조용히 영어로 남는 것을 막기 위해서다.
 // 홈(영문·한국어) 본문의 분석 요약 블록. 수치는 시뮬레이션 결과 파일에서 가져온다.
 const homeAnalysis = (lang) => `<!-- analysis:start -->
-  <h2>${lang === 'ko' ? '숫자로 본 귤게임' : 'What the numbers say'}</h2>
-  <p>${lang === 'ko' ? '게임의 판 만드는 코드를 그대로 돌려 판 10만 개와 자동 플레이 수천 판을 시뮬레이션했습니다. 결과는 세 편의 글로 정리했습니다.' : 'We ran the game\'s own board code through 100,000 simulated boards and thousands of automatic games. The results are written up in three studies.'}</p>
-  <div class="sc-cards">
-${['board', 'bots', 'combos'].map((id) => `    <a class="sc-card" href="${ARTICLES[id][lang].path}"><b>${ARTICLES[id][lang].h1}</b><span>${teaser(id, lang)}</span></a>`).join('\n')}
+<section class="numbers" aria-labelledby="num-h">
+  <div class="wrap">
+  <h2 id="num-h">${lang === 'ko' ? '숫자로 본 귤게임' : 'What the numbers say'}</h2>
+  <p class="lead">${lang === 'ko' ? '게임의 판 만드는 코드를 그대로 돌려 판 10만 개와 자동 플레이 수천 판을 시뮬레이션했습니다. 결과는 세 편의 글로 정리했습니다.' : 'We ran the game\'s own board code through 100,000 simulated boards and thousands of automatic games. The results are written up in three studies.'}</p>
+  ${studyList(lang)}
   </div>
-  <!-- analysis:end -->`;
+</section>
+<!-- analysis:end -->`;
+// 영문 게임 화면: 공통 스타일·글꼴·머리글·바닥글·분석 띠를 채운다(게임 코드와 문구는 그대로).
 {
-  const p = join(OUT, 'index.html'), src = readFileSync(p, 'utf8'), re = /<!-- analysis:start -->[\s\S]*?<!-- analysis:end -->/;
-  if (!re.test(src)) throw new Error('영문 게임 화면: analysis 표시를 찾지 못함');
-  writeFileSync(p, src.replace(re, () => homeAnalysis('en')));
+  const p = join(OUT, 'index.html');
+  let src = readFileSync(p, 'utf8');
+  const fill = (re, to, what) => { if (!re.test(src)) throw new Error(`영문 게임 화면: ${what} 표시를 찾지 못함`); src = src.replace(re, () => to); };
+  fill(/<!-- analysis:start -->[\s\S]*?<!-- analysis:end -->/, homeAnalysis('en'), 'analysis');
+  fill(/\/\* ds:start[^*]*\*\/[\s\S]*?\/\* ds:end \*\//, `/* ds:start — 공통 디자인 토큰·머리글·바닥글. scripts/build-content.mjs 가 빌드 때 이 구간을 덮어쓴다. */${DS_CSS}/* ds:end */`, 'ds');
+  fill(/<!-- fonts:start -->[\s\S]*?<!-- fonts:end -->/, `<!-- fonts:start -->${FONTS}<!-- fonts:end -->`, 'fonts');
+  fill(/<header class="top site-nav">[\s\S]*?<\/header>/, siteHeader('en', '/', '/ko/'), 'header');
+  fill(/<footer class="foot site-ftr">[\s\S]*?<\/footer>/, siteFooter('en', '/ko/'), 'footer');
+  writeFileSync(p, src);
 }
 {
   let g = readFileSync(join(OUT, 'index.html'), 'utf8');
@@ -559,44 +697,43 @@ ${['board', 'bots', 'combos'].map((id) => `    <a class="sc-card" href="${ARTICL
   sub('<link rel="canonical" href="https://tangerin10.web.app/">', '<link rel="canonical" href="https://tangerin10.web.app/ko/">');
   sub('"inLanguage":"en"}', '"inLanguage":"ko"}');
   sub('"description":"Free number puzzle game! Drag and match numbers that add up to 10. 2-minute challenge with global ranking."', '"description":"합이 10이 되게 귤을 묶어 터뜨리는 무료 숫자 퍼즐. 2분 도전과 전체 랭킹."');
-  sub('<nav aria-label="Site menu"><a href="/how-to-play">How to Play</a><a href="/strategy">Strategy</a><a href="/analysis">Analysis</a><a href="/faq">FAQ</a><a href="/about">About</a><a class="lang" href="/ko/" hreflang="ko">한국어</a></nav>',
-    '<nav aria-label="사이트 메뉴"><a href="/ko/how-to-play">게임 방법</a><a href="/ko/strategy">공략</a><a href="/ko/analysis">분석</a><a href="/ko/faq">FAQ</a><a href="/ko/about">소개</a><a class="lang" href="/" hreflang="en">English</a></nav>');
+  block(/<header class="top site-nav">[\s\S]*?<\/header>/, () => siteHeader('ko', '/ko/', '/'));
   block(/<div class="intro">[\s\S]*?<\/div>/, `<div class="intro">
     <h1>귤게임 Tangerine 10 — 2분 동안 숫자 합 10 만들기</h1>
     <p>합이 정확히 10이 되는 귤들을 네모로 묶으면 터집니다. <a href="/ko/how-to-play">전체 규칙</a></p>
   </div>`);
-  sub('<div class="score-label">SCORE</div>', '<div class="score-label">점수</div>');
-  block(/<div class="hint">[\s\S]*?<\/div>/, '<div class="hint">합이 10이 되게 드래그해서 묶으세요 · <a href="/" hreflang="en" style="color:#f97316;text-decoration:none;font-weight:700;">English</a> · <a href="/ko/privacy" style="color:#ccc;text-decoration:none;">개인정보처리방침</a></div>');
-  sub('🏆 TOP SCORES', '🏆 최고 점수');
-  sub('📋 MY HISTORY', '📋 내 기록');
+  sub('<section class="status" aria-label="Time and score">', '<section class="status" aria-label="남은 시간과 점수">');
+  sub('<small class="clock-label">Time left</small>', '<small class="clock-label">남은 시간</small>');
+  sub('<small class="score-label">Score</small>', '<small class="score-label">점수</small>');
+  sub('<span class="restart-label">Restart</span>', '<span class="restart-label">새 판</span>');
+  block(/<div class="hint">[\s\S]*?<\/div>/, '<div class="hint"><span>합이 10이 되게 드래그해서 묶으세요</span><span>빈칸은 합에서 빠집니다</span></div>');
+  block(/<section class="howto"[\s\S]*?<\/section>/, () => `<section class="howto" aria-labelledby="howto-h">
+    <h2 id="howto-h">30초 규칙 요약</h2>
+    <ol class="rules">
+      <li>누른 채 끌어서 네모를 그립니다. 귤의 가운데가 네모 안에 들어오면 선택됩니다.</li>
+      <li>선택한 숫자의 합이 정확히 10일 때 손을 떼세요. 9나 11은 아무 일도 없습니다.</li>
+      <li>터진 자리는 빈칸이 되고, 빈칸은 다음 선택에서 빠집니다. 판이 빌수록 쉬워집니다.</li>
+      <li>120초가 되면 시계가 멈추고 점수가 확정됩니다.</li>
+    </ol>
+    <a class="more" href="/ko/how-to-play">전체 규칙 &rarr;</a>
+  </section>`);
+  sub('>Top scores<', '>최고 점수<');
+  sub('>My history<', '>내 기록<');
   sub('No scores yet', '아직 기록이 없어요', 2);
   sub('No games yet', '아직 플레이 기록이 없어요', 2);
-  block(/<section class="site-content">[\s\S]*?<\/section>/, () => `<section class="site-content">
-  <h2>귤게임 Tangerine 10은요</h2>
-  <p>Tangerine 10은 규칙 하나로 하는 무료 브라우저 퍼즐입니다. 숫자의 합이 <b>정확히 10</b>이 되는 귤들에 네모를 그리면 터집니다. 시간은 120초. 회원가입도, 설치도, 앱스토어도 없습니다.</p>
-  <p>판을 시작할 때마다 1부터 9까지 숫자가 적힌 귤이 새로 깔립니다. PC와 태블릿은 170개, 휴대폰은 168개라 같은 판을 다시 할 일은 없습니다. 내 기록 칸은 페이지가 열려 있는 동안 최근 다섯 판을 보여 줍니다. 점수가 3위 안에 들면 이름 칸이 나오고, 저장하고 다시 하기를 누르면 랭킹에 올라갑니다.</p>
-  <h2>30초 규칙 요약</h2>
-  <ul>
-    <li>누른 채 끌어서 네모를 그립니다. 귤의 가운데가 네모 안에 들어오면 선택됩니다.</li>
-    <li>선택한 숫자의 합이 정확히 10일 때 손을 떼세요. 9나 11은 아무 일도 없습니다.</li>
-    <li>터진 자리는 빈칸이 되고, 빈칸은 다음 선택에서 빠집니다. 판이 빌수록 쉬워집니다.</li>
-    <li>120초가 되면 시계가 멈추고 점수가 확정됩니다.</li>
-  </ul>
-  <p>점수는 터뜨린 귤의 개수에, 마지막으로 터뜨린 뒤 2초 안에 이어서 터뜨리는 동안 커지는 콤보 배율을 곱한 값입니다. 배율 전체 표는 <a href="/ko/how-to-play">게임 방법</a>에, 콤보를 이어 가는 습관은 <a href="/ko/strategy">공략</a>에 있습니다.</p>
-
-  ${homeAnalysis('ko')}
-
-  <div class="sc-links">
-    <a href="/ko/how-to-play">전체 규칙 &rarr;</a>
-    <a href="/ko/strategy">공략 &rarr;</a>
-    <a href="/ko/analysis">분석 &rarr;</a>
-    <a href="/ko/faq">자주 묻는 질문 &rarr;</a>
+  block(/<!-- analysis:start -->[\s\S]*?<!-- analysis:end -->/, () => homeAnalysis('ko'));
+  block(/<section class="about"[\s\S]*?<\/section>/, () => `<section class="about" aria-labelledby="about-h">
+  <h2 id="about-h">귤게임 Tangerine 10은요</h2>
+  <div class="body">
+    <p>Tangerine 10은 규칙 하나로 하는 무료 브라우저 퍼즐입니다. 숫자의 합이 <b>정확히 10</b>이 되는 귤들에 네모를 그리면 터집니다. 시간은 120초. 회원가입도, 설치도, 앱스토어도 없습니다.</p>
+    <p>판을 시작할 때마다 1부터 9까지 숫자가 적힌 귤이 새로 깔립니다. PC와 태블릿은 170개, 휴대폰은 168개라 같은 판을 다시 할 일은 없습니다. 내 기록 칸은 페이지가 열려 있는 동안 최근 다섯 판을 보여 줍니다. 점수가 3위 안에 들면 이름 칸이 나오고, 저장하고 다시 하기를 누르면 랭킹에 올라갑니다.</p>
+    <p>점수는 터뜨린 귤의 개수에, 마지막으로 터뜨린 뒤 2초 안에 이어서 터뜨리는 동안 커지는 콤보 배율을 곱한 값입니다. 배율 전체 표는 <a href="/ko/how-to-play">게임 방법</a>에, 콤보를 이어 가는 습관은 <a href="/ko/strategy">공략</a>에 있습니다.</p>
+    <nav class="links" aria-label="더 읽기">
+      <a href="/ko/how-to-play">전체 규칙 &rarr;</a><a href="/ko/strategy">공략 &rarr;</a><a href="/ko/analysis">분석 &rarr;</a><a href="/ko/faq">자주 묻는 질문 &rarr;</a>
+    </nav>
   </div>
 </section>`);
-  block(/<footer class="site-ftr">[\s\S]*?<\/footer>/, `<footer class="site-ftr">
-  <div class="fnav"><a href="/ko/">게임</a><a href="/ko/how-to-play">게임 방법</a><a href="/ko/strategy">공략</a><a href="/ko/analysis">분석</a><a href="/ko/faq">FAQ</a><a href="/ko/about">소개</a><a href="/ko/contact">문의</a><a href="/ko/privacy">개인정보처리방침</a><a href="/" hreflang="en">English</a></div>
-  <p class="fnote">Tangerine 10은 무료 브라우저 퍼즐 게임입니다. 회원가입·설치 없이 바로 할 수 있습니다.</p>
-</footer>`);
+  block(/<footer class="foot site-ftr">[\s\S]*?<\/footer>/, () => siteFooter('ko', '/'));
   sub('<div class="st-sub">Drag numbers that add up to 10!<br>2 minutes. How many can you clear?</div>', '<div class="st-sub">합이 10이 되게 묶어 터뜨리세요!<br>2분 동안 몇 개나 지울 수 있을까요?</div>');
   sub('▶ START', '▶ 시작');
   sub('<div class="ol" id="ol">GAME OVER</div>', '<div class="ol" id="ol">게임 종료</div>');
@@ -608,6 +745,10 @@ ${['board', 'bots', 'combos'].map((id) => `    <a class="sc-card" href="${ARTICL
   sub("'Save & Play Again'", "'저장하고 다시 하기'");
   sub("'No tiles cleared...'", "'하나도 못 터뜨렸어요...'");
   sub("'Top: '+", "'1위: '+");
+  sub('aria-label="Share on X"', 'aria-label="X로 공유"');
+  sub('aria-label="Share on KakaoTalk"', 'aria-label="카카오톡으로 공유"');
+  sub('aria-label="Share on Facebook"', 'aria-label="페이스북으로 공유"');
+  sub('aria-label="Copy link"', 'aria-label="링크 복사"');
   sub("var SHARE_URL='https://tangerin10.web.app?v='+Date.now();", "var SHARE_URL='https://tangerin10.web.app/ko/?v='+Date.now();");
   writeFileSync(join(OUT, 'ko', 'index.html'), g);
 }

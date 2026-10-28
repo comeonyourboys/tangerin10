@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#f97316">
+<meta name="theme-color" content="#EDF0E6">
 <title>개인정보처리방침 — 귤게임 Tangerine 10</title>
 <meta name="description" content="귤게임 Tangerine 10이 저장하는 정보, Google 애드센스 등 광고 쿠키 사용과 맞춤 광고 거부 방법, 랭킹 기록 삭제 방법.">
 <link rel="canonical" href="https://tangerin10.web.app/ko/privacy">
@@ -28,67 +28,145 @@
 <meta name="twitter:image" content="https://tangerin10.web.app/og-tangerin10.png?v=7">
 <link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/png" href="/favicon.png" sizes="512x512"><link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/gh/sun-typeface/SUIT@2/fonts/static/woff2/SUIT.css" rel="stylesheet">
 <style>
+:root{--bg:#EDF0E6;--bg-2:#E2E7D9;--paper:#F6F8F1;--ink:#13261B;--ink-2:#4A5A4E;--line:rgba(19,38,27,.16);--board:#173828;--fruit:#F68B1F;--leaf:#4E9A57;--link:#A84400;
+--display:"Bricolage Grotesque","SUIT","Apple SD Gothic Neo",sans-serif;--body:"SUIT","Apple SD Gothic Neo","Malgun Gothic",sans-serif;}
 *{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:'Outfit',-apple-system,BlinkMacSystemFont,sans-serif;color:#1a1a1a;background:#fff;line-height:1.7;-webkit-text-size-adjust:100%;}
-a{color:#f97316;}
-.wrap{max-width:780px;margin:0 auto;padding:0 20px;}
-.topbar{border-bottom:1px solid #f0f0f0;position:sticky;top:0;background:rgba(255,255,255,.95);backdrop-filter:blur(8px);z-index:20;}
-.topbar .wrap{display:flex;align-items:center;justify-content:space-between;height:56px;gap:14px;}
-.logo{display:flex;align-items:baseline;gap:5px;text-decoration:none;white-space:nowrap;}
-.logo-t{font-size:16px;font-weight:600;color:#999;}
-.logo-10{font-size:22px;font-weight:900;color:#f97316;letter-spacing:-1px;}
-.nav{display:flex;gap:2px;flex-wrap:wrap;justify-content:flex-end;}
-.nav a{font-size:13px;font-weight:600;color:#777;text-decoration:none;padding:6px 9px;border-radius:8px;white-space:nowrap;}
-.nav a:hover,.nav a.on{background:#fff4ea;color:#ea580c;}
-.crumb{font-size:12px;color:#aaa;margin:16px 0 4px;}
-.crumb a{color:#f97316;text-decoration:none;}
-h1{font-size:clamp(25px,5vw,32px);font-weight:900;letter-spacing:-.6px;margin:14px 0 8px;line-height:1.25;}
-.lead{font-size:16px;color:#666;margin-bottom:26px;line-height:1.75;}
-h2{font-size:20px;font-weight:800;margin:34px 0 12px;letter-spacing:-.3px;}
-h3{font-size:16px;font-weight:700;margin:22px 0 8px;}
-p{font-size:16px;color:#333;margin-bottom:14px;}
-ul,ol{margin:0 0 16px 20px;}
-li{font-size:15.5px;color:#333;margin-bottom:8px;line-height:1.7;}
-.box{background:#fff8f2;border:1px solid #ffe4cc;border-radius:14px;padding:18px 20px;margin:18px 0;}
+html{-webkit-text-size-adjust:100%;}
+body{background:var(--bg);color:var(--ink);font:500 16px/1.65 var(--body);word-break:keep-all;overflow-wrap:break-word;}
+a{color:inherit;}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(--fruit);outline-offset:3px;border-radius:6px;}
+.wrap{max-width:1440px;margin:0 auto;padding:0 48px;}
+.top{display:flex;align-items:center;gap:40px;height:68px;border-bottom:1px solid var(--line);}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font:800 21px/1 var(--display);letter-spacing:-.02em;white-space:nowrap;color:var(--ink);}
+.brand i{width:22px;height:22px;border-radius:50%;background:var(--fruit);position:relative;display:block;flex:none;}
+.brand i::after{content:"";position:absolute;width:9px;height:5px;border-radius:50%;background:var(--leaf);top:-2px;right:-1px;transform:rotate(-30deg);}
+.brand b{color:var(--fruit);font-weight:800;}
+.nav{display:flex;gap:28px;font-size:16px;font-weight:600;}
+.nav a{text-decoration:none;color:var(--ink-2);white-space:nowrap;}
+.nav a:hover,.nav a[aria-current]{color:var(--ink);}
+.nav a[aria-current]{box-shadow:inset 0 -2px 0 var(--fruit);}
+.lang{margin-left:auto;font-weight:700;font-size:15px;text-decoration:none;border:1.5px solid var(--ink);padding:6px 14px;border-radius:999px;white-space:nowrap;color:var(--ink);}
+.lang:hover{background:var(--ink);color:var(--bg);}
+.foot{border-top:1px solid var(--line);margin-top:56px;padding:32px 0 48px;}
+.sib{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 0;}
+.sib h2{font:800 16px/1.4 var(--body);margin:0 24px 0 0;letter-spacing:0;border:0;padding:0;}
+.sib a{text-decoration:none;font-weight:600;padding:2px 0;margin-right:22px;border-bottom:1.5px solid transparent;color:var(--ink);}
+.sib a:hover{border-color:var(--ink);}
+.sib a.me{color:var(--link);font-weight:800;}
+.fnav{display:flex;flex-wrap:wrap;gap:6px 22px;margin-top:22px;color:var(--ink-2);font-size:15px;}
+.fnav a{text-decoration:none;}
+.fnav a:hover{color:var(--ink);text-decoration:underline;}
+.fine{color:var(--ink-2);font-size:15px;margin:14px 0 0;}
+.studies{display:grid;}
+.study{display:block;text-decoration:none;}
+.big{font:800 76px/1 var(--display);color:var(--fruit);letter-spacing:-.03em;font-variant-numeric:tabular-nums;}
+.big small{font-size:22px;letter-spacing:0;margin-left:6px;font-weight:700;}
+.vs{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;}
+.vs span{font:700 18px/1 var(--display);}
+.vs .big.dim{font-size:54px;}
+.study h3{font:800 20px/1.4 var(--body);margin:18px 0 8px;max-width:22em;}
+.study p{margin:0;font-size:16px;max-width:32em;}
+.study:hover h3{text-decoration:underline;text-underline-offset:4px;}
+@media (max-width:600px){
+  .wrap{padding:0 16px;}
+  .top{height:auto;flex-wrap:wrap;gap:10px 16px;padding:14px 0;}
+  .nav{order:3;width:100%;gap:18px;overflow-x:auto;font-size:15px;padding-bottom:2px;}
+  .big{font-size:60px;}
+  .vs .big.dim{font-size:42px;}
+}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important;}}
+
+.doc{display:grid;grid-template-columns:minmax(0,1fr) 352px;gap:44px;padding-top:36px;align-items:start;}
+.doc-main{max-width:760px;min-width:0;}
+.crumb{font-size:14px;color:var(--ink-2);margin:0 0 10px;font-weight:600;}
+.crumb a{color:var(--link);text-decoration:none;}
+.crumb a:hover{text-decoration:underline;}
+.doc-main h1{font:800 clamp(30px,4vw,44px)/1.15 var(--display);letter-spacing:-.025em;margin:4px 0 14px;}
+.lead{font-size:19px;line-height:1.65;color:var(--ink-2);margin-bottom:30px;font-weight:600;}
+.doc-main h2{font:800 24px/1.3 var(--display);letter-spacing:-.015em;margin:44px 0 14px;padding-top:16px;border-top:2px solid var(--ink);}
+.doc-main h3{font:800 18px/1.4 var(--body);margin:26px 0 8px;}
+.doc-main p{font-size:17px;line-height:1.75;margin-bottom:16px;}
+.doc-main a{color:var(--link);text-underline-offset:3px;}
+.doc-main ul,.doc-main ol{margin:0 0 18px 22px;}
+.doc-main li{font-size:17px;line-height:1.7;margin-bottom:8px;}
+.doc-main li::marker{color:var(--fruit);}
+.box{background:var(--paper);border-left:4px solid var(--fruit);border-radius:0 12px 12px 0;padding:18px 22px;margin:20px 0;}
 .box p:last-child,.box ul:last-child,.box li:last-child{margin-bottom:0;}
-.box strong{color:#ea580c;}
-table{width:100%;border-collapse:collapse;margin:16px 0;font-size:15px;background:#fff;border-radius:12px;overflow:hidden;border:1px solid #f0f0f0;}
-th,td{padding:11px 14px;text-align:left;border-bottom:1px solid #f5f5f5;}
-th{background:#fafafa;font-weight:700;font-size:13.5px;color:#777;}
-tr:last-child th,tr:last-child td{border-bottom:none;}
-td b{color:#ea580c;}
+.box strong{color:var(--link);}
+table{width:100%;border-collapse:collapse;margin:18px 0;font-size:16px;border-top:2px solid var(--ink);font-variant-numeric:tabular-nums;}
+th,td{padding:11px 14px 11px 0;text-align:left;border-bottom:1px solid var(--line);vertical-align:top;}
+th{font-weight:700;font-size:14px;color:var(--ink-2);}
+tbody th{color:var(--ink);font-size:15px;}
+td b{color:var(--link);}
 .tbl-wrap{overflow-x:auto;}
-.cta{display:inline-block;background:#f97316;color:#fff;font-weight:800;font-size:16px;padding:13px 26px;border-radius:999px;text-decoration:none;margin:10px 0 6px;}
-.cta:hover{background:#ea580c;}
-.faq-q{font-weight:800;font-size:16.5px;margin:24px 0 6px;}
-.ad-wrap{margin:34px 0 0;}
-.disclose{font-size:11px;color:#c4c4c4;text-align:center;margin-top:6px;}
-footer{border-top:1px solid #f0f0f0;margin-top:36px;padding:24px 0 46px;}
-.ftr-nav{display:flex;flex-wrap:wrap;justify-content:center;gap:2px 0;}
-.ftr-nav a{font-size:12.5px;color:#888;text-decoration:none;padding:4px 9px;}
-.ftr-note{font-size:11.5px;color:#bbb;text-align:center;margin-top:10px;line-height:1.8;}
-@media(max-width:600px){.nav a{font-size:12px;padding:5px 7px;}p,li{font-size:15px;}}
-.fig{margin:20px 0;padding:14px 14px 10px;border:1px solid #f0f0f0;border-radius:14px;background:#fffdfb;}
-.fig figcaption{font-size:13px;color:#888;margin-top:8px;text-align:center;}
-code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.88em;background:#f6f6f6;padding:1px 5px;border-radius:5px;}
-.updated{font-size:13px;color:#aaa;margin:-2px 0 18px;}
-.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin:18px 0;}
-.card{display:block;border:1px solid #ffe4cc;background:#fff8f2;border-radius:14px;padding:16px 18px;text-decoration:none;color:#444;}
-.card b{display:block;color:#ea580c;font-size:16px;margin-bottom:6px;}
-.card span{display:block;font-size:14.5px;line-height:1.65;}
-.r-sum{background:#fff8f2;border:1px solid #ffe4cc;border-radius:12px;padding:12px 16px;font-size:14.5px;color:#7a4a1f;}
-.r-empty{color:#999;}
+.cta{display:inline-block;background:var(--fruit);color:var(--ink)!important;font-weight:800;font-size:17px;padding:13px 28px;border-radius:999px;text-decoration:none;margin:10px 0 6px;}
+.cta:hover{background:#FFA348;}
+.faq-q{font:800 19px/1.45 var(--body)!important;margin:30px 0 6px!important;}
+.ad-wrap{margin:40px 0 0;padding:0;}
+.fig{margin:22px 0;padding:16px 16px 12px;border:1px solid var(--line);border-radius:14px;background:var(--paper);}
+.fig figcaption{font-size:14px;color:var(--ink-2);margin-top:8px;text-align:center;}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.88em;background:var(--bg-2);padding:1px 5px;border-radius:5px;}
+.updated{font-size:14px!important;color:var(--ink-2);margin:-4px 0 22px!important;}
+.doc-main .studies{border-top:2px solid var(--ink);margin:10px 0 8px;}
+.doc-main .study{display:grid;grid-template-columns:300px minmax(0,1fr);gap:4px 28px;padding:24px 0;border-bottom:1px solid var(--line);color:var(--ink);text-decoration:none;}
+.doc-main .study .big{font-size:52px;}
+.doc-main .study .vs .big{font-size:44px;}
+.doc-main .study .vs .big.dim{font-size:32px;color:var(--ink);}
+.doc-main .study .vs{flex-wrap:nowrap;}
+.doc-main .study .vs{gap:8px;}
+.doc-main .study .vs span{color:var(--ink-2);font-size:15px;}
+.doc-main .study .big small{color:var(--ink);font-size:18px;}
+.doc-main .study h3{grid-column:2;grid-row:1;margin:0 0 6px;}
+.doc-main .study p{grid-column:2;color:var(--ink-2);}
+.doc-main .study > :first-child{grid-row:1/3;color:var(--fruit);}
+.r-sum{background:var(--paper);border-left:4px solid var(--fruit);border-radius:0 12px 12px 0;padding:14px 18px;font-size:16px!important;font-weight:600;}
+.r-empty{color:var(--ink-2);}
+.doc-side{position:sticky;top:24px;display:grid;gap:22px;}
+.play-card{background:var(--board);color:#EAF1EA;border-radius:22px;padding:26px 26px 28px;}
+.play-card b{display:block;font:800 26px/1.2 var(--display);letter-spacing:-.02em;}
+.play-card p{color:#C3D3C6;margin:10px 0 18px;font-size:16px;}
+.play-card a{display:inline-block;background:var(--fruit);color:var(--ink);text-decoration:none;font-weight:800;padding:11px 22px;border-radius:999px;}
+.play-card a:hover{background:#FFA348;}
+.play-card a:focus-visible{outline-color:#FFD58F;}
+.toc{border-top:2px solid var(--ink);padding-top:14px;}
+.toc h2{font:800 18px/1.3 var(--body);margin:0 0 6px;}
+.toc a{display:block;padding:9px 0;border-bottom:1px solid var(--line);text-decoration:none;font-weight:600;color:var(--ink-2);}
+.toc a:last-child{border-bottom:0;}
+.toc a:hover{color:var(--ink);}
+.toc a[aria-current]{color:var(--link);font-weight:800;}
+@media (max-width:1100px){
+  .doc{grid-template-columns:minmax(0,1fr);gap:48px;}
+  .doc-main{max-width:none;}
+  .doc-side{position:static;grid-template-columns:1fr 1fr;align-items:start;}
+}
+@media (max-width:600px){
+  .doc{padding-top:22px;}
+  .lead{font-size:17px;}
+  .doc-main p,.doc-main li{font-size:16px;}
+  .doc-main h2{font-size:22px;margin-top:36px;}
+  th,td{padding:9px 10px 9px 0;font-size:15px;}
+  .tbl-wrap table:has(th:nth-child(5)){min-width:600px;}
+  .doc-main .study{grid-template-columns:1fr;}
+  .doc-main .study h3,.doc-main .study p{grid-column:1;grid-row:auto;}
+  .doc-main .study > :first-child{grid-row:auto;}
+  .doc-side{grid-template-columns:1fr;}
+}
 </style>
 
 </head>
 <body>
-<header class="topbar"><div class="wrap">
-  <a class="logo" href="/ko/"><span class="logo-t">🍊 Tangerine</span><span class="logo-10">10</span></a>
-  <nav class="nav"><a href="/ko/">게임</a><a href="/ko/how-to-play">게임 방법</a><a href="/ko/strategy">공략</a><a href="/ko/analysis">분석</a><a href="/ko/faq">FAQ</a><a href="/ko/about">소개</a><a href="/ko/contact">문의</a><a href="/privacy" hreflang="en">English</a></nav>
-</div></header>
-<main class="wrap">
+<div class="wrap">
+<header class="top site-nav">
+  <a class="brand" href="/ko/"><i aria-hidden="true"></i><span>Tangerine <b>10</b></span></a>
+  <nav class="nav" aria-label="사이트 메뉴"><a href="/ko/how-to-play">게임 방법</a><a href="/ko/strategy">공략</a><a href="/ko/analysis">분석</a><a href="/ko/faq">FAQ</a><a href="/ko/about">소개</a></nav>
+  <a class="lang" href="/privacy" hreflang="en">English</a>
+</header>
+<div class="doc">
+<main class="doc-main">
 
 <h1>개인정보처리방침</h1>
 <p class="updated">최종 수정: 2026년 10월 20일</p>
@@ -111,7 +189,7 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.88em;bac
 
 <h2>그 밖의 외부 서비스</h2>
 <p><b>Firebase(Google).</b> 사이트는 Firebase Hosting에서 제공되고 랭킹은 Firebase Realtime Database를 씁니다. 모든 웹 서버처럼 Firebase는 페이지를 열 때 IP 주소와 브라우저 정보를 받습니다. <a href="https://firebase.google.com/support/privacy" target="_blank" rel="noopener">Firebase 개인정보 보호</a>를 참고하세요.</p>
-<p><b>Google Fonts.</b> 글꼴을 Google 서버에서 불러오며, 이때 Google이 IP 주소를 받습니다.</p>
+<p><b>웹 글꼴.</b> 글꼴을 Google Fonts와 jsDelivr(cdn.jsdelivr.net) 서버에서 불러오며, 이때 각 서버가 IP 주소를 받습니다.</p>
 <p><b>카카오 공유 SDK.</b> 게임 화면은 카카오 공유 라이브러리를 불러옵니다. 카카오 공유 버튼을 쓰면 카카오의 개인정보처리방침이 적용됩니다.</p>
 
 <h2>아동의 개인정보</h2>
@@ -126,11 +204,21 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.88em;bac
 <h2>문의</h2>
 <p>개인정보처리방침에 관한 문의는 <a href="mailto:comeonyourboyz@gmail.com">comeonyourboyz@gmail.com</a>으로 보내거나 <a href="/ko/contact">문의하기</a> 페이지를 봐 주세요.</p>
 
-</main>
 
-<footer><div class="wrap">
-  <div class="ftr-nav"><a href="/ko/">게임</a><a href="/ko/how-to-play">게임 방법</a><a href="/ko/strategy">공략</a><a href="/ko/analysis">분석</a><a href="/ko/faq">FAQ</a><a href="/ko/about">소개</a><a href="/ko/contact">문의</a><a href="/ko/privacy">개인정보처리방침</a><a href="/privacy" hreflang="en">English</a></div>
-  <p class="ftr-note">Tangerine 10은 무료 브라우저 퍼즐 게임입니다. 회원가입·설치 없이 바로 할 수 있습니다. © 2026 Tangerine 10</p>
-</div></footer>
+</main>
+<aside class="doc-side">
+  <div class="play-card"><b>Tangerine 10</b><p>합이 정확히 10이 되는 귤들을 네모로 묶으면 터집니다. 시간은 2분.</p><a href="/ko/">귤게임 하러 가기</a></div>
+  <nav class="toc" aria-label="이 사이트의 글"><h2>이 사이트의 글</h2><a href="/ko/how-to-play">게임 방법</a><a href="/ko/strategy">공략</a><a href="/ko/analysis">분석</a><a href="/ko/board-statistics">귤게임 새 판 10만 개를 만들어 보니</a><a href="/ko/bot-strategies">짝이 나을까, 큰 네모가 나을까 — 봇 네 개로 120초 점수 비교</a><a href="/ko/make-ten-combinations">합이 10이 되는 조합 전부와 실제로 나오는 빈도</a><a href="/ko/faq">FAQ</a><a href="/ko/records">기록</a></nav>
+</aside>
+</div>
+<footer class="foot site-ftr">
+  <nav class="sib" aria-label="comeonyourboyz가 만든 다른 도구">
+    <h2>comeonyourboyz가 만든 다른 도구</h2>
+    <a href="https://todays-fortune-app.vercel.app">오늘의 운세</a><a href="https://dreamdict.web.app">꿈해몽 사전</a><a href="https://idiomdict.web.app">사자성어·속담 사전</a><a href="https://plantdict.web.app">실내식물 사전</a><a href="https://salaryrank.web.app">내 연봉 순위</a><a href="https://giftwheel.web.app">선물 룰렛</a><a href="https://mykoreanname.web.app">My Korean Name</a><a class="me" href="/ko/">Tangerine 10</a>
+  </nav>
+  <nav class="fnav" aria-label="바닥글"><a href="/ko/">게임</a><a href="/ko/how-to-play">게임 방법</a><a href="/ko/strategy">공략</a><a href="/ko/analysis">분석</a><a href="/ko/faq">FAQ</a><a href="/ko/about">소개</a><a href="/ko/contact">문의</a><a href="/ko/privacy">개인정보처리방침</a><a href="/privacy" hreflang="en">English</a></nav>
+  <p class="fine">Tangerine 10은 무료 브라우저 퍼즐 게임입니다. 회원가입·설치 없이 바로 할 수 있습니다. © 2026 Tangerine 10</p>
+</footer>
+</div>
 </body>
 </html>

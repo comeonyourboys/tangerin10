@@ -54,7 +54,7 @@ export const howKo = `
 <ul>
   <li><b>마우스:</b> 왼쪽 버튼을 누른 채 네모를 그리고, 놓으면 선택이 확정됩니다.</li>
   <li><b>터치:</b> 손가락 하나로 누른 채 끕니다. 게임 중에 판 위에서 시작한 터치는 화면을 스크롤하지 않고 네모를 그립니다. 판 밖에서 시작한 터치는 평소처럼 스크롤됩니다.</li>
-  <li><b>다시 시작:</b> 위쪽의 둥근 화살표 버튼을 누르면 지금 판이 바로 끝나고 결과 카드가 나옵니다. 다시 하기를 누르면 새 판이 시작됩니다.</li>
+  <li><b>다시 시작:</b> 남은 시간 아래의 새 판 버튼을 누르면 지금 판이 바로 끝나고 결과 카드가 나옵니다. 다시 하기를 누르면 새 판이 시작됩니다.</li>
 </ul>
 
 <h2>게임이 끝나면</h2>
@@ -210,7 +210,7 @@ export const privacyKo = `
 
 <h2>그 밖의 외부 서비스</h2>
 <p><b>Firebase(Google).</b> 사이트는 Firebase Hosting에서 제공되고 랭킹은 Firebase Realtime Database를 씁니다. 모든 웹 서버처럼 Firebase는 페이지를 열 때 IP 주소와 브라우저 정보를 받습니다. <a href="https://firebase.google.com/support/privacy" target="_blank" rel="noopener">Firebase 개인정보 보호</a>를 참고하세요.</p>
-<p><b>Google Fonts.</b> 글꼴을 Google 서버에서 불러오며, 이때 Google이 IP 주소를 받습니다.</p>
+<p><b>웹 글꼴.</b> 글꼴을 Google Fonts와 jsDelivr(cdn.jsdelivr.net) 서버에서 불러오며, 이때 각 서버가 IP 주소를 받습니다.</p>
 <p><b>카카오 공유 SDK.</b> 게임 화면은 카카오 공유 라이브러리를 불러옵니다. 카카오 공유 버튼을 쓰면 카카오의 개인정보처리방침이 적용됩니다.</p>
 
 <h2>아동의 개인정보</h2>

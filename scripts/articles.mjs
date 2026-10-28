@@ -37,7 +37,7 @@ function bars(title, rows, { max } = {}) {
   const top = max || Math.max(...rows.map((r) => r[1])), rh = 28, lw = 150, W = 640, H = rows.length * rh + 8;
   const body = rows.map(([label, v, txt], i) => {
     const y = i * rh + 4, w = Math.max(2, ((W - lw - 70) * v) / top);
-    return `<text x="${lw - 8}" y="${y + 18}" text-anchor="end" font-size="13" fill="#555">${label}</text><rect x="${lw}" y="${y + 5}" width="${w.toFixed(1)}" height="17" rx="4" fill="#f97316"/><text x="${(lw + w + 6).toFixed(1)}" y="${y + 18}" font-size="13" fill="#333" font-weight="700">${txt}</text>`;
+    return `<text x="${lw - 8}" y="${y + 18}" text-anchor="end" font-size="13" fill="#4A5A4E">${label}</text><rect x="${lw}" y="${y + 5}" width="${w.toFixed(1)}" height="17" rx="4" fill="#F68B1F"/><text x="${(lw + w + 6).toFixed(1)}" y="${y + 18}" font-size="13" fill="#13261B" font-weight="700">${txt}</text>`;
   }).join('');
   return `<figure class="fig"><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${title}" style="width:100%;height:auto;display:block">${body}</svg><figcaption>${title}</figcaption></figure>`;
 }
@@ -480,4 +480,12 @@ export function teaser(id, lang) {
     },
   };
   return t[id][lang];
+}
+
+// 홈·분석 목록의 큰 숫자. 수치는 teaser 와 같은 결과 파일에서 가져온다.
+export function headline(id, lang) {
+  const ko = lang === 'ko';
+  if (id === 'board') return { big: bd.moves.mean, unit: ko ? '개' : 'moves' };
+  if (id === 'bots') return { big: bot('desktop', 'pairs', 'fast').score.mean, vs: bot('desktop', 'big', 'fast').score.mean, mid: ko ? '대' : 'vs' };
+  return { big: comboK(2).length + comboK(3).length + comboK(4).length + comboK(5).length, unit: ko ? '가지' : 'combinations' };
 }

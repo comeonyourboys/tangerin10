@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#f97316">
+<meta name="theme-color" content="#EDF0E6">
 <title>Tangerine 10 Bot Strategies — Pairs vs Big Boxes in 120 Seconds</title>
 <meta name="description" content="Four automatic Tangerine 10 players, three play speeds, 5,000 games each under the real combo and multiplier rules. Which strategy scores most, and when does it stop being true?">
 <link rel="canonical" href="https://tangerin10.web.app/bot-strategies">
@@ -28,67 +28,145 @@
 <meta name="twitter:image" content="https://tangerin10.web.app/og-tangerin10.png?v=7">
 <link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/png" href="/favicon.png" sizes="512x512"><link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/gh/sun-typeface/SUIT@2/fonts/static/woff2/SUIT.css" rel="stylesheet">
 <style>
+:root{--bg:#EDF0E6;--bg-2:#E2E7D9;--paper:#F6F8F1;--ink:#13261B;--ink-2:#4A5A4E;--line:rgba(19,38,27,.16);--board:#173828;--fruit:#F68B1F;--leaf:#4E9A57;--link:#A84400;
+--display:"Bricolage Grotesque","SUIT","Apple SD Gothic Neo",sans-serif;--body:"SUIT","Apple SD Gothic Neo","Malgun Gothic",sans-serif;}
 *{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:'Outfit',-apple-system,BlinkMacSystemFont,sans-serif;color:#1a1a1a;background:#fff;line-height:1.7;-webkit-text-size-adjust:100%;}
-a{color:#f97316;}
-.wrap{max-width:780px;margin:0 auto;padding:0 20px;}
-.topbar{border-bottom:1px solid #f0f0f0;position:sticky;top:0;background:rgba(255,255,255,.95);backdrop-filter:blur(8px);z-index:20;}
-.topbar .wrap{display:flex;align-items:center;justify-content:space-between;height:56px;gap:14px;}
-.logo{display:flex;align-items:baseline;gap:5px;text-decoration:none;white-space:nowrap;}
-.logo-t{font-size:16px;font-weight:600;color:#999;}
-.logo-10{font-size:22px;font-weight:900;color:#f97316;letter-spacing:-1px;}
-.nav{display:flex;gap:2px;flex-wrap:wrap;justify-content:flex-end;}
-.nav a{font-size:13px;font-weight:600;color:#777;text-decoration:none;padding:6px 9px;border-radius:8px;white-space:nowrap;}
-.nav a:hover,.nav a.on{background:#fff4ea;color:#ea580c;}
-.crumb{font-size:12px;color:#aaa;margin:16px 0 4px;}
-.crumb a{color:#f97316;text-decoration:none;}
-h1{font-size:clamp(25px,5vw,32px);font-weight:900;letter-spacing:-.6px;margin:14px 0 8px;line-height:1.25;}
-.lead{font-size:16px;color:#666;margin-bottom:26px;line-height:1.75;}
-h2{font-size:20px;font-weight:800;margin:34px 0 12px;letter-spacing:-.3px;}
-h3{font-size:16px;font-weight:700;margin:22px 0 8px;}
-p{font-size:16px;color:#333;margin-bottom:14px;}
-ul,ol{margin:0 0 16px 20px;}
-li{font-size:15.5px;color:#333;margin-bottom:8px;line-height:1.7;}
-.box{background:#fff8f2;border:1px solid #ffe4cc;border-radius:14px;padding:18px 20px;margin:18px 0;}
+html{-webkit-text-size-adjust:100%;}
+body{background:var(--bg);color:var(--ink);font:500 16px/1.65 var(--body);word-break:keep-all;overflow-wrap:break-word;}
+a{color:inherit;}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(--fruit);outline-offset:3px;border-radius:6px;}
+.wrap{max-width:1440px;margin:0 auto;padding:0 48px;}
+.top{display:flex;align-items:center;gap:40px;height:68px;border-bottom:1px solid var(--line);}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font:800 21px/1 var(--display);letter-spacing:-.02em;white-space:nowrap;color:var(--ink);}
+.brand i{width:22px;height:22px;border-radius:50%;background:var(--fruit);position:relative;display:block;flex:none;}
+.brand i::after{content:"";position:absolute;width:9px;height:5px;border-radius:50%;background:var(--leaf);top:-2px;right:-1px;transform:rotate(-30deg);}
+.brand b{color:var(--fruit);font-weight:800;}
+.nav{display:flex;gap:28px;font-size:16px;font-weight:600;}
+.nav a{text-decoration:none;color:var(--ink-2);white-space:nowrap;}
+.nav a:hover,.nav a[aria-current]{color:var(--ink);}
+.nav a[aria-current]{box-shadow:inset 0 -2px 0 var(--fruit);}
+.lang{margin-left:auto;font-weight:700;font-size:15px;text-decoration:none;border:1.5px solid var(--ink);padding:6px 14px;border-radius:999px;white-space:nowrap;color:var(--ink);}
+.lang:hover{background:var(--ink);color:var(--bg);}
+.foot{border-top:1px solid var(--line);margin-top:56px;padding:32px 0 48px;}
+.sib{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 0;}
+.sib h2{font:800 16px/1.4 var(--body);margin:0 24px 0 0;letter-spacing:0;border:0;padding:0;}
+.sib a{text-decoration:none;font-weight:600;padding:2px 0;margin-right:22px;border-bottom:1.5px solid transparent;color:var(--ink);}
+.sib a:hover{border-color:var(--ink);}
+.sib a.me{color:var(--link);font-weight:800;}
+.fnav{display:flex;flex-wrap:wrap;gap:6px 22px;margin-top:22px;color:var(--ink-2);font-size:15px;}
+.fnav a{text-decoration:none;}
+.fnav a:hover{color:var(--ink);text-decoration:underline;}
+.fine{color:var(--ink-2);font-size:15px;margin:14px 0 0;}
+.studies{display:grid;}
+.study{display:block;text-decoration:none;}
+.big{font:800 76px/1 var(--display);color:var(--fruit);letter-spacing:-.03em;font-variant-numeric:tabular-nums;}
+.big small{font-size:22px;letter-spacing:0;margin-left:6px;font-weight:700;}
+.vs{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;}
+.vs span{font:700 18px/1 var(--display);}
+.vs .big.dim{font-size:54px;}
+.study h3{font:800 20px/1.4 var(--body);margin:18px 0 8px;max-width:22em;}
+.study p{margin:0;font-size:16px;max-width:32em;}
+.study:hover h3{text-decoration:underline;text-underline-offset:4px;}
+@media (max-width:600px){
+  .wrap{padding:0 16px;}
+  .top{height:auto;flex-wrap:wrap;gap:10px 16px;padding:14px 0;}
+  .nav{order:3;width:100%;gap:18px;overflow-x:auto;font-size:15px;padding-bottom:2px;}
+  .big{font-size:60px;}
+  .vs .big.dim{font-size:42px;}
+}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important;}}
+
+.doc{display:grid;grid-template-columns:minmax(0,1fr) 352px;gap:44px;padding-top:36px;align-items:start;}
+.doc-main{max-width:760px;min-width:0;}
+.crumb{font-size:14px;color:var(--ink-2);margin:0 0 10px;font-weight:600;}
+.crumb a{color:var(--link);text-decoration:none;}
+.crumb a:hover{text-decoration:underline;}
+.doc-main h1{font:800 clamp(30px,4vw,44px)/1.15 var(--display);letter-spacing:-.025em;margin:4px 0 14px;}
+.lead{font-size:19px;line-height:1.65;color:var(--ink-2);margin-bottom:30px;font-weight:600;}
+.doc-main h2{font:800 24px/1.3 var(--display);letter-spacing:-.015em;margin:44px 0 14px;padding-top:16px;border-top:2px solid var(--ink);}
+.doc-main h3{font:800 18px/1.4 var(--body);margin:26px 0 8px;}
+.doc-main p{font-size:17px;line-height:1.75;margin-bottom:16px;}
+.doc-main a{color:var(--link);text-underline-offset:3px;}
+.doc-main ul,.doc-main ol{margin:0 0 18px 22px;}
+.doc-main li{font-size:17px;line-height:1.7;margin-bottom:8px;}
+.doc-main li::marker{color:var(--fruit);}
+.box{background:var(--paper);border-left:4px solid var(--fruit);border-radius:0 12px 12px 0;padding:18px 22px;margin:20px 0;}
 .box p:last-child,.box ul:last-child,.box li:last-child{margin-bottom:0;}
-.box strong{color:#ea580c;}
-table{width:100%;border-collapse:collapse;margin:16px 0;font-size:15px;background:#fff;border-radius:12px;overflow:hidden;border:1px solid #f0f0f0;}
-th,td{padding:11px 14px;text-align:left;border-bottom:1px solid #f5f5f5;}
-th{background:#fafafa;font-weight:700;font-size:13.5px;color:#777;}
-tr:last-child th,tr:last-child td{border-bottom:none;}
-td b{color:#ea580c;}
+.box strong{color:var(--link);}
+table{width:100%;border-collapse:collapse;margin:18px 0;font-size:16px;border-top:2px solid var(--ink);font-variant-numeric:tabular-nums;}
+th,td{padding:11px 14px 11px 0;text-align:left;border-bottom:1px solid var(--line);vertical-align:top;}
+th{font-weight:700;font-size:14px;color:var(--ink-2);}
+tbody th{color:var(--ink);font-size:15px;}
+td b{color:var(--link);}
 .tbl-wrap{overflow-x:auto;}
-.cta{display:inline-block;background:#f97316;color:#fff;font-weight:800;font-size:16px;padding:13px 26px;border-radius:999px;text-decoration:none;margin:10px 0 6px;}
-.cta:hover{background:#ea580c;}
-.faq-q{font-weight:800;font-size:16.5px;margin:24px 0 6px;}
-.ad-wrap{margin:34px 0 0;}
-.disclose{font-size:11px;color:#c4c4c4;text-align:center;margin-top:6px;}
-footer{border-top:1px solid #f0f0f0;margin-top:36px;padding:24px 0 46px;}
-.ftr-nav{display:flex;flex-wrap:wrap;justify-content:center;gap:2px 0;}
-.ftr-nav a{font-size:12.5px;color:#888;text-decoration:none;padding:4px 9px;}
-.ftr-note{font-size:11.5px;color:#bbb;text-align:center;margin-top:10px;line-height:1.8;}
-@media(max-width:600px){.nav a{font-size:12px;padding:5px 7px;}p,li{font-size:15px;}}
-.fig{margin:20px 0;padding:14px 14px 10px;border:1px solid #f0f0f0;border-radius:14px;background:#fffdfb;}
-.fig figcaption{font-size:13px;color:#888;margin-top:8px;text-align:center;}
-code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.88em;background:#f6f6f6;padding:1px 5px;border-radius:5px;}
-.updated{font-size:13px;color:#aaa;margin:-2px 0 18px;}
-.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin:18px 0;}
-.card{display:block;border:1px solid #ffe4cc;background:#fff8f2;border-radius:14px;padding:16px 18px;text-decoration:none;color:#444;}
-.card b{display:block;color:#ea580c;font-size:16px;margin-bottom:6px;}
-.card span{display:block;font-size:14.5px;line-height:1.65;}
-.r-sum{background:#fff8f2;border:1px solid #ffe4cc;border-radius:12px;padding:12px 16px;font-size:14.5px;color:#7a4a1f;}
-.r-empty{color:#999;}
+.cta{display:inline-block;background:var(--fruit);color:var(--ink)!important;font-weight:800;font-size:17px;padding:13px 28px;border-radius:999px;text-decoration:none;margin:10px 0 6px;}
+.cta:hover{background:#FFA348;}
+.faq-q{font:800 19px/1.45 var(--body)!important;margin:30px 0 6px!important;}
+.ad-wrap{margin:40px 0 0;padding:0;}
+.fig{margin:22px 0;padding:16px 16px 12px;border:1px solid var(--line);border-radius:14px;background:var(--paper);}
+.fig figcaption{font-size:14px;color:var(--ink-2);margin-top:8px;text-align:center;}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.88em;background:var(--bg-2);padding:1px 5px;border-radius:5px;}
+.updated{font-size:14px!important;color:var(--ink-2);margin:-4px 0 22px!important;}
+.doc-main .studies{border-top:2px solid var(--ink);margin:10px 0 8px;}
+.doc-main .study{display:grid;grid-template-columns:300px minmax(0,1fr);gap:4px 28px;padding:24px 0;border-bottom:1px solid var(--line);color:var(--ink);text-decoration:none;}
+.doc-main .study .big{font-size:52px;}
+.doc-main .study .vs .big{font-size:44px;}
+.doc-main .study .vs .big.dim{font-size:32px;color:var(--ink);}
+.doc-main .study .vs{flex-wrap:nowrap;}
+.doc-main .study .vs{gap:8px;}
+.doc-main .study .vs span{color:var(--ink-2);font-size:15px;}
+.doc-main .study .big small{color:var(--ink);font-size:18px;}
+.doc-main .study h3{grid-column:2;grid-row:1;margin:0 0 6px;}
+.doc-main .study p{grid-column:2;color:var(--ink-2);}
+.doc-main .study > :first-child{grid-row:1/3;color:var(--fruit);}
+.r-sum{background:var(--paper);border-left:4px solid var(--fruit);border-radius:0 12px 12px 0;padding:14px 18px;font-size:16px!important;font-weight:600;}
+.r-empty{color:var(--ink-2);}
+.doc-side{position:sticky;top:24px;display:grid;gap:22px;}
+.play-card{background:var(--board);color:#EAF1EA;border-radius:22px;padding:26px 26px 28px;}
+.play-card b{display:block;font:800 26px/1.2 var(--display);letter-spacing:-.02em;}
+.play-card p{color:#C3D3C6;margin:10px 0 18px;font-size:16px;}
+.play-card a{display:inline-block;background:var(--fruit);color:var(--ink);text-decoration:none;font-weight:800;padding:11px 22px;border-radius:999px;}
+.play-card a:hover{background:#FFA348;}
+.play-card a:focus-visible{outline-color:#FFD58F;}
+.toc{border-top:2px solid var(--ink);padding-top:14px;}
+.toc h2{font:800 18px/1.3 var(--body);margin:0 0 6px;}
+.toc a{display:block;padding:9px 0;border-bottom:1px solid var(--line);text-decoration:none;font-weight:600;color:var(--ink-2);}
+.toc a:last-child{border-bottom:0;}
+.toc a:hover{color:var(--ink);}
+.toc a[aria-current]{color:var(--link);font-weight:800;}
+@media (max-width:1100px){
+  .doc{grid-template-columns:minmax(0,1fr);gap:48px;}
+  .doc-main{max-width:none;}
+  .doc-side{position:static;grid-template-columns:1fr 1fr;align-items:start;}
+}
+@media (max-width:600px){
+  .doc{padding-top:22px;}
+  .lead{font-size:17px;}
+  .doc-main p,.doc-main li{font-size:16px;}
+  .doc-main h2{font-size:22px;margin-top:36px;}
+  th,td{padding:9px 10px 9px 0;font-size:15px;}
+  .tbl-wrap table:has(th:nth-child(5)){min-width:600px;}
+  .doc-main .study{grid-template-columns:1fr;}
+  .doc-main .study h3,.doc-main .study p{grid-column:1;grid-row:auto;}
+  .doc-main .study > :first-child{grid-row:auto;}
+  .doc-side{grid-template-columns:1fr;}
+}
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Pairs or big boxes? Four bots, 120 seconds, real scoring rules","description":"Four automatic Tangerine 10 players, three play speeds, 5,000 games each under the real combo and multiplier rules. Which strategy scores most, and when does it stop being true?","inLanguage":"en","datePublished":"2026-10-20","mainEntityOfPage":"https://tangerin10.web.app/bot-strategies","author":{"@type":"Organization","name":"Tangerine 10","url":"https://tangerin10.web.app"},"publisher":{"@type":"Organization","name":"Tangerine 10","url":"https://tangerin10.web.app"}}</script>
 </head>
 <body>
-<header class="topbar"><div class="wrap">
-  <a class="logo" href="/"><span class="logo-t">🍊 Tangerine</span><span class="logo-10">10</span></a>
-  <nav class="nav"><a href="/">Play</a><a href="/how-to-play">How to Play</a><a href="/strategy">Strategy</a><a href="/analysis">Analysis</a><a href="/faq">FAQ</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/ko/bot-strategies" hreflang="ko">한국어</a></nav>
-</div></header>
-<main class="wrap">
+<div class="wrap">
+<header class="top site-nav">
+  <a class="brand" href="/"><i aria-hidden="true"></i><span>Tangerine <b>10</b></span></a>
+  <nav class="nav" aria-label="Site menu"><a href="/how-to-play">How to Play</a><a href="/strategy">Strategy</a><a href="/analysis">Analysis</a><a href="/faq">FAQ</a><a href="/about">About</a></nav>
+  <a class="lang" href="/ko/bot-strategies" hreflang="ko">한국어</a>
+</header>
+<div class="doc">
+<main class="doc-main">
 
 <nav class="crumb"><a href="/">Home</a> › <a href="/analysis">Analysis</a> › Bot strategies</nav>
 <h1>Pairs or big boxes? Four bots, 120 seconds, real scoring rules</h1>
@@ -119,7 +197,7 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.88em;bac
 <div class="tbl-wrap"><table><thead><tr><th>Strategy</th><th>Mean score</th><th>10th–90th pct</th><th>Tangerines cleared</th><th>Clears</th><th>Longest combo</th><th>Ran out of moves</th></tr></thead><tbody><tr><td>Pairs first</td><td><b>304.27</b></td><td>234–376</td><td>113.32</td><td>51.41</td><td>35.41</td><td>87.78%</td></tr><tr><td>Highest number first</td><td><b>210.08</b></td><td>160–267</td><td>112.27</td><td>50.61</td><td>18.83</td><td>90.78%</td></tr><tr><td>Random legal move</td><td><b>144.44</b></td><td>120–169</td><td>103.53</td><td>43.49</td><td>9.09</td><td>99.76%</td></tr><tr><td>Biggest box first</td><td><b>152.55</b></td><td>120–191</td><td>97.97</td><td>38.64</td><td>15.14</td><td>99.98%</td></tr></tbody></table></div>
 <h3>Slow: 3 s per move</h3>
 <div class="tbl-wrap"><table><thead><tr><th>Strategy</th><th>Mean score</th><th>10th–90th pct</th><th>Tangerines cleared</th><th>Clears</th><th>Longest combo</th><th>Ran out of moves</th></tr></thead><tbody><tr><td>Pairs first</td><td><b>83.5</b></td><td>80–88</td><td>83.5</td><td>39.89</td><td>1</td><td>4.84%</td></tr><tr><td>Highest number first</td><td><b>85.66</b></td><td>82–89</td><td>85.66</td><td>39.87</td><td>1</td><td>6.24%</td></tr><tr><td>Random legal move</td><td><b>93.91</b></td><td>87–100</td><td>93.91</td><td>39.21</td><td>1</td><td>28.24%</td></tr><tr><td>Biggest box first</td><td><b>95.42</b></td><td>84–105</td><td>95.42</td><td>37.42</td><td>1</td><td>65.58%</td></tr></tbody></table></div>
-<figure class="fig"><svg viewBox="0 0 640 344" role="img" aria-label="Mean 120-second score by strategy and speed (desktop board)" style="width:100%;height:auto;display:block"><text x="142" y="22" text-anchor="end" font-size="13" fill="#555">Fast · Pairs first</text><rect x="150" y="9" width="420.0" height="17" rx="4" fill="#f97316"/><text x="576.0" y="22" font-size="13" fill="#333" font-weight="700">473.31</text><text x="142" y="50" text-anchor="end" font-size="13" fill="#555">Fast · Highest number first</text><rect x="150" y="37" width="411.7" height="17" rx="4" fill="#f97316"/><text x="567.7" y="50" font-size="13" fill="#333" font-weight="700">463.93</text><text x="142" y="78" text-anchor="end" font-size="13" fill="#555">Fast · Random legal move</text><rect x="150" y="65" width="351.2" height="17" rx="4" fill="#f97316"/><text x="507.2" y="78" font-size="13" fill="#333" font-weight="700">395.74</text><text x="142" y="106" text-anchor="end" font-size="13" fill="#555">Fast · Biggest box first</text><rect x="150" y="93" width="296.9" height="17" rx="4" fill="#f97316"/><text x="452.9" y="106" font-size="13" fill="#333" font-weight="700">334.54</text><text x="142" y="134" text-anchor="end" font-size="13" fill="#555">Size · Pairs first</text><rect x="150" y="121" width="270.0" height="17" rx="4" fill="#f97316"/><text x="426.0" y="134" font-size="13" fill="#333" font-weight="700">304.27</text><text x="142" y="162" text-anchor="end" font-size="13" fill="#555">Size · Highest number first</text><rect x="150" y="149" width="186.4" height="17" rx="4" fill="#f97316"/><text x="342.4" y="162" font-size="13" fill="#333" font-weight="700">210.08</text><text x="142" y="190" text-anchor="end" font-size="13" fill="#555">Size · Random legal move</text><rect x="150" y="177" width="128.2" height="17" rx="4" fill="#f97316"/><text x="284.2" y="190" font-size="13" fill="#333" font-weight="700">144.44</text><text x="142" y="218" text-anchor="end" font-size="13" fill="#555">Size · Biggest box first</text><rect x="150" y="205" width="135.4" height="17" rx="4" fill="#f97316"/><text x="291.4" y="218" font-size="13" fill="#333" font-weight="700">152.55</text><text x="142" y="246" text-anchor="end" font-size="13" fill="#555">Slow · Pairs first</text><rect x="150" y="233" width="74.1" height="17" rx="4" fill="#f97316"/><text x="230.1" y="246" font-size="13" fill="#333" font-weight="700">83.5</text><text x="142" y="274" text-anchor="end" font-size="13" fill="#555">Slow · Highest number first</text><rect x="150" y="261" width="76.0" height="17" rx="4" fill="#f97316"/><text x="232.0" y="274" font-size="13" fill="#333" font-weight="700">85.66</text><text x="142" y="302" text-anchor="end" font-size="13" fill="#555">Slow · Random legal move</text><rect x="150" y="289" width="83.3" height="17" rx="4" fill="#f97316"/><text x="239.3" y="302" font-size="13" fill="#333" font-weight="700">93.91</text><text x="142" y="330" text-anchor="end" font-size="13" fill="#555">Slow · Biggest box first</text><rect x="150" y="317" width="84.7" height="17" rx="4" fill="#f97316"/><text x="240.7" y="330" font-size="13" fill="#333" font-weight="700">95.42</text></svg><figcaption>Mean 120-second score by strategy and speed (desktop board)</figcaption></figure>
+<figure class="fig"><svg viewBox="0 0 640 344" role="img" aria-label="Mean 120-second score by strategy and speed (desktop board)" style="width:100%;height:auto;display:block"><text x="142" y="22" text-anchor="end" font-size="13" fill="#4A5A4E">Fast · Pairs first</text><rect x="150" y="9" width="420.0" height="17" rx="4" fill="#F68B1F"/><text x="576.0" y="22" font-size="13" fill="#13261B" font-weight="700">473.31</text><text x="142" y="50" text-anchor="end" font-size="13" fill="#4A5A4E">Fast · Highest number first</text><rect x="150" y="37" width="411.7" height="17" rx="4" fill="#F68B1F"/><text x="567.7" y="50" font-size="13" fill="#13261B" font-weight="700">463.93</text><text x="142" y="78" text-anchor="end" font-size="13" fill="#4A5A4E">Fast · Random legal move</text><rect x="150" y="65" width="351.2" height="17" rx="4" fill="#F68B1F"/><text x="507.2" y="78" font-size="13" fill="#13261B" font-weight="700">395.74</text><text x="142" y="106" text-anchor="end" font-size="13" fill="#4A5A4E">Fast · Biggest box first</text><rect x="150" y="93" width="296.9" height="17" rx="4" fill="#F68B1F"/><text x="452.9" y="106" font-size="13" fill="#13261B" font-weight="700">334.54</text><text x="142" y="134" text-anchor="end" font-size="13" fill="#4A5A4E">Size · Pairs first</text><rect x="150" y="121" width="270.0" height="17" rx="4" fill="#F68B1F"/><text x="426.0" y="134" font-size="13" fill="#13261B" font-weight="700">304.27</text><text x="142" y="162" text-anchor="end" font-size="13" fill="#4A5A4E">Size · Highest number first</text><rect x="150" y="149" width="186.4" height="17" rx="4" fill="#F68B1F"/><text x="342.4" y="162" font-size="13" fill="#13261B" font-weight="700">210.08</text><text x="142" y="190" text-anchor="end" font-size="13" fill="#4A5A4E">Size · Random legal move</text><rect x="150" y="177" width="128.2" height="17" rx="4" fill="#F68B1F"/><text x="284.2" y="190" font-size="13" fill="#13261B" font-weight="700">144.44</text><text x="142" y="218" text-anchor="end" font-size="13" fill="#4A5A4E">Size · Biggest box first</text><rect x="150" y="205" width="135.4" height="17" rx="4" fill="#F68B1F"/><text x="291.4" y="218" font-size="13" fill="#13261B" font-weight="700">152.55</text><text x="142" y="246" text-anchor="end" font-size="13" fill="#4A5A4E">Slow · Pairs first</text><rect x="150" y="233" width="74.1" height="17" rx="4" fill="#F68B1F"/><text x="230.1" y="246" font-size="13" fill="#13261B" font-weight="700">83.5</text><text x="142" y="274" text-anchor="end" font-size="13" fill="#4A5A4E">Slow · Highest number first</text><rect x="150" y="261" width="76.0" height="17" rx="4" fill="#F68B1F"/><text x="232.0" y="274" font-size="13" fill="#13261B" font-weight="700">85.66</text><text x="142" y="302" text-anchor="end" font-size="13" fill="#4A5A4E">Slow · Random legal move</text><rect x="150" y="289" width="83.3" height="17" rx="4" fill="#F68B1F"/><text x="239.3" y="302" font-size="13" fill="#13261B" font-weight="700">93.91</text><text x="142" y="330" text-anchor="end" font-size="13" fill="#4A5A4E">Slow · Biggest box first</text><rect x="150" y="317" width="84.7" height="17" rx="4" fill="#F68B1F"/><text x="240.7" y="330" font-size="13" fill="#13261B" font-weight="700">95.42</text></svg><figcaption>Mean 120-second score by strategy and speed (desktop board)</figcaption></figure>
 
 <h2>Finding 1: with a fast hand, pairs win by a wide margin</h2>
 <p>At 1.5 seconds a move, the pairs-first bot averaged <b>473.31</b> points. The biggest-box bot averaged 334.54. That is a gap of 138.8 points, and it is not caused by the combo, because at this speed no bot ever breaks its combo. The difference is in how many tangerines each bot manages to clear before the board runs dry: 114.46 for pairs-first against 97.97 for biggest-first.</p>
@@ -153,11 +231,21 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.88em;bac
 <h2>Reproducing these numbers</h2>
 <p>Everything on this page comes from one script, <code>scripts/simulate.mjs</code>, run with Node.js. It copies the game's <code>makeBoard</code> line exactly — each cell gets <code>Math.floor(random × 9) + 1</code> — but swaps the browser's random number generator for a seeded one (seed 20261020) so the same run produces the same numbers every time. The script writes its results to a JSON file, and this page is built from that file, so no figure here was typed by hand. Change the seed and the decimals will move a little; the conclusions will not.</p>
 <p><a class="cta" href="/">Try the pairs-first rule yourself</a></p>
+<div class="ad-wrap" style="display:flex;justify-content:center"><ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-vwzzWFnt83j2lDmM" data-ad-width="320" data-ad-height="50"></ins><script async src="https://t1.kakaocdn.net/kas/static/ba.min.js"></script></div>
 </main>
-<div class="wrap ad-wrap" style="display:flex;justify-content:center"><ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-vwzzWFnt83j2lDmM" data-ad-width="320" data-ad-height="50"></ins><script async src="https://t1.kakaocdn.net/kas/static/ba.min.js"></script></div>
-<footer><div class="wrap">
-  <div class="ftr-nav"><a href="/">Play</a><a href="/how-to-play">How to Play</a><a href="/strategy">Strategy</a><a href="/analysis">Analysis</a><a href="/faq">FAQ</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/privacy">Privacy Policy</a><a href="/ko/bot-strategies" hreflang="ko">한국어</a></div>
-  <p class="ftr-note">Tangerine 10 is a free browser puzzle game. No sign-up, no download. © 2026 Tangerine 10</p>
-</div></footer>
+<aside class="doc-side">
+  <div class="play-card"><b>Tangerine 10</b><p>Two minutes. Drag a box over tangerines that add up to exactly 10.</p><a href="/">Play Tangerine 10</a></div>
+  <nav class="toc" aria-label="On this site"><h2>On this site</h2><a href="/how-to-play">How to Play</a><a href="/strategy">Strategy</a><a href="/analysis">Analysis</a><a href="/board-statistics">What 100,000 Tangerine 10 boards look like</a><a href="/bot-strategies" aria-current="page">Pairs or big boxes? Four bots, 120 seconds, real scoring rules</a><a href="/make-ten-combinations">Every way to make ten, and how often each one shows up</a><a href="/faq">FAQ</a><a href="/records">Records</a></nav>
+</aside>
+</div>
+<footer class="foot site-ftr">
+  <nav class="sib" aria-label="Other tools by comeonyourboyz">
+    <h2>Other tools by comeonyourboyz</h2>
+    <a href="https://todays-fortune-app.vercel.app">Today's Fortune</a><a href="https://dreamdict.web.app">Dream Dictionary</a><a href="https://idiomdict.web.app">Korean Idiom Dictionary</a><a href="https://plantdict.web.app">Houseplant Dictionary</a><a href="https://salaryrank.web.app">Salary Rank</a><a href="https://giftwheel.web.app">Gift Wheel</a><a href="https://mykoreanname.web.app">My Korean Name</a><a class="me" href="/">Tangerine 10</a>
+  </nav>
+  <nav class="fnav" aria-label="Footer"><a href="/">Play</a><a href="/how-to-play">How to Play</a><a href="/strategy">Strategy</a><a href="/analysis">Analysis</a><a href="/faq">FAQ</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/privacy">Privacy Policy</a><a href="/ko/bot-strategies" hreflang="ko">한국어</a></nav>
+  <p class="fine">Tangerine 10 is a free browser puzzle game. No sign-up, no download. © 2026 Tangerine 10</p>
+</footer>
+</div>
 </body>
 </html>
