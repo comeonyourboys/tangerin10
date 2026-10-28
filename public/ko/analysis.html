@@ -33,13 +33,14 @@
 <link href="https://cdn.jsdelivr.net/gh/sun-typeface/SUIT@2/fonts/static/woff2/SUIT.css" rel="stylesheet">
 <style>
 :root{--bg:#EDF0E6;--bg-2:#E2E7D9;--paper:#F6F8F1;--ink:#13261B;--ink-2:#4A5A4E;--line:rgba(19,38,27,.16);--board:#173828;--fruit:#F68B1F;--leaf:#4E9A57;--link:#A84400;
---display:"Bricolage Grotesque","SUIT","Apple SD Gothic Neo",sans-serif;--body:"SUIT","Apple SD Gothic Neo","Malgun Gothic",sans-serif;}
+--display:"Bricolage Grotesque","SUIT","Apple SD Gothic Neo",sans-serif;--body:"SUIT","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+--gutter:48px;--side:352px;--col-gap:44px;--top-gap:36px;--foot-gap:56px;--sec-gap:64px;}
 *{margin:0;padding:0;box-sizing:border-box;}
 html{-webkit-text-size-adjust:100%;}
 body{background:var(--bg);color:var(--ink);font:500 16px/1.65 var(--body);word-break:keep-all;overflow-wrap:break-word;}
 a{color:inherit;}
 a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(--fruit);outline-offset:3px;border-radius:6px;}
-.wrap{max-width:1440px;margin:0 auto;padding:0 48px;}
+.wrap{max-width:1440px;margin:0 auto;padding:0 var(--gutter);}
 .top{display:flex;align-items:center;gap:40px;height:68px;border-bottom:1px solid var(--line);}
 .brand{display:flex;align-items:center;gap:10px;text-decoration:none;font:800 21px/1 var(--display);letter-spacing:-.02em;white-space:nowrap;color:var(--ink);}
 .brand i{width:22px;height:22px;border-radius:50%;background:var(--fruit);position:relative;display:block;flex:none;}
@@ -51,9 +52,9 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(-
 .nav a[aria-current]{box-shadow:inset 0 -2px 0 var(--fruit);}
 .lang{margin-left:auto;font-weight:700;font-size:15px;text-decoration:none;border:1.5px solid var(--ink);padding:6px 14px;border-radius:999px;white-space:nowrap;color:var(--ink);}
 .lang:hover{background:var(--ink);color:var(--bg);}
-.foot{border-top:1px solid var(--line);margin-top:56px;padding:32px 0 48px;}
+.foot{border-top:1px solid var(--line);margin-top:var(--foot-gap);padding:32px 0 48px;}
 .sib{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 0;}
-.sib h2{font:800 16px/1.4 var(--body);margin:0 24px 0 0;letter-spacing:0;border:0;padding:0;}
+.sib h2{font:800 16px/1.4 var(--body);margin:0 0 4px;flex:0 0 100%;letter-spacing:0;border:0;padding:0;}
 .sib a{text-decoration:none;font-weight:600;padding:2px 0;margin-right:22px;border-bottom:1.5px solid transparent;color:var(--ink);}
 .sib a:hover{border-color:var(--ink);}
 .sib a.me{color:var(--link);font-weight:800;}
@@ -61,6 +62,11 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(-
 .fnav a{text-decoration:none;}
 .fnav a:hover{color:var(--ink);text-decoration:underline;}
 .fine{color:var(--ink-2);font-size:15px;margin:14px 0 0;}
+/* 광고 자리: 작은 "광고" 표시 + 단위 크기만큼 자리 확보, 못 채우면 접힘 */
+.ad-slot{display:flex;flex-direction:column;align-items:center;gap:6px;min-height:72px;margin:32px 0 40px;min-width:0;}
+.ad-label{font:600 12px/16px var(--body);color:var(--ink-2);letter-spacing:.02em;}
+.ad-slot ins,.ad-slot iframe{max-width:100%!important;}
+.ad-slot:not(:has(ins:not(.ad-failed))){display:none;}
 .studies{display:grid;}
 .study{display:block;text-decoration:none;}
 .big{font:800 76px/1 var(--display);color:var(--fruit);letter-spacing:-.03em;font-variant-numeric:tabular-nums;}
@@ -72,7 +78,7 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(-
 .study p{margin:0;font-size:16px;max-width:32em;}
 .study:hover h3{text-decoration:underline;text-underline-offset:4px;}
 @media (max-width:600px){
-  .wrap{padding:0 16px;}
+  :root{--gutter:16px;--top-gap:22px;--sec-gap:48px;}
   .top{height:auto;flex-wrap:wrap;gap:10px 16px;padding:14px 0;}
   .nav{order:3;width:100%;gap:18px;overflow-x:auto;font-size:15px;padding-bottom:2px;}
   .big{font-size:60px;}
@@ -80,7 +86,7 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(-
 }
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important;}}
 
-.doc{display:grid;grid-template-columns:minmax(0,1fr) 352px;gap:44px;padding-top:36px;align-items:start;}
+.doc{display:grid;grid-template-columns:minmax(0,1fr) var(--side);gap:var(--col-gap);padding-top:var(--top-gap);align-items:start;}
 .doc-main{max-width:760px;min-width:0;}
 .crumb{font-size:14px;color:var(--ink-2);margin:0 0 10px;font-weight:600;}
 .crumb a{color:var(--link);text-decoration:none;}
@@ -106,7 +112,6 @@ td b{color:var(--link);}
 .cta{display:inline-block;background:var(--fruit);color:var(--ink)!important;font-weight:800;font-size:17px;padding:13px 28px;border-radius:999px;text-decoration:none;margin:10px 0 6px;}
 .cta:hover{background:#FFA348;}
 .faq-q{font:800 19px/1.45 var(--body)!important;margin:30px 0 6px!important;}
-.ad-wrap{margin:40px 0 0;padding:0;}
 .fig{margin:22px 0;padding:16px 16px 12px;border:1px solid var(--line);border-radius:14px;background:var(--paper);}
 .fig figcaption{font-size:14px;color:var(--ink-2);margin-top:8px;text-align:center;}
 code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.88em;background:var(--bg-2);padding:1px 5px;border-radius:5px;}
@@ -144,7 +149,6 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.88em;bac
   .doc-side{position:static;grid-template-columns:1fr 1fr;align-items:start;}
 }
 @media (max-width:600px){
-  .doc{padding-top:22px;}
   .lead{font-size:17px;}
   .doc-main p,.doc-main li{font-size:16px;}
   .doc-main h2{font-size:22px;margin-top:36px;}
@@ -171,6 +175,7 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.88em;bac
 <nav class="crumb"><a href="/ko/">홈</a> › 분석</nav>
 <h1>숫자로 보는 귤게임</h1>
 <p class="lead">게임 코드로 직접 돌린 연구 세 편입니다. 무작위 판에 무엇이 들어 있는지, 어떤 방식이 점수가 가장 높은지, 10을 만드는 방법이 몇 가지인지. 모두 짐작이 아니라 시뮬레이션 스크립트에서 나온 결과입니다.</p>
+<div class="ad-slot ad-bottom"><span class="ad-label">광고</span><ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-vwzzWFnt83j2lDmM" data-ad-width="320" data-ad-height="50" data-ad-onfail="tgAdFail"></ins></div><script>window.tgAdFail=function(el){if(el&&el.classList)el.classList.add('ad-failed');};function tgAdBlocked(){document.querySelectorAll('ins.kakao_ad_area').forEach(function(el){el.classList.add('ad-failed');});}</script><script async src="https://t1.kakaocdn.net/kas/static/ba.min.js" onerror="tgAdBlocked()"></script>
 <div class="studies">
     <a class="study" href="/ko/board-statistics"><div class="big">54.65<small>개</small></div><h3>귤게임 새 판 10만 개를 만들어 보니</h3><p>새 PC 판에는 평균 54.65개의 묶음이 있고 그중 34.77개가 붙어 있는 짝입니다. 9의 64.94%는 옆에 1 없이 시작합니다.</p></a>
     <a class="study" href="/ko/bot-strategies"><div class="vs"><div class="big">473.31</div><span>대</span><div class="big dim">334.54</div></div><h3>짝이 나을까, 큰 네모가 나을까 — 봇 네 개로 120초 점수 비교</h3><p>손이 빠르면 짝 먼저가 평균 473.31점, 큰 네모 먼저가 334.54점. 한 번에 3초가 걸리면 순서가 뒤집혀 95.42점 대 83.5점.</p></a>
@@ -180,7 +185,6 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.88em;bac
 <p><code>scripts/simulate.mjs</code> 스크립트는 판을 채우는 게임 코드 한 줄(칸마다 1~9 무작위 정수)을 그대로 옮기고, 결과를 똑같이 다시 만들 수 있게 난수 시드를 고정합니다. 판 크기마다 100,000개의 판을 만들었고, 자동 플레이 봇 네 개를 속도 가정 세 가지로 각각 5,000판씩 실제 120초 타이머·2초 콤보·배율 표대로 돌렸습니다. 각 페이지는 스크립트의 결과 파일에서 숫자를 바로 읽어 만듭니다.</p>
 <p>규칙은 <a href="/ko/how-to-play">게임 방법</a>에, 실전 습관은 <a href="/ko/strategy">공략</a>에 있습니다.</p>
 
-<div class="ad-wrap" style="display:flex;justify-content:center"><ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-vwzzWFnt83j2lDmM" data-ad-width="320" data-ad-height="50"></ins><script async src="https://t1.kakaocdn.net/kas/static/ba.min.js"></script></div>
 </main>
 <aside class="doc-side">
   <div class="play-card"><b>Tangerine 10</b><p>합이 정확히 10이 되는 귤들을 네모로 묶으면 터집니다. 시간은 2분.</p><a href="/ko/">귤게임 하러 가기</a></div>

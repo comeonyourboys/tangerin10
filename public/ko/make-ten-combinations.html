@@ -33,13 +33,14 @@
 <link href="https://cdn.jsdelivr.net/gh/sun-typeface/SUIT@2/fonts/static/woff2/SUIT.css" rel="stylesheet">
 <style>
 :root{--bg:#EDF0E6;--bg-2:#E2E7D9;--paper:#F6F8F1;--ink:#13261B;--ink-2:#4A5A4E;--line:rgba(19,38,27,.16);--board:#173828;--fruit:#F68B1F;--leaf:#4E9A57;--link:#A84400;
---display:"Bricolage Grotesque","SUIT","Apple SD Gothic Neo",sans-serif;--body:"SUIT","Apple SD Gothic Neo","Malgun Gothic",sans-serif;}
+--display:"Bricolage Grotesque","SUIT","Apple SD Gothic Neo",sans-serif;--body:"SUIT","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+--gutter:48px;--side:352px;--col-gap:44px;--top-gap:36px;--foot-gap:56px;--sec-gap:64px;}
 *{margin:0;padding:0;box-sizing:border-box;}
 html{-webkit-text-size-adjust:100%;}
 body{background:var(--bg);color:var(--ink);font:500 16px/1.65 var(--body);word-break:keep-all;overflow-wrap:break-word;}
 a{color:inherit;}
 a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(--fruit);outline-offset:3px;border-radius:6px;}
-.wrap{max-width:1440px;margin:0 auto;padding:0 48px;}
+.wrap{max-width:1440px;margin:0 auto;padding:0 var(--gutter);}
 .top{display:flex;align-items:center;gap:40px;height:68px;border-bottom:1px solid var(--line);}
 .brand{display:flex;align-items:center;gap:10px;text-decoration:none;font:800 21px/1 var(--display);letter-spacing:-.02em;white-space:nowrap;color:var(--ink);}
 .brand i{width:22px;height:22px;border-radius:50%;background:var(--fruit);position:relative;display:block;flex:none;}
@@ -51,9 +52,9 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(-
 .nav a[aria-current]{box-shadow:inset 0 -2px 0 var(--fruit);}
 .lang{margin-left:auto;font-weight:700;font-size:15px;text-decoration:none;border:1.5px solid var(--ink);padding:6px 14px;border-radius:999px;white-space:nowrap;color:var(--ink);}
 .lang:hover{background:var(--ink);color:var(--bg);}
-.foot{border-top:1px solid var(--line);margin-top:56px;padding:32px 0 48px;}
+.foot{border-top:1px solid var(--line);margin-top:var(--foot-gap);padding:32px 0 48px;}
 .sib{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 0;}
-.sib h2{font:800 16px/1.4 var(--body);margin:0 24px 0 0;letter-spacing:0;border:0;padding:0;}
+.sib h2{font:800 16px/1.4 var(--body);margin:0 0 4px;flex:0 0 100%;letter-spacing:0;border:0;padding:0;}
 .sib a{text-decoration:none;font-weight:600;padding:2px 0;margin-right:22px;border-bottom:1.5px solid transparent;color:var(--ink);}
 .sib a:hover{border-color:var(--ink);}
 .sib a.me{color:var(--link);font-weight:800;}
@@ -61,6 +62,11 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(-
 .fnav a{text-decoration:none;}
 .fnav a:hover{color:var(--ink);text-decoration:underline;}
 .fine{color:var(--ink-2);font-size:15px;margin:14px 0 0;}
+/* 광고 자리: 작은 "광고" 표시 + 단위 크기만큼 자리 확보, 못 채우면 접힘 */
+.ad-slot{display:flex;flex-direction:column;align-items:center;gap:6px;min-height:72px;margin:32px 0 40px;min-width:0;}
+.ad-label{font:600 12px/16px var(--body);color:var(--ink-2);letter-spacing:.02em;}
+.ad-slot ins,.ad-slot iframe{max-width:100%!important;}
+.ad-slot:not(:has(ins:not(.ad-failed))){display:none;}
 .studies{display:grid;}
 .study{display:block;text-decoration:none;}
 .big{font:800 76px/1 var(--display);color:var(--fruit);letter-spacing:-.03em;font-variant-numeric:tabular-nums;}
@@ -72,7 +78,7 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(-
 .study p{margin:0;font-size:16px;max-width:32em;}
 .study:hover h3{text-decoration:underline;text-underline-offset:4px;}
 @media (max-width:600px){
-  .wrap{padding:0 16px;}
+  :root{--gutter:16px;--top-gap:22px;--sec-gap:48px;}
   .top{height:auto;flex-wrap:wrap;gap:10px 16px;padding:14px 0;}
   .nav{order:3;width:100%;gap:18px;overflow-x:auto;font-size:15px;padding-bottom:2px;}
   .big{font-size:60px;}
@@ -80,7 +86,7 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(-
 }
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important;}}
 
-.doc{display:grid;grid-template-columns:minmax(0,1fr) 352px;gap:44px;padding-top:36px;align-items:start;}
+.doc{display:grid;grid-template-columns:minmax(0,1fr) var(--side);gap:var(--col-gap);padding-top:var(--top-gap);align-items:start;}
 .doc-main{max-width:760px;min-width:0;}
 .crumb{font-size:14px;color:var(--ink-2);margin:0 0 10px;font-weight:600;}
 .crumb a{color:var(--link);text-decoration:none;}
@@ -106,7 +112,6 @@ td b{color:var(--link);}
 .cta{display:inline-block;background:var(--fruit);color:var(--ink)!important;font-weight:800;font-size:17px;padding:13px 28px;border-radius:999px;text-decoration:none;margin:10px 0 6px;}
 .cta:hover{background:#FFA348;}
 .faq-q{font:800 19px/1.45 var(--body)!important;margin:30px 0 6px!important;}
-.ad-wrap{margin:40px 0 0;padding:0;}
 .fig{margin:22px 0;padding:16px 16px 12px;border:1px solid var(--line);border-radius:14px;background:var(--paper);}
 .fig figcaption{font-size:14px;color:var(--ink-2);margin-top:8px;text-align:center;}
 code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.88em;background:var(--bg-2);padding:1px 5px;border-radius:5px;}
@@ -144,7 +149,6 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.88em;bac
   .doc-side{position:static;grid-template-columns:1fr 1fr;align-items:start;}
 }
 @media (max-width:600px){
-  .doc{padding-top:22px;}
   .lead{font-size:17px;}
   .doc-main p,.doc-main li{font-size:16px;}
   .doc-main h2{font-size:22px;margin-top:36px;}
@@ -171,6 +175,7 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.88em;bac
 <nav class="crumb"><a href="/ko/">홈</a> › <a href="/ko/analysis">분석</a> › 합이 10인 조합</nav>
 <h1>합이 10이 되는 조합 전부와 실제로 나오는 빈도</h1>
 <p class="lead">1부터 9까지의 숫자로 10을 만드는 방법은 많지 않습니다. 이 페이지는 2~5개짜리 조합을 하나도 빠짐없이 나열하고, 각각이 나올 정확한 확률을 계산한 뒤, 시뮬레이션한 귤게임 판 100,000개에서 실제로 터뜨릴 수 있는 네모로 얼마나 자주 나타나는지 확인합니다.</p>
+<div class="ad-slot ad-bottom"><span class="ad-label">광고</span><ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-vwzzWFnt83j2lDmM" data-ad-width="320" data-ad-height="50" data-ad-onfail="tgAdFail"></ins></div><script>window.tgAdFail=function(el){if(el&&el.classList)el.classList.add('ad-failed');};function tgAdBlocked(){document.querySelectorAll('ins.kakao_ad_area').forEach(function(el){el.classList.add('ad-failed');});}</script><script async src="https://t1.kakaocdn.net/kas/static/ba.min.js" onerror="tgAdBlocked()"></script>
 
 <h2>조합은 몇 가지인가</h2>
 <p>순서는 무시하고 숫자의 묶음으로 셉니다. 네모는 숫자가 어느 구석에 있는지 따지지 않으니 3+7과 7+3은 판 위에서 같은 것입니다. 1~9 숫자로, 같은 숫자를 여러 번 써도 된다고 하면 10을 만드는 방법은 두 개로 정확히 <b>5가지</b>, 세 개로 <b>8가지</b>, 네 개로 <b>9가지</b>, 다섯 개로 <b>7가지</b>입니다. 실제로 쓸 만한 범위에서 모두 29가지입니다. 여섯 개 이상도 1 열 개까지 12가지가 더 있지만, 판 통계에서 보듯 그렇게 큰 네모는 실제 판에 거의 없습니다.</p>
@@ -209,7 +214,6 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.88em;bac
 <h2>이 숫자를 다시 만들어 보려면</h2>
 <p>이 페이지의 수치는 모두 Node.js로 돌리는 스크립트 하나, <code>scripts/simulate.mjs</code>에서 나왔습니다. 게임의 <code>makeBoard</code> 한 줄(칸마다 <code>Math.floor(난수 × 9) + 1</code>)을 그대로 옮기고, 브라우저 난수 대신 시드(20261020)를 고정한 난수를 써서 몇 번을 돌려도 같은 결과가 나오게 했습니다. 스크립트가 결과를 JSON 파일로 남기고 이 페이지는 그 파일로 만들어지기 때문에, 여기 있는 숫자 중 손으로 적은 것은 없습니다. 시드를 바꾸면 소수점 아래는 조금 달라지지만 결론은 그대로입니다.</p>
 <p><a class="cta" href="/ko/">조합 찾으러 가기</a></p>
-<div class="ad-wrap" style="display:flex;justify-content:center"><ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-vwzzWFnt83j2lDmM" data-ad-width="320" data-ad-height="50"></ins><script async src="https://t1.kakaocdn.net/kas/static/ba.min.js"></script></div>
 </main>
 <aside class="doc-side">
   <div class="play-card"><b>Tangerine 10</b><p>합이 정확히 10이 되는 귤들을 네모로 묶으면 터집니다. 시간은 2분.</p><a href="/ko/">귤게임 하러 가기</a></div>

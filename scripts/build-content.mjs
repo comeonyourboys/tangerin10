@@ -13,9 +13,17 @@ import { ARTICLES, articleBody, teaser, headline, SIM } from './articles.mjs';
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const OUT = join(root, 'public');
 const SITE = { url: 'https://tangerin10.web.app', name: 'Tangerine 10', gsv: ['8nUCFYxTph7TOTN0ZC0zWvamYgyQMd026qCLSBL9YgE', 'WjzFs7iu4kDSzcJKM5QyAqGDAqx9J1P0uj-Ry4z1_NU'], adfit: 'DAN-vwzzWFnt83j2lDmM' }; // adfit: 카카오 애드핏 하단 320x50
-// 카카오 애드핏 320x50 한 칸을 본문 맨 아래에 둔다. 단위 ID 가 비어 있으면 아무것도 출력하지 않는다.
-// 개인정보처리방침·소개·문의·404·기록 페이지에는 광고를 넣지 않는다(layout 의 ads:false).
-const adfit = (unit) => unit ? `<div class="ad-wrap" style="display:flex;justify-content:center"><ins class="kakao_ad_area" style="display:none;" data-ad-unit="${unit}" data-ad-width="320" data-ad-height="50"></ins><script async src="https://t1.kakaocdn.net/kas/static/ba.min.js"></script></div>` : '';
+// 카카오 애드핏 광고 자리. 새 단위는 만들지 않고 있는 단위(320x50 하나, 160x600 두 개)만 쓴다.
+// - 자리마다 "광고" 작은 표시 한 줄 + 단위 크기만큼 min-height 를 잡아 채워질 때 화면이 밀리지 않게 한다.
+// - 애드핏이 못 채우면(data-ad-onfail) 또는 스크립트가 막히면 ins 에 ad-failed 를 붙이고, 그 자리를 접는다(CSS :has).
+// - 개인정보처리방침·소개·문의·404·기록 페이지에는 광고를 넣지 않는다(layout 의 ads:false).
+const AD_LABEL = { en: 'Advertisement', ko: '광고' };
+const ADS_JS = `<script>window.tgAdFail=function(el){if(el&&el.classList)el.classList.add('ad-failed');};function tgAdBlocked(){document.querySelectorAll('ins.kakao_ad_area').forEach(function(el){el.classList.add('ad-failed');});}</script>`;
+const ADFIT_JS = `${ADS_JS}<script async src="https://t1.kakaocdn.net/kas/static/ba.min.js" onerror="tgAdBlocked()"></script>`;
+const adIns = (unit, w, h) => `<ins class="kakao_ad_area" style="display:none;" data-ad-unit="${unit}" data-ad-width="${w}" data-ad-height="${h}" data-ad-onfail="tgAdFail"></ins>`;
+// 320x50 한 칸. 글 페이지는 첫 단락(lead) 바로 뒤, 게임 화면은 게임 영역이 끝난 뒤 첫 쉬는 자리에 둔다.
+const adSlot320 = (unit, lang, extra = '') => unit ? `<div class="ad-slot ad-bottom${extra}"><span class="ad-label">${AD_LABEL[lang]}</span>${adIns(unit, 320, 50)}</div>` : '';
+const adfit = (unit, lang) => unit ? adSlot320(unit, lang) + ADFIT_JS : '';
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const jsonld = (o) => `<script type="application/ld+json">${JSON.stringify(o).replace(/</g, '\\u003c')}</script>`;
 
@@ -27,13 +35,14 @@ const FONTS = `<link rel="preconnect" href="https://fonts.googleapis.com"><link 
 <link href="https://cdn.jsdelivr.net/gh/sun-typeface/SUIT@2/fonts/static/woff2/SUIT.css" rel="stylesheet">`;
 const DS_CSS = `
 :root{--bg:#EDF0E6;--bg-2:#E2E7D9;--paper:#F6F8F1;--ink:#13261B;--ink-2:#4A5A4E;--line:rgba(19,38,27,.16);--board:#173828;--fruit:#F68B1F;--leaf:#4E9A57;--link:#A84400;
---display:"Bricolage Grotesque","SUIT","Apple SD Gothic Neo",sans-serif;--body:"SUIT","Apple SD Gothic Neo","Malgun Gothic",sans-serif;}
+--display:"Bricolage Grotesque","SUIT","Apple SD Gothic Neo",sans-serif;--body:"SUIT","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+--gutter:48px;--side:352px;--col-gap:44px;--top-gap:36px;--foot-gap:56px;--sec-gap:64px;}
 *{margin:0;padding:0;box-sizing:border-box;}
 html{-webkit-text-size-adjust:100%;}
 body{background:var(--bg);color:var(--ink);font:500 16px/1.65 var(--body);word-break:keep-all;overflow-wrap:break-word;}
 a{color:inherit;}
 a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(--fruit);outline-offset:3px;border-radius:6px;}
-.wrap{max-width:1440px;margin:0 auto;padding:0 48px;}
+.wrap{max-width:1440px;margin:0 auto;padding:0 var(--gutter);}
 .top{display:flex;align-items:center;gap:40px;height:68px;border-bottom:1px solid var(--line);}
 .brand{display:flex;align-items:center;gap:10px;text-decoration:none;font:800 21px/1 var(--display);letter-spacing:-.02em;white-space:nowrap;color:var(--ink);}
 .brand i{width:22px;height:22px;border-radius:50%;background:var(--fruit);position:relative;display:block;flex:none;}
@@ -45,9 +54,9 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(-
 .nav a[aria-current]{box-shadow:inset 0 -2px 0 var(--fruit);}
 .lang{margin-left:auto;font-weight:700;font-size:15px;text-decoration:none;border:1.5px solid var(--ink);padding:6px 14px;border-radius:999px;white-space:nowrap;color:var(--ink);}
 .lang:hover{background:var(--ink);color:var(--bg);}
-.foot{border-top:1px solid var(--line);margin-top:56px;padding:32px 0 48px;}
+.foot{border-top:1px solid var(--line);margin-top:var(--foot-gap);padding:32px 0 48px;}
 .sib{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 0;}
-.sib h2{font:800 16px/1.4 var(--body);margin:0 24px 0 0;letter-spacing:0;border:0;padding:0;}
+.sib h2{font:800 16px/1.4 var(--body);margin:0 0 4px;flex:0 0 100%;letter-spacing:0;border:0;padding:0;}
 .sib a{text-decoration:none;font-weight:600;padding:2px 0;margin-right:22px;border-bottom:1.5px solid transparent;color:var(--ink);}
 .sib a:hover{border-color:var(--ink);}
 .sib a.me{color:var(--link);font-weight:800;}
@@ -55,6 +64,11 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(-
 .fnav a{text-decoration:none;}
 .fnav a:hover{color:var(--ink);text-decoration:underline;}
 .fine{color:var(--ink-2);font-size:15px;margin:14px 0 0;}
+/* 광고 자리: 작은 "광고" 표시 + 단위 크기만큼 자리 확보, 못 채우면 접힘 */
+.ad-slot{display:flex;flex-direction:column;align-items:center;gap:6px;min-height:72px;margin:32px 0 40px;min-width:0;}
+.ad-label{font:600 12px/16px var(--body);color:var(--ink-2);letter-spacing:.02em;}
+.ad-slot ins,.ad-slot iframe{max-width:100%!important;}
+.ad-slot:not(:has(ins:not(.ad-failed))){display:none;}
 .studies{display:grid;}
 .study{display:block;text-decoration:none;}
 .big{font:800 76px/1 var(--display);color:var(--fruit);letter-spacing:-.03em;font-variant-numeric:tabular-nums;}
@@ -66,7 +80,7 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(-
 .study p{margin:0;font-size:16px;max-width:32em;}
 .study:hover h3{text-decoration:underline;text-underline-offset:4px;}
 @media (max-width:600px){
-  .wrap{padding:0 16px;}
+  :root{--gutter:16px;--top-gap:22px;--sec-gap:48px;}
   .top{height:auto;flex-wrap:wrap;gap:10px 16px;padding:14px 0;}
   .nav{order:3;width:100%;gap:18px;overflow-x:auto;font-size:15px;padding-bottom:2px;}
   .big{font-size:60px;}
@@ -126,7 +140,7 @@ ${['board', 'bots', 'combos'].map((id) => {
 
 // ---------- 글 페이지 전용 스타일 ----------
 const CSS = DS_CSS + `
-.doc{display:grid;grid-template-columns:minmax(0,1fr) 352px;gap:44px;padding-top:36px;align-items:start;}
+.doc{display:grid;grid-template-columns:minmax(0,1fr) var(--side);gap:var(--col-gap);padding-top:var(--top-gap);align-items:start;}
 .doc-main{max-width:760px;min-width:0;}
 .crumb{font-size:14px;color:var(--ink-2);margin:0 0 10px;font-weight:600;}
 .crumb a{color:var(--link);text-decoration:none;}
@@ -152,7 +166,6 @@ td b{color:var(--link);}
 .cta{display:inline-block;background:var(--fruit);color:var(--ink)!important;font-weight:800;font-size:17px;padding:13px 28px;border-radius:999px;text-decoration:none;margin:10px 0 6px;}
 .cta:hover{background:#FFA348;}
 .faq-q{font:800 19px/1.45 var(--body)!important;margin:30px 0 6px!important;}
-.ad-wrap{margin:40px 0 0;padding:0;}
 .fig{margin:22px 0;padding:16px 16px 12px;border:1px solid var(--line);border-radius:14px;background:var(--paper);}
 .fig figcaption{font-size:14px;color:var(--ink-2);margin-top:8px;text-align:center;}
 code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.88em;background:var(--bg-2);padding:1px 5px;border-radius:5px;}
@@ -190,7 +203,6 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.88em;bac
   .doc-side{position:static;grid-template-columns:1fr 1fr;align-items:start;}
 }
 @media (max-width:600px){
-  .doc{padding-top:22px;}
   .lead{font-size:17px;}
   .doc-main p,.doc-main li{font-size:16px;}
   .doc-main h2{font-size:22px;margin-top:36px;}
@@ -213,6 +225,20 @@ function docSide(lang, path) {
   <div class="play-card"><b>Tangerine 10</b><p>${s.pitch}</p><a href="${nav[0][0]}">${s.play}</a></div>
   <nav class="toc" aria-label="${s.read}"><h2>${s.read}</h2>${items.map(([h, n]) => `<a href="${h}"${h === path ? ' aria-current="page"' : ''}>${n}</a>`).join('')}</nav>
 </aside>`;
+}
+
+// 모든 글 페이지의 제목 시작선을 같게: 경로 표시(crumb)가 없는 페이지(소개·문의·개인정보처리방침·404)에도 붙인다.
+function withCrumb(body, lang, path) {
+  if (body.includes('class="crumb"')) return body;
+  const h1 = (body.match(/<h1>([\s\S]*?)<\/h1>/) || [])[1] || '';
+  const home = lang === 'ko' ? ['/ko/', '홈'] : ['/', 'Home'];
+  return `\n<nav class="crumb"><a href="${home[0]}">${home[1]}</a> › ${h1.replace(/<[^>]+>/g, '')}</nav>` + body;
+}
+// 광고는 첫 단락(lead) 바로 뒤 — 첫 화면 안. lead 가 없으면 본문 끝.
+function placeAd(body, ad) {
+  if (!ad) return body;
+  const m = body.match(/<p class="lead">[\s\S]*?<\/p>/);
+  return m ? body.replace(m[0], () => m[0] + '\n' + ad) : body + '\n' + ad;
 }
 
 // alt: 다른 언어 판의 경로. 있으면 hreflang 과 언어 전환 링크를 붙인다.
@@ -257,8 +283,7 @@ ${ld.map(jsonld).join('\n')}
 ${siteHeader(lang, path, alt)}
 <div class="doc">
 <main class="doc-main">
-${body}
-${ads ? adfit(SITE.adfit) : ''}
+${placeAd(withCrumb(body, lang, path), ads ? adfit(SITE.adfit, lang) : '')}
 </main>
 ${docSide(lang, path)}
 </div>
@@ -414,7 +439,7 @@ const aboutEn = `
 <p>When your score reaches the top three and you choose to save it, the name you typed, the score and the date are stored in Firebase Realtime Database and shown on the leaderboard. The My History panel exists only in the open page and is not stored anywhere. No email address, phone number or account identity is collected at any point. The <a href="/privacy">privacy policy</a> covers this in full.</p>
 
 <h2>Advertising</h2>
-<p>The game is free and there is nothing to buy inside it — no hints, no extra time, no cosmetic items. Hosting is paid for out of pocket, and advertising helps offset that. Ads appear below the page content, never over the board or between rounds. This page, the contact page, the privacy policy and the error page carry no ads.</p>
+<p>The game is free and there is nothing to buy inside it — no hints, no extra time, no cosmetic items. Hosting is paid for out of pocket, and advertising helps offset that. Ads sit in their own spaces marked "Advertisement", never over or beside the board and never between rounds. This page, the contact page, the privacy policy and the error page carry no ads.</p>
 
 <h2>Corrections</h2>
 <p>If a rule on <a href="/how-to-play">How to Play</a> or an answer in the <a href="/faq">FAQ</a> is wrong or unclear, please say so through the <a href="/contact">contact page</a>.</p>
@@ -662,6 +687,20 @@ const homeAnalysis = (lang) => `<!-- analysis:start -->
   </div>
 </section>
 <!-- analysis:end -->`;
+// 게임 화면 광고 자리(영문·한국어 공용). 게임 중 드래그 영역 근처에는 두지 않는다.
+//  - 320x50: 게임 영역(판·규칙 요약·랭킹·내 기록)이 끝난 뒤, 분석 띠 앞
+//  - 160x600 두 칸: 소개 섹션 왼쪽 칸(판과 분석 띠를 사이에 둔 아래쪽). 보이지 않는 광고 요청을 막으려고 1200px 이상일 때만 만든다.
+const homeAds = (lang) => ({
+  bottom: `<!-- ad-bottom:start -->${adSlot320(SITE.adfit, lang, ' ad-home')}<!-- ad-bottom:end -->`,
+  side: `<!-- ad-side:start --><div class="ad-slot ad-tall"><span class="ad-label">${AD_LABEL[lang]}</span><div class="ad-side-row"><script>
+    if(window.matchMedia('(min-width:1200px)').matches){
+      [['adLeft','DAN-xRz8uKiS9ed0NFsD'],['adRight','DAN-u7ebMhFWv4UdKAMT']].forEach(function(a){
+        document.write('<div class="ad-side" id="'+a[0]+'"><ins class="kakao_ad_area" style="display:none;" data-ad-unit="'+a[1]+'" data-ad-width="160" data-ad-height="600" data-ad-onfail="tgAdFail"></ins></div>');
+      });
+    }
+    </script></div></div><!-- ad-side:end -->`,
+  js: `<!-- ad-js:start -->${ADFIT_JS}<!-- ad-js:end -->`,
+});
 // 영문 게임 화면: 공통 스타일·글꼴·머리글·바닥글·분석 띠를 채운다(게임 코드와 문구는 그대로).
 {
   const p = join(OUT, 'index.html');
@@ -672,6 +711,10 @@ const homeAnalysis = (lang) => `<!-- analysis:start -->
   fill(/<!-- fonts:start -->[\s\S]*?<!-- fonts:end -->/, `<!-- fonts:start -->${FONTS}<!-- fonts:end -->`, 'fonts');
   fill(/<header class="top site-nav">[\s\S]*?<\/header>/, siteHeader('en', '/', '/ko/'), 'header');
   fill(/<footer class="foot site-ftr">[\s\S]*?<\/footer>/, siteFooter('en', '/ko/'), 'footer');
+  const ad = homeAds('en');
+  fill(/<!-- ad-bottom:start -->[\s\S]*?<!-- ad-bottom:end -->/, ad.bottom, 'ad-bottom');
+  fill(/<!-- ad-side:start -->[\s\S]*?<!-- ad-side:end -->/, ad.side, 'ad-side');
+  fill(/<!-- ad-js:start -->[\s\S]*?<!-- ad-js:end -->/, ad.js, 'ad-js');
   writeFileSync(p, src);
 }
 {
@@ -722,8 +765,12 @@ const homeAnalysis = (lang) => `<!-- analysis:start -->
   sub('No scores yet', '아직 기록이 없어요', 2);
   sub('No games yet', '아직 플레이 기록이 없어요', 2);
   block(/<!-- analysis:start -->[\s\S]*?<!-- analysis:end -->/, () => homeAnalysis('ko'));
+  block(/<!-- ad-bottom:start -->[\s\S]*?<!-- ad-bottom:end -->/, () => homeAds('ko').bottom);
   block(/<section class="about"[\s\S]*?<\/section>/, () => `<section class="about" aria-labelledby="about-h">
+  <div class="about-head">
   <h2 id="about-h">귤게임 Tangerine 10은요</h2>
+  ${homeAds('ko').side}
+  </div>
   <div class="body">
     <p>Tangerine 10은 규칙 하나로 하는 무료 브라우저 퍼즐입니다. 숫자의 합이 <b>정확히 10</b>이 되는 귤들에 네모를 그리면 터집니다. 시간은 120초. 회원가입도, 설치도, 앱스토어도 없습니다.</p>
     <p>판을 시작할 때마다 1부터 9까지 숫자가 적힌 귤이 새로 깔립니다. PC와 태블릿은 170개, 휴대폰은 168개라 같은 판을 다시 할 일은 없습니다. 내 기록 칸은 페이지가 열려 있는 동안 최근 다섯 판을 보여 줍니다. 점수가 3위 안에 들면 이름 칸이 나오고, 저장하고 다시 하기를 누르면 랭킹에 올라갑니다.</p>
