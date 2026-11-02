@@ -258,6 +258,7 @@ ${hreflang}
 <meta name="robots" content="${noindex ? 'noindex, follow' : 'index, follow'}">
 ${SITE.gsv.map((g) => `<meta name="google-site-verification" content="${g}">`).join('\n')}
 <meta name="google-adsense-account" content="ca-pub-5479403345572412">
+<meta name="naver-site-verification" content="51f62593fd36d7833ec5e31e273ce86ff8811909">
 ${ads ? `<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5479403345572412" crossorigin="anonymous"></script>\n` : ''}<meta property="og:type" content="article">
 <meta property="og:site_name" content="${SITE.name}">
 <meta property="og:title" content="${esc(title)}">
