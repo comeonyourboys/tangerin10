@@ -12,7 +12,7 @@ import { ARTICLES, articleBody, teaser, headline, SIM } from './articles.mjs';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const OUT = join(root, 'public');
-const SITE = { url: 'https://tangerin10.web.app', name: 'Tangerine 10', gsv: ['8nUCFYxTph7TOTN0ZC0zWvamYgyQMd026qCLSBL9YgE', 'WjzFs7iu4kDSzcJKM5QyAqGDAqx9J1P0uj-Ry4z1_NU'], adfit: 'DAN-vwzzWFnt83j2lDmM' }; // adfit: 카카오 애드핏 하단 320x50
+const SITE = { url: 'https://tangerin10.comeonyourboyz.app', name: 'Tangerine 10', gsv: ['8nUCFYxTph7TOTN0ZC0zWvamYgyQMd026qCLSBL9YgE', 'WjzFs7iu4kDSzcJKM5QyAqGDAqx9J1P0uj-Ry4z1_NU'], adfit: 'DAN-vwzzWFnt83j2lDmM' }; // adfit: 카카오 애드핏 하단 320x50
 // 카카오 애드핏 광고 자리. 새 단위는 만들지 않고 있는 단위(320x50 하나, 160x600 두 개)만 쓴다.
 // - 자리마다 "광고" 작은 표시 한 줄 + 단위 크기만큼 min-height 를 잡아 채워질 때 화면이 밀리지 않게 한다.
 // - 애드핏이 못 채우면(data-ad-onfail) 또는 스크립트가 막히면 ins 에 ad-failed 를 붙이고, 그 자리를 접는다(CSS :has).
@@ -98,13 +98,13 @@ const T = {
 };
 // comeonyourboyz 가 만든 도구 8개. 자기 사이트(Tangerine 10)는 이 사이트 홈으로 걸고 강조한다.
 const SIBLINGS = [
-  ['https://todays-fortune-app.vercel.app', '오늘의 운세', "Today's Fortune"],
-  ['https://dreamdict.web.app', '꿈해몽 사전', 'Dream Dictionary'],
-  ['https://idiomdict.web.app', '사자성어·속담 사전', 'Korean Idiom Dictionary'],
-  ['https://plantdict.web.app', '실내식물 사전', 'Houseplant Dictionary'],
-  ['https://salaryrank.web.app', '내 연봉 순위', 'Salary Rank'],
-  ['https://giftwheel.web.app', '선물 룰렛', 'Gift Wheel'],
-  ['https://mykoreanname.web.app', 'My Korean Name', 'My Korean Name'],
+  ['https://todays-fortune.comeonyourboyz.app', '오늘의 운세', "Today's Fortune"],
+  ['https://dreamdict.comeonyourboyz.app', '꿈해몽 사전', 'Dream Dictionary'],
+  ['https://idiomdict.comeonyourboyz.app', '사자성어·속담 사전', 'Korean Idiom Dictionary'],
+  ['https://plantdict.comeonyourboyz.app', '실내식물 사전', 'Houseplant Dictionary'],
+  ['https://salaryrank.comeonyourboyz.app', '내 연봉 순위', 'Salary Rank'],
+  ['https://giftwheel.comeonyourboyz.app', '선물 룰렛', 'Gift Wheel'],
+  ['https://mykoreanname.comeonyourboyz.app', 'My Korean Name', 'My Korean Name'],
   [null, 'Tangerine 10', 'Tangerine 10'],
 ];
 // 머리글: 로고 · 메뉴 다섯 개(게임 방법~소개) · 언어 전환. path 와 같은 메뉴는 aria-current.
@@ -452,7 +452,7 @@ const privacyEn = `
 <p class="updated">Last updated: October 20, 2026</p>
 
 <h2>Overview</h2>
-<p>This policy explains what Tangerine 10 (tangerin10.web.app, "the site") stores, which third-party services it uses, and how advertising cookies work on it. The site is run by one individual; see the <a href="/about">about page</a>.</p>
+<p>This policy explains what Tangerine 10 (tangerin10.comeonyourboyz.app, "the site") stores, which third-party services it uses, and how advertising cookies work on it. The site is run by one individual; see the <a href="/about">about page</a>.</p>
 
 <h2>Who the site is for</h2>
 <p>Tangerine 10 is a general-audience website for people who enjoy number puzzles. It is not designed for or directed at children, and it does not ask for anyone's age.</p>
@@ -735,10 +735,10 @@ const homeAds = (lang) => ({
   sub('<meta name="twitter:title" content="Tangerine 10 — Number Puzzle Game">', `<meta name="twitter:title" content="${TITLE}">`);
   block(/<meta property="og:description" content="[^"]*">/, '<meta property="og:description" content="2분 동안 합이 10이 되는 숫자를 골라 없애는 무료 숫자 퍼즐 게임입니다. 전 세계 랭킹에 도전해 보세요.">');
   block(/<meta name="twitter:description" content="[^"]*">/, '<meta name="twitter:description" content="2분 동안 합이 10이 되는 숫자를 골라 없애는 무료 숫자 퍼즐 게임입니다. 전 세계 랭킹에 도전해 보세요.">');
-  sub('<meta property="og:url" content="https://tangerin10.web.app">', '<meta property="og:url" content="https://tangerin10.web.app/ko/">');
+  sub('<meta property="og:url" content="https://tangerin10.comeonyourboyz.app">', '<meta property="og:url" content="https://tangerin10.comeonyourboyz.app/ko/">');
   sub('<meta property="og:locale" content="en_US">', '<meta property="og:locale" content="ko_KR">');
   sub('<meta property="og:image:alt" content="Tangerine 10 number puzzle">', '<meta property="og:image:alt" content="귤게임 Tangerine 10 숫자 퍼즐">');
-  sub('<link rel="canonical" href="https://tangerin10.web.app/">', '<link rel="canonical" href="https://tangerin10.web.app/ko/">');
+  sub('<link rel="canonical" href="https://tangerin10.comeonyourboyz.app/">', '<link rel="canonical" href="https://tangerin10.comeonyourboyz.app/ko/">');
   sub('"inLanguage":"en"}', '"inLanguage":"ko"}');
   sub('"description":"Free number puzzle game! Drag and match numbers that add up to 10. 2-minute challenge with global ranking."', '"description":"합이 10이 되게 귤을 묶어 터뜨리는 무료 숫자 퍼즐. 2분 도전과 전체 랭킹."');
   block(/<header class="top site-nav">[\s\S]*?<\/header>/, () => siteHeader('ko', '/ko/', '/'));
@@ -797,7 +797,7 @@ const homeAds = (lang) => ({
   sub('aria-label="Share on KakaoTalk"', 'aria-label="카카오톡으로 공유"');
   sub('aria-label="Share on Facebook"', 'aria-label="페이스북으로 공유"');
   sub('aria-label="Copy link"', 'aria-label="링크 복사"');
-  sub("var SHARE_URL='https://tangerin10.web.app?v='+Date.now();", "var SHARE_URL='https://tangerin10.web.app/ko/?v='+Date.now();");
+  sub("var SHARE_URL='https://tangerin10.comeonyourboyz.app?v='+Date.now();", "var SHARE_URL='https://tangerin10.comeonyourboyz.app/ko/?v='+Date.now();");
   writeFileSync(join(OUT, 'ko', 'index.html'), g);
 }
 

@@ -1,5 +1,6 @@
 {
   "hosting": {
+    "site": "cyb-tangerin10",
     "public": "public",
     "ignore": [
       "firebase.json",
