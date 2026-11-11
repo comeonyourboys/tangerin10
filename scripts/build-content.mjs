@@ -264,7 +264,7 @@ ${ads ? `<script async src="https://pagead2.googlesyndication.com/pagead/js/adsb
 <meta property="og:title" content="${esc(title)}">
 <meta property="og:description" content="${esc(desc)}">
 <meta property="og:url" content="${abs(path)}">
-<meta property="og:image" content="${SITE.url}/og-tangerin10.png?v=7">
+<meta property="og:image" content="${SITE.url}/og-tangerin10.png?v=8">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="${t.alt}">
@@ -272,7 +272,7 @@ ${ads ? `<script async src="https://pagead2.googlesyndication.com/pagead/js/adsb
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="${esc(title)}">
 <meta name="twitter:description" content="${esc(desc)}">
-<meta name="twitter:image" content="${SITE.url}/og-tangerin10.png?v=7">
+<meta name="twitter:image" content="${SITE.url}/og-tangerin10.png?v=8">
 <link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/png" href="/favicon.png" sizes="512x512"><link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">
 ${FONTS}
