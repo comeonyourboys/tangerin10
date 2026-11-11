@@ -212,6 +212,10 @@ body.tense{background:linear-gradient(180deg,#fff 0%,#fff0f0 100%);}
 .share-row{display:flex;gap:8px;margin-top:4px;}
 .sh-btn{flex:1;padding:12px 0;border:none;border-radius:12px;font-size:18px;cursor:pointer;font-family:inherit;transition:all .15s;font-weight:700;}
 .sh-btn:hover{transform:translateY(-2px);}
+.share-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.sh-btn{display:flex;align-items:center;justify-content:center;gap:7px;min-width:0;height:46px;padding:0 8px;font-size:14px;white-space:nowrap}
+.sh-btn svg{width:18px;height:18px;flex:none}
+
 .sh-x{background:#000;color:#fff;}
 .sh-kakao{background:#FEE500;color:#3C1E1E;}
 .sh-fb{background:#1877F2;color:#fff;font-size:20px;}
@@ -319,11 +323,12 @@ body.tense{background:linear-gradient(180deg,#fff 0%,#fff0f0 100%);}
       <input class="name-input" id="nameInput" placeholder="Enter your name" maxlength="12">
     </div>
     <button class="bp" id="playBtn" onclick="onPlayAgain()">▶ Play Again</button>
+    <div class="share-t" style="margin:6px 0 8px;font-weight:700;font-size:15px">Share with friends</div>
     <div class="share-row">
-      <button class="sh-btn sh-x" onclick="shareX()">𝕏</button>
-      <button class="sh-btn sh-kakao" onclick="shareKakao()">💬</button>
-      <button class="sh-btn sh-fb" onclick="shareFB()">f</button>
-      <button class="sh-btn sh-copy" onclick="cp()">📋</button>
+      <button class="sh-btn sh-x" onclick="shareX()"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg><span>X</span></button>
+      <button class="sh-btn sh-kakao" onclick="shareKakao()"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3C6.48 3 2 6.58 2 11c0 2.84 1.87 5.33 4.69 6.75l-1 3.66c-.09.32.27.58.55.4l4.36-2.9c.46.06.93.09 1.4.09 5.52 0 10-3.58 10-8S17.52 3 12 3z"/></svg><span>KakaoTalk</span></button>
+      <button class="sh-btn sh-fb" onclick="shareFB()"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg><span>Facebook</span></button>
+      <button class="sh-btn sh-copy" onclick="cp()"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.5 1.5M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1.5-1.5"/></svg><span>Copy link</span></button>
     </div>
   </div>
 </div>
