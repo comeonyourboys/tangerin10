@@ -4,7 +4,8 @@
 //   드래그 사각형 안 숫자 합이 정확히 10 이어야 제거
 //   점수 = floor(제거한 타일 수 × 배수), 배수: 콤보 2~4 x1.5, 5~9 x2, 10~19 x3, 20+ x5
 //   콤보는 마지막 제거 후 2초가 지나면 0 으로 초기화
-import { writeFileSync, mkdirSync, readFileSync } from 'node:fs';
+import { writeFileSync, mkdirSync, readFileSync, existsSync } from 'node:fs';
+import { createHash } from 'node:crypto';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { howKo, stratKo, faqsKo, aboutKo, contactKo, privacyKo } from './content-ko.mjs';
@@ -802,15 +803,34 @@ const homeAds = (lang) => ({
 }
 
 const today = new Date().toISOString().slice(0, 10);
+// 페이지별 최종 수정일: 다 쓴 페이지 파일의 본문 글자 해시가 바뀐 페이지만 오늘 날짜로 갱신한다(sitemap lastmod).
+// 디자인·광고 자리만 바뀌면 날짜가 그대로다. data/lastmod.json 은 빌드가 갱신하므로 배포 후 함께 커밋한다.
+// 이 파일이 처음 생길 때는 지금 public/sitemap.xml 의 날짜로 시작한다(빌드 날짜로 전부 같아지지 않게).
+const LASTMOD_P = join(root, 'data', 'lastmod.json');
+const MOD = existsSync(LASTMOD_P) ? JSON.parse(readFileSync(LASTMOD_P, 'utf8')) : {};
+if (!existsSync(LASTMOD_P) && existsSync(join(OUT, 'sitemap.xml'))) {
+  for (const [, u, d] of readFileSync(join(OUT, 'sitemap.xml'), 'utf8').matchAll(/<loc>([^<]+)<\/loc><lastmod>([^<]+)</g)) MOD[u.slice(SITE.url.length)] = { d };
+}
+const pageFile = (l) => join(OUT, l.endsWith('/') ? l.slice(1) + 'index.html' : l.slice(1) + '.html');
+const textOf = (html) => (html.match(/<main[\s\S]*?<\/main>/)?.[0] ?? html).replace(/<script[\s\S]*?<\/script>/g, ' ').replace(/<style[\s\S]*?<\/style>/g, ' ').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+const lastmodOf = (l) => {
+  const t = createHash('md5').update(textOf(readFileSync(pageFile(l), 'utf8'))).digest('hex').slice(0, 12);
+  const cur = MOD[l];
+  if (cur?.t !== t) MOD[l] = cur && !cur.t ? { t, d: cur.d } : { t, d: today };
+  return MOD[l].d;
+};
 const urls = [
   // 기록(/records) 페이지는 noindex 라 넣지 않는다.
   ['/', '1.0', 'weekly'], ['/how-to-play', '0.8', 'monthly'], ['/strategy', '0.8', 'monthly'], ['/analysis', '0.7', 'monthly'], ...Object.values(ARTICLES).map((a) => [a.en.path, '0.7', 'monthly']), ['/faq', '0.7', 'monthly'], ['/about', '0.6', 'yearly'], ['/contact', '0.5', 'yearly'],
   ['/ko/', '1.0', 'weekly'], ['/ko/how-to-play', '0.8', 'monthly'], ['/ko/strategy', '0.8', 'monthly'], ['/ko/analysis', '0.7', 'monthly'], ...Object.values(ARTICLES).map((a) => [a.ko.path, '0.7', 'monthly']), ['/ko/faq', '0.7', 'monthly'], ['/ko/about', '0.6', 'yearly'], ['/ko/contact', '0.5', 'yearly'],
 ];
-writeFileSync(join(OUT, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.map(([l, p, f]) => `  <url><loc>${SITE.url}${l}</loc><lastmod>${today}</lastmod><changefreq>${f}</changefreq><priority>${p}</priority></url>`).join('\n')}\n</urlset>\n`);
+writeFileSync(join(OUT, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.map(([l, p, f]) => `  <url><loc>${SITE.url}${l}</loc><lastmod>${lastmodOf(l)}</lastmod><changefreq>${f}</changefreq><priority>${p}</priority></url>`).join('\n')}\n</urlset>\n`);
 
 const strip = (h) => h.replace(/<script[\s\S]*?<\/script>/g, '').replace(/<style[\s\S]*?<\/style>/g, '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+mkdirSync(dirname(LASTMOD_P), { recursive: true });
+writeFileSync(LASTMOD_P, JSON.stringify(Object.fromEntries(urls.map(([l]) => [l, MOD[l]]).sort(([a], [b]) => a.localeCompare(b))), null, 1) + '\n');
 console.log('✔ 콘텐츠 페이지 생성');
+console.log(`  최종 수정일이 오늘(${today})인 페이지 ${urls.filter(([l]) => MOD[l].d === today).length}개 / 전체 ${urls.length}개 (data/lastmod.json)`);
 for (const [name, html] of [...pages, ...pagesKo, ...recordPages]) console.log(`  ${name.padEnd(20)} 본문 ${strip(html).length.toLocaleString()}자`);
 console.log(`  기록: ${RANKS ? `랭킹 ${RANKS.length}건 반영` : '랭킹을 불러오지 못해 브라우저에서 채움'}`);
 console.log(`  sitemap.xml 항목 ${urls.length}개`);
